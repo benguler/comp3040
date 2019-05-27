@@ -8,4 +8,15 @@ public class Character {
 		this.character = character;
 		
 	}
+
+	public void printChar() {
+		System.out.print(character);
+		
+	}
+	
+	public String toString(){
+		return character;
+		
+	}
+	
 }
