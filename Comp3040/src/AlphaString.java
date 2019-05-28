@@ -36,13 +36,15 @@ public class AlphaString {
 		
 	}
 	
-	public void addChar(int i){				//Add char at alphabet[i] to string
+	public void addChar(Character character){				//Add char at alphabet[i] to string
+		int i = alphabet.findIndex(character);
+		
 		string.add(alphabet.get(i));
 		
 	}
 	
-	public void setChar(int n, int i){		//Sets the nth character of a string to the ith character of an alphabet
-		string.set(n, alphabet.get(i));
+	public void setChar(int n, Character character){		//Sets the nth character of a string to the new character 
+		string.set(n, character);
 		
 	}
 	

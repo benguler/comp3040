@@ -11,7 +11,7 @@ public class Nth {
 	
 	private static Alphabet alphabet = new Alphabet(symbols);
 	
-	private static int n = 28;
+	private static int n = 100;
 	
 	public static void main(String[] args) {
 		AlphaString nthString = nthString(alphabet, n);
@@ -41,9 +41,9 @@ public class Nth {
 			
 		}
 		
-																	//Initialize nthString with stringLength many 0s
+																	//Initialize nthString with stringLength many first characters
 		for(int i = 0; i < stringLength; i++){
-			nthString.addChar(0);
+			nthString.addChar(alphabet.get(i));
 			
 		}
 		
@@ -54,7 +54,9 @@ public class Nth {
 			
 			int newIntIndex = Integer.parseInt(Integer.toString(Integer.parseInt(newStrIndex, alphabetSize), 10)); //Index of the character to be added in base 10
 			
-			nthString.setChar((nthString.length()-i-1), newIntIndex);
+			Character newCharacter = alphabet.get(newIntIndex);
+			
+			nthString.setChar((nthString.length()-i-1), newCharacter);
 			
 		}
 		

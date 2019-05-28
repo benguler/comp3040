@@ -28,9 +28,11 @@ public class DFA {
 	public void findNextState(Character character){
 		this.currentState = this.stateTable.findNextState(currentState, character);
 		
+		System.out.println(currentState.getIdentifier());
+		
 	}
 	
-	public Boolean acceptReject(){
+	public boolean acceptReject(){
 		boolean accepts = false;
 		
 		for(int i = 0; i < this.acceptingStates.size(); i++){
