@@ -18,7 +18,7 @@ public class Character {
 		
 	}
 	
-	public String toString(){
+	public String displayable(){
 		return character;
 		
 	}

@@ -10,6 +10,8 @@ public class DFA {
 	
 	private State currentState;
 	
+	private Trace trace;
+	
 	public DFA(){
 		
 	}
@@ -23,28 +25,58 @@ public class DFA {
 		
 		this.currentState = startState;
 		
+		this.trace = new Trace();
+		
 	}
 	
-	public void findNextState(Character character){
+	private void findNextState(Character character){
 		this.currentState = this.stateTable.findNextState(currentState, character);
-		
-		System.out.println(currentState.getIdentifier());
 		
 	}
 	
 	public boolean acceptReject(){
 		boolean accepts = false;
 		
-		for(int i = 0; i < this.acceptingStates.size(); i++){
-			if(acceptingStates.contains(currentState)){
-				accepts = true;
-				
-			}
+		if(acceptingStates.contains(currentState)){
+			accepts = true;
 			
 		}
+			
 		
 		return accepts;
 		
+	}
+	
+	public boolean run(AlphaString string){
+		this.trace.clear();
+		
+		resetDFA();
+		
+		this.trace.addState(returnCurrentState());
+		
+		for(int i = 0; i <  string.length(); i++){
+			findNextState(string.getChar(i));
+			
+			this.trace.addState(returnCurrentState());
+			
+		}
+		
+		return acceptReject();
+		
+	}
+	
+	public State returnCurrentState(){
+		return currentState;
+		
+	}
+	
+	public void resetDFA(){
+		this.currentState = this.startState;
+		
+	}
+	
+	public Trace getTrace(){
+		return this.trace;
 		
 	}
 	

@@ -16,7 +16,7 @@ public class Nth {
 	public static void main(String[] args) {
 		AlphaString nthString = nthString(alphabet, n);
 		
-		nthString.printString();
+		System.out.println(nthString.displayable());
 		
 	}
 																	//Returns the nth string in a lexicographical ordering of a given alphabet

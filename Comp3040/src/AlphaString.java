@@ -52,7 +52,7 @@ public class AlphaString {
 		String display = "";
 		
 		for(int i = 0; i < string.size(); i++){
-			display += string.get(i).toString();
+			display += string.get(i).displayable();
 			
 		}
 		
@@ -60,12 +60,5 @@ public class AlphaString {
 		
 	}
 	
-	public void printString(){
-		for(int i = 0; i < string.size(); i++){
-			string.get(i).printChar();
-			
-		}
-		
-	}
 	
 }
