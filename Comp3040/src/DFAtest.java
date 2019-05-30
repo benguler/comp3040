@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //Create and test various DFAs and DFA-related functions
@@ -444,11 +444,12 @@ public class DFAtest {
 		DFA azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
 		
 		boolean cont = true;
+		boolean validInput = true;
 		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		
-		int input = 0;
+		String input = "";
 		
 		int testStringIndex = 0;
 		
@@ -457,6 +458,8 @@ public class DFAtest {
 		DFA currentDFA = new DFA();
 		
 		while(cont){
+			validInput = true;
+			
 			System.out.println("0  - Quit ");
 			System.out.println("1  - DFA that accepts no strings of bits");
 			System.out.println("2  - DFA that only accepts the empty string");
@@ -473,112 +476,116 @@ public class DFAtest {
 			System.out.println("13 - DFA that only accepts a string that begins with 'a' and ends with 'c'");
 			System.out.println("14 - DFA that only accepts a string that begins with 'a' or ends with 'c'");
 			System.out.println("15 - DFA that only accepts a string that contains the binary number '01' or '10'");
-			System.out.println("16 - DFA that every string but one made up of my first name, 'ben'");
+			System.out.println("16 - DFA that accepts every string but one made up of my first name, 'ben'");
+			System.out.println("17 - DFA that accpets a string made up of an even binary number or of an even number of bits or (the union of DFA 5 and 7)");
 			
 			System.out.println("\nWhich DFA would you like to test?: ");
 			
-			input = scanner.nextInt();
+			
+			input = scanner.next();
+			
 			
 			switch(input){
-				case 0:
+				case "0":
 					System.out.println("\nBye...");
 					cont = false;
 					break;
 					
-				case 1:
+				case "1":
 					testString = noTestString;
 					currentDFA = noDFA;
 					break;
 					
-				case 2:
+				case "2":
 					testString = emptyTestString;
 					currentDFA = emptyDFA;
 					break;
 					
-				case 3:
+				case "3":
 					testString = new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcTestCharacter)));
 					currentDFA = nDFA;
 					break;
 					
-				case 4:
+				case "4":
 					testString = oddTestStrings[testStringIndex%12];
 					currentDFA = oddDFA;
 					
 					break;
 					
-				case 5:
+				case "5":
 					testString = evenTestStrings[testStringIndex%12];
 					currentDFA = evenDFA;
 					break;
 					
-				case 6:
+				case "6":
 					testString = tbTestStrings[testStringIndex%12];
 					currentDFA = tbDFA;
 					break;
 					
-				case 7:
+				case "7":
 					testString = elTestStrings[testStringIndex%12];
 					currentDFA = elDFA;
 					break;
 					
-				case 8:
+				case "8":
 					testString = olTestStrings[testStringIndex%12];
 					currentDFA = olDFA;
 					break;
-				case 9:
+				case "9":
 					testString = benTestStrings[testStringIndex%12];;
 					currentDFA = benDFA;
 					
 					break;
 					
-				case 10:
+				case "10":
 					testString = azTestStrings[testStringIndex%12];		
 					currentDFA = azDFA;
 					
 					break;
 					
-				case 11:
+				case "11":
 					testString = abTestStrings[testStringIndex%12];;
 					currentDFA = abDFA;
 					break;
 					
-				case 12:
+				case "12":
 					testString = allTestStrings[testStringIndex%12];
 					currentDFA = allDFA;
 					break;
 					
-				case 13:
+				case "13":
 					testString = acTestStrings[testStringIndex%12];;
 					currentDFA = acDFA;
 					break;
 					
-				case 14:
+				case "14":
 					testString = acOrTestStrings[testStringIndex%12];;;
 					currentDFA = acOrDFA;
 					break;
 					
-				case 15:
+				case "15":
 					testString = ooTestStrings[testStringIndex%12];
 					currentDFA = ooDFA;
 					break;
 					
-				case 16:
+				case "16":
 					testString = benTestStrings[testStringIndex%12];
 					currentDFA = complementDFA(benDFA);
 					break;
 					
-				case 17:
+				case "17":
 					testString = elTestStrings[testStringIndex%12];
 					currentDFA = unionDFA(evenDFA, elDFA);
 					break;
 					
 				default:
-					System.out.println("Please enter a valid input!");
+					validInput = false;
+					System.out.println("\nPlease enter a valid input!\n");
 					break;
 			
 			}
 			
-			if(cont){
+			if(cont && validInput){
 				testStringIndex++;
 				
 				System.out.println("\nString to be tested: '" + testString.displayable() + "'");
@@ -704,17 +711,13 @@ public class DFAtest {
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			for(int j = 0; j < dfa2.getStates().size(); j++){
-				unionDFAStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );
+				unionDFAStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//UnionDFA States[i+j] = da1States[i] + da2States[j]
 				
 			}
 			
 		}
 		
-		unionDFAStartState = unionDFAStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );
-		
-		/* dfa1.getStates().indexOf(dfa1.getNextStates().get(i+k)) +
-											  dfa2.getStates().indexOf(dfa2.getNextStates().get(j+k)) */
-		
+		unionDFAStartState = unionDFAStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//UnionDFA StartState = dfa1StartState + dfa2 + start state
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			for(int j = 0; j < dfa2.getStates().size(); j++){
@@ -722,13 +725,9 @@ public class DFAtest {
 					State dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
 					State dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
 				    
-					unionDFANextStates.add(unionDFAStates.get(
-							alphabet.size() * dfa1.getStates().indexOf(dfa1NextState) +
-							  				  dfa2.getStates().indexOf(dfa2NextState))
-										
-							);
+					int nextIndex = (alphabet.size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//UnionDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
 					
-					System.out.print(unionDFANextStates.get(alphabet.size()*i+j+k).getIdentifier() + " ");
+					unionDFANextStates.add(unionDFAStates.get(nextIndex));
 				
 				}
 				
@@ -738,13 +737,17 @@ public class DFAtest {
 		
 		
 		
-		for(int i = 0; i < dfa1.getAcceptingStates().size(); i++){
-			for(int j = 0; j < dfa2.getAcceptingStates().size(); j++){
-				unionDFAAcceptingStates.add(
-							unionDFAStates.get( 
-									alphabet.size() * dfa1.getStates().indexOf( dfa1.getAcceptingStates().get(i) ) +
-													  dfa2.getStates().indexOf( dfa2.getAcceptingStates().get(j) )
-						));
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			
+			State dfa1CurState = dfa1.getStates().get(i);
+			
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				State dfa2CurState = dfa2.getStates().get(j);
+				
+				if(dfa1.getAcceptingStates().contains(dfa1CurState) || dfa2.getAcceptingStates().contains(dfa2CurState)){
+					unionDFAAcceptingStates.add(unionDFAStates.get(alphabet.size() * i + j));	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[j]) or dfa2AcceptingStates.contains(dfa2States[j]}
+					
+				}
 				
 			}
 			
