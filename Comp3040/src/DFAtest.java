@@ -149,7 +149,7 @@ public class DFAtest {
 			
 			private static ArrayList<State>tbDFAAcceptingStates = new ArrayList<State>(Arrays.asList( tbDFAStates.get(3)));							//AcceptingStates = {D}
 			
-			private static DFA tbDFA = new DFA(tbDFAStates, biAlphabet,tbDFAStartState,tbDFANextStates,tbDFAAcceptingStates);
+			private static DFA tbDFA = new DFA(tbDFAStates, biAlphabet,tbDFAStartState,tbDFANextStates,tbDFAAcceptingStates) ;
 	//----------------------------------------------------------------------------------------------------------------------
 			
 	//DFA that accepts even length binary #s (The "elDFA")------------------------------------------------------------------
@@ -473,7 +473,7 @@ public class DFAtest {
 			System.out.println("13 - DFA that only accepts a string that begins with 'a' and ends with 'c'");
 			System.out.println("14 - DFA that only accepts a string that begins with 'a' or ends with 'c'");
 			System.out.println("15 - DFA that only accepts a string that contains the binary number '01' or '10'");
-			System.out.println("16 - DFA that every string buy one made up of my first name, 'ben'");
+			System.out.println("16 - DFA that every string but one made up of my first name, 'ben'");
 			
 			System.out.println("\nWhich DFA would you like to test?: ");
 			
@@ -564,7 +564,12 @@ public class DFAtest {
 					
 				case 16:
 					testString = benTestStrings[testStringIndex%12];
-					currentDFA = complimentDFA(benDFA);
+					currentDFA = complementDFA(benDFA);
+					break;
+					
+				case 17:
+					testString = elTestStrings[testStringIndex%12];
+					currentDFA = unionDFA(evenDFA, elDFA);
 					break;
 					
 				default:
@@ -673,21 +678,81 @@ public class DFAtest {
 	}
 	
 	//Function that returns a DFA that accepts where a given DFA rejects and vice versa
-	public static DFA complimentDFA(DFA dfa){
-		ArrayList<State> complimentAcceptingStates = new ArrayList<State>();
+	public static DFA complementDFA(DFA dfa){
+		ArrayList<State> complementAcceptingStates = new ArrayList<State>();
 		
 		for(int i = 0; i < dfa.getStates().size(); i++){
 			if(!(dfa.getAcceptingStates().contains(dfa.getStates().get(i)))){
-				complimentAcceptingStates.add(dfa.getStates().get(i));			//complimentAcceptingStates = dfaStates - dfaAcceptingStates
+				complementAcceptingStates.add(dfa.getStates().get(i));			//complementAcceptingStates = dfaStates - dfaAcceptingStates
 				
 			}
 			
 		}
 		
-		DFA complimentDFA = new DFA(dfa.getStates(), dfa.getAlphabet(), dfa.getStartState(), dfa.getNextStates(), complimentAcceptingStates);
+		DFA complementDFA = new DFA(dfa.getStates(), dfa.getAlphabet(), dfa.getStartState(), dfa.getNextStates(), complementAcceptingStates);
 		
-		return complimentDFA;
+		return complementDFA;
 		
+	}
+	
+	public static DFA unionDFA(DFA dfa1, DFA dfa2){
+		ArrayList<State> unionDFAStates = new ArrayList<State>();
+		Alphabet alphabet = dfa1.getAlphabet();
+		State unionDFAStartState;
+		ArrayList<State> unionDFANextStates = new ArrayList<State>();
+		ArrayList<State> unionDFAAcceptingStates = new ArrayList<State>();
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				unionDFAStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );
+				
+			}
+			
+		}
+		
+		unionDFAStartState = unionDFAStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );
+		
+		/* dfa1.getStates().indexOf(dfa1.getNextStates().get(i+k)) +
+											  dfa2.getStates().indexOf(dfa2.getNextStates().get(j+k)) */
+		
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				for(int k = 0; k < alphabet.size(); k++){
+					State dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
+					State dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
+				    
+					unionDFANextStates.add(unionDFAStates.get(
+							alphabet.size() * dfa1.getStates().indexOf(dfa1NextState) +
+							  				  dfa2.getStates().indexOf(dfa2NextState))
+										
+							);
+					
+					System.out.print(unionDFANextStates.get(alphabet.size()*i+j+k).getIdentifier() + " ");
+				
+				}
+				
+			}
+			
+		}
+		
+		
+		
+		for(int i = 0; i < dfa1.getAcceptingStates().size(); i++){
+			for(int j = 0; j < dfa2.getAcceptingStates().size(); j++){
+				unionDFAAcceptingStates.add(
+							unionDFAStates.get( 
+									alphabet.size() * dfa1.getStates().indexOf( dfa1.getAcceptingStates().get(i) ) +
+													  dfa2.getStates().indexOf( dfa2.getAcceptingStates().get(j) )
+						));
+				
+			}
+			
+		}
+		
+		DFA unionDFA = new DFA(unionDFAStates, alphabet, unionDFAStartState, unionDFANextStates, unionDFAAcceptingStates);
+		
+		return unionDFA;
 	}
 
 }
