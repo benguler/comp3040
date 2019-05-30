@@ -45,4 +45,9 @@ public class StateTable {
 		
 	}
 	
+	public State get(int i, int j){
+		return (stateTable.get(i)).get(j);
+		
+	}
+	
 }

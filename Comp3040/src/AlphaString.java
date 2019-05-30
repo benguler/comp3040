@@ -43,6 +43,12 @@ public class AlphaString {
 		
 	}
 	
+	public void pushChar(Character character){
+		int i = alphabet.findIndex(character);
+		
+		string.add(0, alphabet.get(i));
+	}
+	
 	public void setChar(int n, Character character){		//Sets the nth character of a string to the new character 
 		string.set(n, character);
 		

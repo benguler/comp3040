@@ -500,8 +500,6 @@ public class DFAtest {
 					currentDFA = olDFA;
 					break;
 				case 9:
-					testString = benTestStrings[testStringIndex%12];;
-					
 					initializeStates(engAlphabet, benDFAStates, benDFANextStates, benDFAStates.get(4)); //([ALL States], [ALL Characters], E])
 																										//Except for
 					benDFANextStates.set((26*0 + 1), benDFAStates.get(1));								//(A, 'b', B)
@@ -510,6 +508,8 @@ public class DFAtest {
 					
 					DFA benDFA = new DFA(benDFAStates, engAlphabet, benDFAStartState, benDFANextStates, benDFAAcceptingStates);
 					currentDFA = benDFA;
+					
+					testString = benTestStrings[testStringIndex%12];;
 					
 					break;
 					
@@ -614,8 +614,48 @@ public class DFAtest {
 		
 	}
 	
+	//Function that given a DFA, returns a string that is accepted by that DFA
 	public static AlphaString acceptString(DFA dfa){
-		AlphaString acceptString = new AlphaString();
+		
+		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
+			return null;							//Return null
+		}
+		
+		ArrayList<State> states = dfa.getStates(); 
+		State curState = dfa.getAcceptingStates().get(0);	//Current state = acceptingStates[0] - i.e. the first accepting state
+		State startState = dfa.getStartState();
+		
+		StateTable stateTable = dfa.getStateTable();
+		
+		Alphabet alphabet = dfa.getAlphabet();
+		
+		AlphaString acceptString = new AlphaString(alphabet);
+		
+		boolean newState;
+				
+		while(curState != startState){				//Until we arrive at the starting state
+			newState = false;
+			
+			for(int i = 0; i < states.size(); i++){
+				if(newState){						//Current state has been updated
+					break;							//Stop searching
+					
+				}
+				
+				for(int j = 0; j < alphabet.size(); j++){
+					if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
+						acceptString.pushChar(alphabet.get(j));							//Puch Character into the String to be returned
+						curState = states.get(i);										//Current State = Previous State
+						newState = true;												
+						break;															//Stop searching
+						
+					}
+					
+				}	
+				
+			}
+			
+		}
 		
 		return acceptString;
 		

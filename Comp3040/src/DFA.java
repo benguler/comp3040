@@ -29,8 +29,8 @@ public class DFA {
 		
 	}
 	
-	private void findNextState(Character character){
-		this.currentState = this.stateTable.findNextState(currentState, character);
+	private State findNextState(Character character){
+		return this.stateTable.findNextState(currentState, character);
 		
 	}
 	
@@ -55,7 +55,7 @@ public class DFA {
 		this.trace.addState(returnCurrentState());
 		
 		for(int i = 0; i <  string.length(); i++){
-			findNextState(string.getChar(i));
+			currentState = findNextState(string.getChar(i));
 			
 			this.trace.addState(returnCurrentState());
 			
@@ -72,6 +72,30 @@ public class DFA {
 	
 	public void resetDFA(){
 		this.currentState = this.startState;
+		
+	}
+	
+	public Alphabet getAlphabet(){
+		return this.alphabet;
+		
+	}
+	
+	public ArrayList<State> getStates(){
+		return this.states;
+		
+	}
+	
+	public State getStartState(){
+		return this.startState;
+	}
+	
+	public  ArrayList<State> getAcceptingStates(){
+		return this.acceptingStates;
+		
+	}
+	
+	public StateTable getStateTable(){
+		return this.stateTable;
 		
 	}
 	
