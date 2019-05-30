@@ -418,6 +418,31 @@ public class DFAtest {
 	//----------------------------------------------------------------------------------------------------------------------
 			
 	public static void main(String[] args) { 
+		
+		//Initialize benDFA--------------------------------------------------------------------------------------------------------
+			initializeStates(engAlphabet, benDFAStates, benDFANextStates, benDFAStates.get(4)); //([ALL States], [ALL Characters], E])
+			//Except for
+			benDFANextStates.set((26*0 + 1), benDFAStates.get(1));								//(A, 'b', B)
+			benDFANextStates.set((26*1 + 4), benDFAStates.get(2));								//(B, 'e', C)
+			benDFANextStates.set((26*2 + 13), benDFAStates.get(3));								//(C, 'n', D)
+			
+			DFA benDFA = new DFA(benDFAStates, engAlphabet, benDFAStartState, benDFANextStates, benDFAAcceptingStates);
+		//------------------------------------------------------------------------------------------------------------------------
+		
+		//Initialize azDFA---------------------------------------------------------------------------------------------------------
+			initializeStates(engAlphabet, azDFAStates, azDFANextStates, azDFAStates.get(2));//([ALL States], [ALL Characters], C])
+			//Except for
+			azDFANextStates.set((26*0 + 0), azDFAStates.get(1));							//(A, 'a', B)
+			azDFANextStates.set((26*1 + 25), azDFAStates.get(3));							//(B, 'z', D)
+			
+			for(int i = 0; i < engAlphabet.size(); i++){
+			azDFANextStates.set((26*3 + i), azDFAStates.get(3));						//(D, [All Characters], D)
+			
+			}
+		//------------------------------------------------------------------------------------------------------------------------
+		
+		DFA azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
+		
 		boolean cont = true;
 		
 		@SuppressWarnings("resource")
@@ -448,6 +473,7 @@ public class DFAtest {
 			System.out.println("13 - DFA that only accepts a string that begins with 'a' and ends with 'c'");
 			System.out.println("14 - DFA that only accepts a string that begins with 'a' or ends with 'c'");
 			System.out.println("15 - DFA that only accepts a string that contains the binary number '01' or '10'");
+			System.out.println("16 - DFA that every string buy one made up of my first name, 'ben'");
 			
 			System.out.println("\nWhich DFA would you like to test?: ");
 			
@@ -500,33 +526,13 @@ public class DFAtest {
 					currentDFA = olDFA;
 					break;
 				case 9:
-					initializeStates(engAlphabet, benDFAStates, benDFANextStates, benDFAStates.get(4)); //([ALL States], [ALL Characters], E])
-																										//Except for
-					benDFANextStates.set((26*0 + 1), benDFAStates.get(1));								//(A, 'b', B)
-					benDFANextStates.set((26*1 + 4), benDFAStates.get(2));								//(B, 'e', C)
-					benDFANextStates.set((26*2 + 13), benDFAStates.get(3));								//(C, 'n', D)
-					
-					DFA benDFA = new DFA(benDFAStates, engAlphabet, benDFAStartState, benDFANextStates, benDFAAcceptingStates);
-					currentDFA = benDFA;
-					
 					testString = benTestStrings[testStringIndex%12];;
+					currentDFA = benDFA;
 					
 					break;
 					
 				case 10:
 					testString = azTestStrings[testStringIndex%12];		
-					
-					initializeStates(engAlphabet, azDFAStates, azDFANextStates, azDFAStates.get(2));//([ALL States], [ALL Characters], C])
-																									//Except for
-					azDFANextStates.set((26*0 + 0), azDFAStates.get(1));							//(A, 'a', B)
-					azDFANextStates.set((26*1 + 25), azDFAStates.get(3));							//(B, 'z', D)
-					
-					for(int i = 0; i < engAlphabet.size(); i++){
-						azDFANextStates.set((26*3 + i), azDFAStates.get(3));						//(D, [All Characters], D)
-						
-					}
-					
-					DFA azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
 					currentDFA = azDFA;
 					
 					break;
@@ -554,6 +560,11 @@ public class DFAtest {
 				case 15:
 					testString = ooTestStrings[testStringIndex%12];
 					currentDFA = ooDFA;
+					break;
+					
+				case 16:
+					testString = benTestStrings[testStringIndex%12];
+					currentDFA = complimentDFA(benDFA);
 					break;
 					
 				default:
@@ -658,6 +669,24 @@ public class DFAtest {
 		}
 		
 		return acceptString;
+		
+	}
+	
+	//Function that returns a DFA that accepts where a given DFA rejects and vice versa
+	public static DFA complimentDFA(DFA dfa){
+		ArrayList<State> complimentAcceptingStates = new ArrayList<State>();
+		
+		for(int i = 0; i < dfa.getStates().size(); i++){
+			if(!(dfa.getAcceptingStates().contains(dfa.getStates().get(i)))){
+				complimentAcceptingStates.add(dfa.getStates().get(i));			//complimentAcceptingStates = dfaStates - dfaAcceptingStates
+				
+			}
+			
+		}
+		
+		DFA complimentDFA = new DFA(dfa.getStates(), dfa.getAlphabet(), dfa.getStartState(), dfa.getNextStates(), complimentAcceptingStates);
+		
+		return complimentDFA;
 		
 	}
 

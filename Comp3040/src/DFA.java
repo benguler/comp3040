@@ -5,6 +5,7 @@ public class DFA {
 	private ArrayList<State> states;
 	private Alphabet alphabet; 
 	private State startState; 
+	private ArrayList<State> nextStates;
 	private StateTable stateTable;
 	private ArrayList<State> acceptingStates;
 	
@@ -20,6 +21,7 @@ public class DFA {
 		this.states = states;
 		this.alphabet = alphabet;
 		this.startState = startState;
+		this.nextStates = nextStates;
 		this.stateTable = new StateTable(states, alphabet, nextStates);
 		this.acceptingStates = acceptingStates;
 		
@@ -75,18 +77,24 @@ public class DFA {
 		
 	}
 	
-	public Alphabet getAlphabet(){
-		return this.alphabet;
-		
-	}
-	
 	public ArrayList<State> getStates(){
 		return this.states;
 		
 	}
 	
+	public Alphabet getAlphabet(){
+		return this.alphabet;
+		
+	}
+	
 	public State getStartState(){
 		return this.startState;
+		
+	}
+	
+	public  ArrayList<State> getNextStates(){
+		return this.nextStates;
+		
 	}
 	
 	public  ArrayList<State> getAcceptingStates(){
