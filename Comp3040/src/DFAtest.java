@@ -237,6 +237,8 @@ public class DFAtest {
 			private static ArrayList<State> benDFANextStates = new ArrayList<State>();
 			
 			private static ArrayList<State> benDFAAcceptingStates = new ArrayList<State>(Arrays.asList(benDFAStates.get(3)));												//AcceptingStates = {D}
+			
+			private static DFA benDFA;
 	//----------------------------------------------------------------------------------------------------------------------
 			
 	//DFA that accepts a string that starts with "az" (The azDFA")---------------------------------------------------------------
@@ -263,6 +265,8 @@ public class DFAtest {
 			private static ArrayList<State> azDFANextStates = new ArrayList<State>();																						
 			
 			private static ArrayList<State> azDFAAcceptingStates = new ArrayList<State>(Arrays.asList(azDFAStates.get(3)));													//AcceptingStates = {D}
+			
+			private static DFA azDFA;
 	//----------------------------------------------------------------------------------------------------------------------
 	
 	//DFA that accepts a string that contains "ab" somewhere in it (The "abDFA")---------------------------------------------
@@ -416,17 +420,17 @@ public class DFAtest {
 			
 	public static void main(String[] args) { 
 		
-		//Initialize benDFA--------------------------------------------------------------------------------------------------------
+		//Define benDFA--------------------------------------------------------------------------------------------------------
 			initializeStates(engAlphabet, benDFAStates, benDFANextStates, benDFAStates.get(4)); //([ALL States], [ALL Characters], E])
 			//Except for
 			benDFANextStates.set((26*0 + 1), benDFAStates.get(1));								//(A, 'b', B)
 			benDFANextStates.set((26*1 + 4), benDFAStates.get(2));								//(B, 'e', C)
 			benDFANextStates.set((26*2 + 13), benDFAStates.get(3));								//(C, 'n', D)
 			
-			DFA benDFA = new DFA(benDFAStates, engAlphabet, benDFAStartState, benDFANextStates, benDFAAcceptingStates);
+			benDFA = new DFA(benDFAStates, engAlphabet, benDFAStartState, benDFANextStates, benDFAAcceptingStates);
 		//------------------------------------------------------------------------------------------------------------------------
 		
-		//Initialize azDFA---------------------------------------------------------------------------------------------------------
+		//Define azDFA---------------------------------------------------------------------------------------------------------
 			initializeStates(engAlphabet, azDFAStates, azDFANextStates, azDFAStates.get(2));//([ALL States], [ALL Characters], C])
 			//Except for
 			azDFANextStates.set((26*0 + 0), azDFAStates.get(1));							//(A, 'a', B)
@@ -436,14 +440,15 @@ public class DFAtest {
 			azDFANextStates.set((26*3 + i), azDFAStates.get(3));						//(D, [All Characters], D)
 			
 			}
+			
+			azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
 		//------------------------------------------------------------------------------------------------------------------------
-		
-		DFA azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
 		
 		boolean cont = true;
 		boolean dfaToTest = true;
 		
 		boolean isSubset;
+		boolean isEqual;
 		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
@@ -465,10 +470,11 @@ public class DFAtest {
 			System.out.println("1  - Initial DFA tests");
 			System.out.println("2  - Expanded DFA tests");
 			System.out.println("3  - Compliment DFA tests");
-			System.out.println("4  - Union DFA tests");
-			System.out.println("5  - Intersection DFA tests");
-			System.out.println("6  - Subset of DFA tests");
-			
+			System.out.println("4  - Union of DFAs tests");
+			System.out.println("5  - Intersection of DFAs tests");
+			System.out.println("6  - Subset of DFAs tests");
+			System.out.println("6  - Subset of DFAs tests");
+			System.out.println("7  - Equality of DFAs tests");
 			System.out.println("\nWhat kind of DFA would you like to test?: ");
 			
 			input = scanner.next();
@@ -824,6 +830,7 @@ public class DFAtest {
 					}
 					
 					break;
+					
 				case "6":
 					System.out.println("0  - Quit ");
 					System.out.println("1  - Is oddDFA a subset of ooDFA?");
@@ -838,7 +845,7 @@ public class DFAtest {
 					System.out.println("10 - Is allDFA a subset of noDFA?");
 					System.out.println("11 - Is tbDFA a subset of olDFA?");
 					System.out.println("12 - Is tbDFA a subset of elDFA?");
-					System.out.println("\nWhich DFA would you like to test?: ");
+					System.out.println("\nWhich statement would you like to test?: ");
 					
 					input = scanner.next();
 					
@@ -939,6 +946,135 @@ public class DFAtest {
 						case "12":
 							isSubset = subset(tbDFA, elDFA);
 							accepts = (isSubset)?"tbDFA is a subset of elDFA":"tbDFA is not a subset of elDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						default:
+							dfaToTest = false;
+							System.out.println("\nPlease enter a valid input!\n");
+							break;
+					
+					}
+					
+					break;
+					
+				case "7":
+					System.out.println("0  - Quit ");
+					System.out.println("1  - Is oddDFA equal to evenDFA?");
+					System.out.println("2  - Is oddDFA equal to oddFA?");
+					System.out.println("3  - Is benDFA equal to benDFA?");
+					System.out.println("4  - Is benDFA equal to azDFA?");
+					System.out.println("5  - Is acDFA equal to acOrDFA?");
+					System.out.println("6  - Is allDFA equal to noDFA?");
+					System.out.println("7  - Is allDFA equal to allDFA?");
+					System.out.println("8  - Is (evenDFA n oddDFA) equal to noDFA?");
+					System.out.println("9  - Is ~(allDFA) equal to noDFA?");
+					System.out.println("10 - Is (allDFA n oddDFA) equal to oddDFA?");
+					System.out.println("11 - Is ~(oddDFA) equal to evenDFA?");
+					System.out.println("12 - Is (~(oddDFA) n ~(emptyDFA)) equal to evenDFA?");
+					System.out.println("\nWhich Statement would you like to test?: ");
+					
+					input = scanner.next();
+					
+					switch(input) {	
+						case "0":
+							System.out.println("\nBye...");
+							cont = false;
+							break;
+							
+						case "1":
+							isEqual = equal(oddDFA, evenDFA);
+							accepts = (isEqual)?"oddDFA is equal to evenDFA":"oddDFA is not equal to evenDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "2":
+							isEqual = equal(oddDFA, oddDFA);
+							accepts = (isEqual)?"oddDFA is equal to oddDFA":"oddDFA is not equal to oddDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "3":
+							isEqual = equal(benDFA, benDFA);
+							accepts = (isEqual)?"benDFA is equal to benDFA":"benDFA is not equal to benDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "4":
+							isEqual = equal(benDFA, azDFA);
+							accepts = (isEqual)?"benDFA is equal to ooDFA":"oddDFA is not equal to ooDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "5":
+							isEqual = equal(acDFA, acOrDFA);
+							accepts = (isEqual)?"acDFA is equal to acOrDFA":"acDFA is not equal to acOrDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "6":
+							isEqual = equal(allDFA, noDFA);
+							accepts = (isEqual)?"allDFA is equal to noDFA":"allDFA is not equal to noDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "7":
+							isEqual = equal(allDFA, allDFA);
+							accepts = (isEqual)?"allDFA is equal to allDFA":"allDFA is not equal to allDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "8":
+							isEqual = equal(intersection(evenDFA, oddDFA), noDFA);
+							accepts = (isEqual)?"(evenDFA n oddDFA) is equal to noDFA":"(evenDFA n oddDFA) is not equal to noDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "9":
+							isEqual = equal(complement(allDFA), noDFA);
+							accepts = (isEqual)?"~(allDFA) is equal to noDFA":"~(allDFA) is not equal to noDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "10":
+							isEqual = equal(intersection(allDFA, oddDFA), oddDFA);
+							accepts = (isEqual)?"(allDFA n oddDFA) is equal to oddDFA":"(allDFA n oddDFA) is not equal to oddDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "11":
+							isEqual = equal(complement(oddDFA), evenDFA);																//Counterintuitively untrue because the empty string is in ~(oddDFA) and not in evenDFA
+							accepts = (isEqual)?"~(oddDFA) is equal to evenDFA":"~(oddDFA) is not equal to evenDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+							
+						case "12":
+							isEqual = equal(intersection(complement(oddDFA), complement(emptyDFA)), evenDFA);							//Always consider the empty string
+							accepts = (isEqual)?"(~(oddDFA) n ~(emptyDFA)) is equal to evenDFA":"(~(oddDFA) n ~(emptyDFA)) is not equal to evenDFA";
 							System.out.println(accepts);
 							
 							dfaToTest = false;
@@ -1091,13 +1227,13 @@ public class DFAtest {
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			for(int j = 0; j < dfa2.getStates().size(); j++){
-				unionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//UnionDFA States[i+j] = da1States[i] + da2States[j]
+				unionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//|Q| = |Qa| * |Qb|
 				
 			}
 			
 		}
 		
-		unionStartState = unionStates.get(dfa2.getStates().size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//UnionDFA StartState = dfa1StartState + dfa2 + start state
+		unionStartState = unionStates.get(dfa2.getStates().size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//q0 = qa0 + qb0
 		
 		State dfa1NextState;
 		State dfa2NextState;
@@ -1108,7 +1244,7 @@ public class DFAtest {
 					dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
 					dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
 				    
-					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//UnionDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
+					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//( qi+j, c, ((qai, c)+(qaj, c)) )
 					
 					unionNextStates.add(unionStates.get(nextIndex));
 				
@@ -1128,7 +1264,7 @@ public class DFAtest {
 				dfa2CurState = dfa2.getStates().get(j);
 				
 				if(dfa1.getAcceptingStates().contains(dfa1CurState) || dfa2.getAcceptingStates().contains(dfa2CurState)){
-					unionAcceptingStates.add(unionStates.get(dfa2.getStates().size() * i + j));	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[j]) or dfa2AcceptingStates.contains(dfa2States[j]}
+					unionAcceptingStates.add(unionStates.get(dfa2.getStates().size() * i + j));	//F = {qa e Qa + qb e Qb | qa e Fa or qb e Fb}
 					
 				}
 				
@@ -1150,13 +1286,13 @@ public class DFAtest {
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			for(int j = 0; j < dfa2.getStates().size(); j++){
-				intersectionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//IntersectDFA States[i+j] = da1States[i] + da2States[j]
+				intersectionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//|Q| = |Qa| * |Qb|
 				
 			}
 			
 		}
 		
-		intersectionStartState = intersectionStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//IntersectDFA StartState = dfa1StartState + dfa2 + start state
+		intersectionStartState = intersectionStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//q0 = qa0 + qb0
 		
 		State dfa1NextState;
 		State dfa2NextState;
@@ -1167,7 +1303,7 @@ public class DFAtest {
 					dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
 					dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
 				    
-					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//IntersectDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
+					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//( qi+j, c, ((qai, c)+(qaj, c)) )
 					
 					intersectionNextStates.add(intersectionStates.get(nextIndex));
 				
@@ -1188,7 +1324,7 @@ public class DFAtest {
 				dfa2CurState = dfa2.getStates().get(j);
 				
 				if(dfa1.getAcceptingStates().contains(dfa1CurState) && dfa2.getAcceptingStates().contains(dfa2CurState)){
-					intersectionAcceptingStates.add( intersectionStates.get( (dfa2.getStates().size() * i) + j) );	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[i]) and dfa2AcceptingStates.contains(dfa2States[j]}		
+					intersectionAcceptingStates.add( intersectionStates.get( (dfa2.getStates().size() * i) + j) );	//F = {qa e Qa + qb e Qb | qa e Fa and qb e Fb}
 				
 				}
 				
@@ -1204,11 +1340,17 @@ public class DFAtest {
 	
 	//(dfa1 c dfa2)?
 	public static boolean subset(DFA dfa1, DFA dfa2){
-		DFA dfa2Compliment = complement(dfa2);				   //~(dfa2)
-		DFA dfaIntersection = intersection(dfa1, dfa2Compliment); //dfa1 n ~(dfa2)
+		DFA dfa2Compliment = complement(dfa2);				   		//~(dfa2)
+		DFA dfaIntersection = intersection(dfa1, dfa2Compliment);	//dfa1 n ~(dfa2)
 		
 		
 		return (acceptingString(dfaIntersection) == null);					   
+	}
+	
+	//(dfa1 == dfa2)?
+	public static boolean equal(DFA dfa1, DFA dfa2) {
+		return(subset(dfa1, dfa2) && subset(dfa2, dfa1)); 			//(dfa1 c dfa2) and (dfa2 c dfa1) -> dfa1 == dfa2
+		
 	}
 
 }
