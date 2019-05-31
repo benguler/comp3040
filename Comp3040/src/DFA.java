@@ -2,12 +2,12 @@ import java.util.ArrayList;
 
 public class DFA {
 
-	private ArrayList<State> states;
-	private Alphabet alphabet; 
-	private State startState; 
-	private ArrayList<State> nextStates;
-	private StateTable stateTable;
-	private ArrayList<State> acceptingStates;
+	private ArrayList<State> states; 			//Q [Also serves as the y-axis of the state map]
+	private Alphabet alphabet; 					//Sigma	[Also serves as the x-axis of the state map]
+	private State startState; 					//q0
+	private ArrayList<State> nextStates;		//What fills the cells in the state map[The "--> Q" in Delta]
+	private StateTable stateTable;				//Delta : Q X Sigma --> Q	
+	private ArrayList<State> acceptingStates;	//F
 	
 	private State currentState;
 	
@@ -18,12 +18,12 @@ public class DFA {
 	}
 	
 	public DFA(ArrayList<State> states, Alphabet alphabet, State startState, ArrayList<State> nextStates, ArrayList<State> acceptingStates){
-		this.states = states;
-		this.alphabet = alphabet;
-		this.startState = startState;
-		this.nextStates = nextStates;
-		this.stateTable = new StateTable(states, alphabet, nextStates);
-		this.acceptingStates = acceptingStates;
+		this.states = states;											
+		this.alphabet = alphabet;										
+		this.startState = startState;									
+		this.nextStates = nextStates;									
+		this.stateTable = new StateTable(states, alphabet, nextStates); 
+		this.acceptingStates = acceptingStates;							
 		
 		this.currentState = startState;
 		

@@ -66,18 +66,18 @@ public class DFAtest {
 		
 	//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
 		private static AlphaString oddTestStrings[] = new AlphaString[]{
-				new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
+				new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),						//011
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),						//100
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0)))),						//110
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),	//1001
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),	//1000
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 		};
 		
 		private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
@@ -94,18 +94,18 @@ public class DFAtest {
 		
 	//DFA that accepts even binary #s (The "evenDFA")-------------------------------------------------------------------------
 		private static AlphaString evenTestStrings[] = new AlphaString[]{
-				new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
+				new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),							//000
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),							//001
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),							//010
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),							//011
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),							//100
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),							//111
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0)))),							//110
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),		//1001
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),		//1000
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),		//1011
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),		//1000
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))		//1101
 		};
 				
 		private static ArrayList<State> evenDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
@@ -122,18 +122,18 @@ public class DFAtest {
 		
 	//DFA that accepts 3 bit binary #s (The "tbDFA")------------------------------------------------------------------------
 			private static AlphaString tbTestStrings[] = new AlphaString[]{
-					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
+					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000	
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),	//1100
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),	//1001
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),						//101
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),						//100
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),	//1010
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
 			private static ArrayList<State> tbDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 
@@ -154,18 +154,18 @@ public class DFAtest {
 			
 	//DFA that accepts even length binary #s (The "elDFA")------------------------------------------------------------------
 			private static AlphaString elTestStrings[] = new AlphaString[]{
-					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
+					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000	
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),	//1100
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),	//1001
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),						//101
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),						//100
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),	//1010
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
 			private static ArrayList<State> elDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
@@ -183,18 +183,18 @@ public class DFAtest {
 			
 	//DFA that accepts odd length binary #s (The olDFA")-------------------------------------------------------------------
 			private static AlphaString olTestStrings[] = new AlphaString[]{
-					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
+					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000	
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),	//1100
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),	//1001
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),						//101
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),						//100
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),	//1010
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
 			private static ArrayList<State> olDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
@@ -215,18 +215,18 @@ public class DFAtest {
 			private static AlphaString benTestString = new AlphaString(engAlphabet, benTestCharacters);
 			
 			private static AlphaString benTestStrings[] = new AlphaString[]{
-					new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(7), engAlphabet.get(2), engAlphabet.get(5)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(20), engAlphabet.get(15), engAlphabet.get(12)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(21), engAlphabet.get(18), engAlphabet.get(11), engAlphabet.get(5)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(5), engAlphabet.get(4), engAlphabet.get(14)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13), engAlphabet.get(0)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(17), engAlphabet.get(7), engAlphabet.get(5)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(17), engAlphabet.get(6), engAlphabet.get(0)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(10), engAlphabet.get(9)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(25), engAlphabet.get(25), engAlphabet.get(25), engAlphabet.get(25)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(4), engAlphabet.get(10), engAlphabet.get(24), engAlphabet.get(14)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13))))
+					new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13)))),							//ben
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(7), engAlphabet.get(2), engAlphabet.get(5)))),							//hcf
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(20), engAlphabet.get(15), engAlphabet.get(12)))),						//upm
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(21), engAlphabet.get(18), engAlphabet.get(11), engAlphabet.get(5)))),	//vslf
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(5), engAlphabet.get(4), engAlphabet.get(14)))),	//lfeo
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13), engAlphabet.get(0)))),		//bena
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(17), engAlphabet.get(7), engAlphabet.get(5)))),							//rhf
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(17), engAlphabet.get(6), engAlphabet.get(0)))),							//rga
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(13), engAlphabet.get(4), engAlphabet.get(1)))),							//neb
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(25), engAlphabet.get(25), engAlphabet.get(25), engAlphabet.get(25)))),	//zzzz
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(9), engAlphabet.get(0), engAlphabet.get(2), engAlphabet.get(10)))),		//jack
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13))))		//lben
 			};
 			
 			private static ArrayList<State> benDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 								//States = {A, B, C, D, E}
@@ -239,20 +239,20 @@ public class DFAtest {
 			private static ArrayList<State> benDFAAcceptingStates = new ArrayList<State>(Arrays.asList(benDFAStates.get(3)));												//AcceptingStates = {D}
 	//----------------------------------------------------------------------------------------------------------------------
 			
-	//DFA that accepts a string that starts with "az" (The aaDFA")---------------------------------------------------------------
+	//DFA that accepts a string that starts with "az" (The azDFA")---------------------------------------------------------------
 			private static AlphaString azTestStrings[] = new AlphaString[]{
-					new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(13)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(7), engAlphabet.get(2), engAlphabet.get(5)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(20), engAlphabet.get(15), engAlphabet.get(12)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(11), engAlphabet.get(25)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(5), engAlphabet.get(4), engAlphabet.get(14)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13), engAlphabet.get(0)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(0)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(17), engAlphabet.get(6), engAlphabet.get(0)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(9)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(0), engAlphabet.get(25)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(4), engAlphabet.get(10), engAlphabet.get(24), engAlphabet.get(14)))),
-				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(6), engAlphabet.get(13))))
+					new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(13)))),						//azn
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(7), engAlphabet.get(2), engAlphabet.get(5)))),							//hcf
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(20), engAlphabet.get(15), engAlphabet.get(12)))),						//upm
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(11), engAlphabet.get(25)))),	//azkz
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(5), engAlphabet.get(4), engAlphabet.get(14)))),	//lfeo
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13), engAlphabet.get(0)))),		//bena
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(0)))),							//aza
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(17), engAlphabet.get(6), engAlphabet.get(0)))),							//rga
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(9)))),							//azj
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(0), engAlphabet.get(25)))),	//azaz
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(4), engAlphabet.get(10), engAlphabet.get(24), engAlphabet.get(14)))),	//elyo
+				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(6), engAlphabet.get(13))))		//azgn
 			};
 			
 			private static ArrayList<State> azDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 								//States = {A, B, C, D}
@@ -267,18 +267,18 @@ public class DFAtest {
 	
 	//DFA that accepts a string that contains "ab" somewhere in it (The "abDFA")---------------------------------------------
 			private static AlphaString abTestStrings[] = new AlphaString[]{
-					new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(2))))
+					new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1)))),						//abb
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0)))),						//bba
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),						//aac
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),	//abbc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(0)))),	//abaa
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(0)))),	//bbca
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(0)))),						//aba
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),						//bab
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),						//abc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2)))),	//cccc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1)))),	//bbbb
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(2))))	//acbc
 			};
 			
 			private static ArrayList<State> abDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));								//States = {A, B, C}
@@ -297,18 +297,18 @@ public class DFAtest {
 			
 	//DFA that accepts all strings of bits (The "allDFA")-------------------------------------------------------------------															
 			private static AlphaString allTestStrings[] = new AlphaString[]{
-					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
+					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),							//aaa
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),							//aab
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),							//aba
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),		//bbaa
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),		//baab
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),		//baaa
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),							//bab
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),							//baa
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),							//bbb
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),		//babb
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),		//baba
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))		//bbab
 			};
 			
 			private static ArrayList<State> allDFAStates = new ArrayList<State>(Arrays.asList(new State("A")));																//States = {A}
@@ -325,18 +325,18 @@ public class DFAtest {
 	
 	//DFA that accepts a string that starts with 'a' and ends with 'c' (The acDFA")-----------------------------------------
 			private static AlphaString acTestStrings[] = new AlphaString[]{
-					new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(2))))
+					new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),						//abc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0)))),						//bba
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),						//aac
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),	//abbc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(0)))),	//0100
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(0)))),	//bbca
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),						//abc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),						//bab
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(2)))),						//abc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2), abcAlphabet.get(2)))),	//bbbb
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(1)))),	//bbbb
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(2))))	//acbc
 			};											//Input = "abc"
 			
 			private static ArrayList<State> acDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));				//States = {A, B, C, D}
@@ -355,18 +355,18 @@ public class DFAtest {
 			
 	//DFA that accepts a string that starts with 'a' or ends with 'c' (The acOrDFA")----------------------------------------
 			private static AlphaString acOrTestStrings[] = new AlphaString[]{
-					new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(0)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(0), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(1)))),
-				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(2))))
+					new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),						//aac
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),						//bab
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(1)))),						//bcb
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(1)))),	//bbab
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),	//abbc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(0)))),	//aaaa
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(2)))),						//bbc
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(0), abcAlphabet.get(2)))),						//aab
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(1)))),						//bcb
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(0), abcAlphabet.get(1)))),	//bcab
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(1)))),	//bcaa
+				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(2))))	//bbac
 			};																//Input = "abc"
 			
 			private static ArrayList<State> acOrDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));				//States = {A, B, C, D}
@@ -385,18 +385,18 @@ public class DFAtest {
 			
 	//DFA that accepts a sting containing the binary # "01", or "10" (The "ooDFA")------------------------------------------------------------------------
 			private static AlphaString ooTestStrings[] = new AlphaString[]{
-					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),
-				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
+					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0)))),															//0
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1)))),															//1
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0)))),											//00
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1)))),											//01
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0)))),											//10
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1)))),											//11
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),   //1111
+				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
 			private static ArrayList<State> ooDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 
@@ -441,19 +441,16 @@ public class DFAtest {
 		DFA azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
 		
 		boolean cont = true;
-		boolean validInput = true;
+		boolean dfaToTest = true;
 		
-		boolean cont0 = false;
-		boolean cont1 = false;
-		boolean cont2 = false;
-		boolean cont3 = false;
-		boolean cont4 = false;
-		boolean cont5 = true;
+		boolean isSubset;
 		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		
 		String input = "";
+		
+		String accepts;
 		
 		int testStringIndex = 0;
 		
@@ -462,7 +459,7 @@ public class DFAtest {
 		DFA currentDFA = new DFA();
 		
 		while(cont){
-			validInput = true;
+			dfaToTest = true;
 			
 			System.out.println("0  - Quit ");
 			System.out.println("1  - Initial DFA tests");
@@ -470,6 +467,7 @@ public class DFAtest {
 			System.out.println("3  - Compliment DFA tests");
 			System.out.println("4  - Union DFA tests");
 			System.out.println("5  - Intersection DFA tests");
+			System.out.println("6  - Subset of DFA tests");
 			
 			System.out.println("\nWhat kind of DFA would you like to test?: ");
 			
@@ -511,7 +509,7 @@ public class DFAtest {
 							break;
 							
 						default:
-							validInput = false;
+							dfaToTest = false;
 							System.out.println("\nPlease enter a valid input!\n");
 							break;
 							
@@ -520,19 +518,19 @@ public class DFAtest {
 					break;
 					
 				case "2":
-					
-					System.out.println("4  - DFA that only accepts a string of an odd binary number");
-					System.out.println("5  - DFA that only accepts a string of an even binary number");
-					System.out.println("6  - DFA that only accepts a string of a binary number of length 3");
-					System.out.println("7  - DFA that only accepts a string made of an even number of bits");
-					System.out.println("8  - DFA that only accepts a string made of an odd number of bits");
-					System.out.println("9  - DFA that only accepts a string of my first name, 'ben' in all lower case letters");
-					System.out.println("10 - DFA that only accepts a string that starts with 'az'");
-					System.out.println("11 - DFA that only accepts a string that contains 'ab'");
-					System.out.println("12 - DFA that accepts all strings of bits");
-					System.out.println("13 - DFA that only accepts a string that begins with 'a' and ends with 'c'");
-					System.out.println("14 - DFA that only accepts a string that begins with 'a' or ends with 'c'");
-					System.out.println("15 - DFA that only accepts a string that contains the binary number '01' or '10'");
+					System.out.println("0  - Quit ");
+					System.out.println("1  - DFA that only accepts a string of an odd binary number");
+					System.out.println("2  - DFA that only accepts a string of an even binary number");
+					System.out.println("3  - DFA that only accepts a string of a binary number of length 3");
+					System.out.println("4  - DFA that only accepts a string made of an even number of bits");
+					System.out.println("5  - DFA that only accepts a string made of an odd number of bits");
+					System.out.println("6  - DFA that only accepts a string of my first name, 'ben' in all lower case letters");
+					System.out.println("7  - DFA that only accepts a string that starts with 'az'");
+					System.out.println("8  - DFA that only accepts a string that contains 'ab'");
+					System.out.println("9  - DFA that accepts all strings of bits");
+					System.out.println("10 - DFA that only accepts a string that begins with 'a' and ends with 'c'");
+					System.out.println("11 - DFA that only accepts a string that begins with 'a' or ends with 'c'");
+					System.out.println("12 - DFA that only accepts a string that contains the binary number '01' or '10'");
 					
 					System.out.println("\nWhich DFA would you like to test?: ");
 					
@@ -543,70 +541,71 @@ public class DFAtest {
 							System.out.println("\nBye...");
 							break;
 					
-						case "4":
+						case "1":
 							testString = oddTestStrings[testStringIndex%12];
 							currentDFA = oddDFA;
 							
 							break;
 							
-						case "5":
+						case "2":
 							testString = evenTestStrings[testStringIndex%12];
 							currentDFA = evenDFA;
 							break;
 							
-						case "6":
+						case "3":
 							testString = tbTestStrings[testStringIndex%12];
 							currentDFA = tbDFA;
 							break;
 							
-						case "7":
+						case "4":
 							testString = elTestStrings[testStringIndex%12];
 							currentDFA = elDFA;
 							break;
 							
-						case "8":
+						case "5":
 							testString = olTestStrings[testStringIndex%12];
 							currentDFA = olDFA;
 							break;
-						case "9":
+							
+						case "6":
 							testString = benTestStrings[testStringIndex%12];;
 							currentDFA = benDFA;
 							
 							break;
 							
-						case "10":
+						case "7":
 							testString = azTestStrings[testStringIndex%12];		
 							currentDFA = azDFA;
 							
 							break;
 							
-						case "11":
+						case "8":
 							testString = abTestStrings[testStringIndex%12];;
 							currentDFA = abDFA;
 							break;
 							
-						case "12":
+						case "9":
 							testString = allTestStrings[testStringIndex%12];
 							currentDFA = allDFA;
 							break;
 							
-						case "13":
+						case "10":
 							testString = acTestStrings[testStringIndex%12];;
 							currentDFA = acDFA;
 							break;
 							
-						case "14":
+						case "11":
 							testString = acOrTestStrings[testStringIndex%12];;;
 							currentDFA = acOrDFA;
 							break;
 							
-						case "15":
+						case "12":
 							testString = ooTestStrings[testStringIndex%12];
 							currentDFA = ooDFA;
 							break;
 							
 						default:
-							validInput = false;
+							dfaToTest = false;
 							System.out.println("\nPlease enter a valid input!\n");
 							break;
 							
@@ -615,7 +614,8 @@ public class DFAtest {
 					break;
 					
 				case "3":
-					System.out.println("16 - DFA that accepts every string but one made up of my first name, 'ben'");
+					System.out.println("0  - Quit ");
+					System.out.println("1  - DFA that accepts every string but one made up of my first name, 'ben'");
 					
 					System.out.println("\nWhich DFA would you like to test?: ");
 					
@@ -625,13 +625,13 @@ public class DFAtest {
 							System.out.println("\nBye...");;
 							break;
 					
-						case "16":
+						case "1":
 							testString = benTestStrings[testStringIndex%12];
-							currentDFA = complementDFA(benDFA);
+							currentDFA = complement(benDFA);
 							break;
 							
 						default:
-							validInput = false;
+							dfaToTest = false;
 							System.out.println("\nPlease enter a valid input!\n");
 							break;
 							
@@ -640,18 +640,19 @@ public class DFAtest {
 					break;
 				
 				case "4":
-					System.out.println("17 - DFA that accepts a string made up of an even binary number or of an even number of bits");
-					System.out.println("18 - DFA that accepts a string made up of an even binary number or of an odd number of bits");
-					System.out.println("19 - DFA that accepts a string made up of an even binary number or of three bits");
-					System.out.println("20 - DFA that accepts a string made up of an even binary number or one that contains '01' or '10' ");
-					System.out.println("21 - DFA that accepts a string made up of an odd binary number or of an even number of bits");
-					System.out.println("22 - DFA that accepts a string made up of an odd binary number or of an odd number of bits");
-					System.out.println("23 - DFA that accepts a string made up of an odd binary number or of three bits");
-					System.out.println("24 - DFA that accepts a string made up of an odd binary number or one that contains '01' or '10' ");
-					System.out.println("25 - DFA that accepts a string that contains '01' or '10' or is made of an even number of bits");
-					System.out.println("26 - DFA that accepts a string that contains '01' or '10' or is made of of an odd number of bits");
-					System.out.println("27 - DFA that accepts a string that contains 'ab' or that begins with an 'a' or ends with a 'c'");
-					System.out.println("28 - DFA that accepts a string made up of an even binary number or one made up of an odd binary number");
+					System.out.println("0  - Quit ");
+					System.out.println("1  - DFA that accepts a string made up of an even binary number or of an even number of bits");
+					System.out.println("2  - DFA that accepts a string made up of an even binary number or of an odd number of bits");
+					System.out.println("3  - DFA that accepts a string made up of an even binary number or of three bits");
+					System.out.println("4  - DFA that accepts a string made up of an even binary number or one that contains '01' or '10' ");
+					System.out.println("5  - DFA that accepts a string made up of an odd binary number or of an even number of bits");
+					System.out.println("6  - DFA that accepts a string made up of an odd binary number or of an odd number of bits");
+					System.out.println("7  - DFA that accepts a string made up of an odd binary number or of three bits");
+					System.out.println("8  - DFA that accepts a string made up of an odd binary number or one that contains '01' or '10' ");
+					System.out.println("9  - DFA that accepts a string that contains '01' or '10' or is made of an even number of bits");
+					System.out.println("10  - DFA that accepts a string that contains '01' or '10' or is made of of an odd number of bits");
+					System.out.println("11 - DFA that accepts a string that contains 'ab' or that begins with an 'a' or ends with a 'c'");
+					System.out.println("12 - DFA that accepts a string made up of an even binary number or one made up of an odd binary number");
 					
 					System.out.println("\nWhich DFA would you like to test?: ");
 					
@@ -662,68 +663,68 @@ public class DFAtest {
 							System.out.println("\nBye...");
 							break;
 					
-						case "17":
+						case "1":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(evenDFA, elDFA);
+							currentDFA = union(evenDFA, elDFA);
 							break;
 						
-						case "18":
+						case "2":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(evenDFA, olDFA);
+							currentDFA = union(evenDFA, olDFA);
 							break;
 							
-						case "19":
+						case "3":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(evenDFA, tbDFA);
+							currentDFA = union(evenDFA, tbDFA);
 							break;
 							
-						case "20":
+						case "4":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(evenDFA, ooDFA);
+							currentDFA = union(evenDFA, ooDFA);
 							break;
 							
-						case "21":
+						case "5":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(oddDFA, elDFA);
+							currentDFA = union(oddDFA, elDFA);
 							break;
 							
-						case "22":
+						case "6":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(oddDFA, olDFA);
+							currentDFA = union(oddDFA, olDFA);
 							break;
 							
-						case "23":
+						case "7":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(oddDFA, tbDFA);
+							currentDFA = union(oddDFA, tbDFA);
 							break;
 							
-						case "24":
+						case "8":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(oddDFA, ooDFA);
+							currentDFA = union(oddDFA, ooDFA);
 							break;
 							
-						case "25":
+						case "9":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(ooDFA, elDFA);
+							currentDFA = union(ooDFA, elDFA);
 							break;
 							
-						case "26":
+						case "10":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(ooDFA, olDFA);
+							currentDFA = union(ooDFA, olDFA);
 							break;
 							
-						case "27":
+						case "11":
 							testString = abTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(abDFA, acOrDFA);
+							currentDFA = union(abDFA, acOrDFA);
 							break;
 							
-						case "28":
+						case "12":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = unionDFA(evenDFA, oddDFA);
+							currentDFA = union(evenDFA, oddDFA);
 							break;
 							
 						default:
-							validInput = false;
+							dfaToTest = false;
 							System.out.println("\nPlease enter a valid input!\n");
 							break;
 					}
@@ -731,18 +732,19 @@ public class DFAtest {
 					break;
 					
 				case "5":
-					System.out.println("29 - DFA that accepts a string made up of an even binary number and of an even number of bits");
-					System.out.println("30 - DFA that accepts a string made up of an even binary number and of an odd number of bits");
-					System.out.println("31 - DFA that accepts a string made up of an even binary number and of three bits");
-					System.out.println("32 - DFA that accepts a string made up of an even binary number and one that contains '01' or '10' ");
-					System.out.println("33 - DFA that accepts a string made up of an odd binary number and of an even number of bits");
-					System.out.println("34 - DFA that accepts a string made up of an odd binary number and of an odd number of bits");
-					System.out.println("35 - DFA that accepts a string made up of an odd binary number and of three bits");
-					System.out.println("36 - DFA that accepts a string made up of an odd binary number and one that contains '01' or '10' ");
-					System.out.println("37 - DFA that accepts a string that contains '01' or '10' and is made of an even number of bits");
-					System.out.println("38 - DFA that accepts a string that contains '01' or '10' and is made of of an odd number of bits");
-					System.out.println("39 - DFA that accepts a string that contains 'ab' and that begins with an 'a' or ends with a 'c'");
-					System.out.println("40 - DFA that accepts a string made up of an even binary number and made up of an odd binary number");
+					System.out.println("0  - Quit ");
+					System.out.println("1  - DFA that accepts a string made up of an even binary number and of an even number of bits");
+					System.out.println("2  - DFA that accepts a string made up of an even binary number and of an odd number of bits");
+					System.out.println("3  - DFA that accepts a string made up of an even binary number and of three bits");
+					System.out.println("4  - DFA that accepts a string made up of an even binary number and one that contains '01' or '10' ");
+					System.out.println("5  - DFA that accepts a string made up of an odd binary number and of an even number of bits");
+					System.out.println("6  - DFA that accepts a string made up of an odd binary number and of an odd number of bits");
+					System.out.println("7  - DFA that accepts a string made up of an odd binary number and of three bits");
+					System.out.println("8  - DFA that accepts a string made up of an odd binary number and one that contains '01' or '10' ");
+					System.out.println("9  - DFA that accepts a string that contains '01' or '10' and is made of an even number of bits");
+					System.out.println("10 - DFA that accepts a string that contains '01' or '10' and is made of of an odd number of bits");
+					System.out.println("11 - DFA that accepts a string that contains 'ab' and that begins with an 'a' or ends with a 'c'");
+					System.out.println("12 - DFA that accepts a string made up of an even binary number and made up of an odd binary number");
 					
 					System.out.println("\nWhich DFA would you like to test?: ");
 					
@@ -754,88 +756,216 @@ public class DFAtest {
 							cont = false;
 							break;
 					
-						case "29":
+						case "1":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(evenDFA, elDFA);
+							currentDFA = intersection(evenDFA, elDFA);
 							break;
 						
-						case "30":
+						case "2":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(evenDFA, olDFA);
+							currentDFA = intersection(evenDFA, olDFA);
 							break;
 							
-						case "31":
+						case "3":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(evenDFA, tbDFA);
+							currentDFA = intersection(evenDFA, tbDFA);
 							break;
 							
-						case "32":
+						case "4":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(evenDFA, ooDFA);
+							currentDFA = intersection(evenDFA, ooDFA);
 							break;
 							
-						case "33":
+						case "5":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(oddDFA, elDFA);
+							currentDFA = intersection(oddDFA, elDFA);
 							break;
 							
-						case "34":
+						case "6":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(oddDFA, olDFA);
+							currentDFA = intersection(oddDFA, olDFA);
 							break;
 							
-						case "35":
+						case "7":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(oddDFA, tbDFA);
+							currentDFA = intersection(oddDFA, tbDFA);
 							break;
 							
-						case "36":
+						case "8":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(oddDFA, ooDFA);
+							currentDFA = intersection(oddDFA, ooDFA);
 							break;
 							
-						case "37":
+						case "9":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(ooDFA, elDFA);
+							currentDFA = intersection(ooDFA, elDFA);
 							break;
 							
-						case "38":
+						case "10":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(ooDFA, olDFA);
+							currentDFA = intersection(ooDFA, olDFA);
 							break;
 							
-						case "39":
+						case "11":
 							testString = abTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(abDFA, acOrDFA);
+							currentDFA = intersection(abDFA, acOrDFA);
 							break;
 							
-						case "40":
+						case "12":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = intersectDFA(evenDFA, oddDFA);
+							currentDFA = intersection(evenDFA, oddDFA);
 							break;
 						
 						default:
-							validInput = false;
+							dfaToTest = false;
 							System.out.println("\nPlease enter a valid input!\n");
 							break;
 							
 					}
 					
 					break;
-										
+				case "6":
+					System.out.println("0  - Quit ");
+					System.out.println("1  - Is oddDFA a subset of ooDFA?");
+					System.out.println("2  - Is evenDFA a subset of ooDFA?");
+					System.out.println("3  - Is acDFA a subset of acorDFA?");
+					System.out.println("4  - Is evenDFA a subset of oddDFA?");
+					System.out.println("5  - Is evenDFA a subset of evenDFA?");
+					System.out.println("6  - Is noDFA a subset of evenDFA?");
+					System.out.println("7  - Is allDFA a subset of oddDFA?");
+					System.out.println("8  - Is benDFA a subset of azDFA?");
+					System.out.println("9  - Is noDFA a subset of noDFA?");
+					System.out.println("10 - Is allDFA a subset of noDFA?");
+					System.out.println("11 - Is tbDFA a subset of olDFA?");
+					System.out.println("12 - Is tbDFA a subset of elDFA?");
+					System.out.println("\nWhich DFA would you like to test?: ");
+					
+					input = scanner.next();
+					
+					switch(input) {	
+						case "0":
+							System.out.println("\nBye...");
+							cont = false;
+							break;
+							
+						case "1":
+							isSubset = subset(oddDFA, ooDFA);
+							accepts = (isSubset)?"oddDFA is a subset of ooDFA":"oddDFA is not a subset of ooDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "2":
+							isSubset = subset(evenDFA, ooDFA);
+							accepts = (isSubset)?"evenDFA is a subset of ooDFA":"evenDFA is not a subset of ooDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "3":
+							isSubset = subset(acDFA, acOrDFA);
+							accepts = (isSubset)?"acDFA is a subset of acOrDFA":"acDFA is not a subset of acOrDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "4":
+							isSubset = subset(evenDFA, oddDFA);
+							accepts = (isSubset)?"evenDFA is a subset of oddDFA":"evenDFA is not a subset of oddDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "5":
+							isSubset = subset(evenDFA, evenDFA);
+							accepts = (isSubset)?"evenDFA is a subset of evenDFA":"evenDFA is not a subset of evenDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "6":
+							isSubset = subset(noDFA, evenDFA);
+							accepts = (isSubset)?"noDFA is a subset of evenDFA":"noDFA is not a subset of evenDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "7":
+							isSubset = subset(allDFA, oddDFA);
+							accepts = (isSubset)?"noDFA is a subset of evenDFA":"noDFA is not a subset of evenDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "8":
+							isSubset = subset(benDFA, azDFA);
+							accepts = (isSubset)?"benDFA is a subset of azDFA":"benDFA is not a subset of azDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "9":
+							isSubset = subset(noDFA, noDFA);
+							accepts = (isSubset)?"noDFA is a subset of noDFA":"noDFA is not a subset of noDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "10":
+							isSubset = subset(allDFA, noDFA);
+							accepts = (isSubset)?"allDFA is a subset of noDFA":"allDFA is not a subset of noDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "11":
+							isSubset = subset(tbDFA, olDFA);
+							accepts = (isSubset)?"tbDFA is a subset of olDFA":"tbDFA is not a subset of olDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						case "12":
+							isSubset = subset(tbDFA, elDFA);
+							accepts = (isSubset)?"tbDFA is a subset of elDFA":"tbDFA is not a subset of elDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+						
+						default:
+							dfaToTest = false;
+							System.out.println("\nPlease enter a valid input!\n");
+							break;
+					
+					}
+					
+					break;
+					
 				default:
-					validInput = false;
+					dfaToTest = false;
 					System.out.println("\nPlease enter a valid input!\n");
 					break;
 			
 			}
 			
-			if(cont && validInput){
+			if(cont && dfaToTest){
 				testStringIndex++;
 				
 				System.out.println("\nString to be tested: '" + testString.displayable() + "'");
 				
-				String accepts = (currentDFA.run(testString))? "String Accepted":"String Rejected";	//Run DFA and return whether the string was accepted or not
+				accepts = (currentDFA.run(testString))? "String Accepted":"String Rejected";	//Run DFA and return whether the string was accepted or not
 				
 				System.out.println("\n" + accepts + "\n");
 				
@@ -849,7 +979,16 @@ public class DFAtest {
 		
 	}
 	
-	//Function that returns a DFA that only accepts a string made up of a single, specific character
+	//Intialize destination states to a single state for a state map
+	public static void initializeStates(Alphabet alphabet, ArrayList<State> states, ArrayList<State> nextStates, State state){
+		for(int i = 0; i < alphabet.size() * states.size(); i++){
+			nextStates.add(state);
+			
+		}
+		
+	}
+	
+	//Function that returns a DFA with a language consisting of a single character
 	public static DFA nDFA(Alphabet alphabet, Character character){
 		ArrayList<State> states = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));	//States = {A, B, C}
 		
@@ -872,16 +1011,8 @@ public class DFAtest {
 		
 	}
 	
-	public static void initializeStates(Alphabet alphabet, ArrayList<State> states, ArrayList<State> nextStates, State state){
-		for(int i = 0; i < alphabet.size() * states.size(); i++){
-			nextStates.add(state);
-			
-		}
-		
-	}
-	
 	//Function that given a DFA, returns a string that is accepted by that DFA
-	public static AlphaString acceptString(DFA dfa){
+	public static AlphaString acceptingString(DFA dfa){
 		
 		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
 			return null;							//Return null
@@ -895,22 +1026,27 @@ public class DFAtest {
 		
 		Alphabet alphabet = dfa.getAlphabet();
 		
-		AlphaString acceptString = new AlphaString(alphabet);
+		AlphaString acceptingString = new AlphaString(alphabet);
 		
 		boolean newState;
 				
 		while(curState != startState){				//Until we arrive at the starting state
 			newState = false;
 			
-			for(int i = 0; i < states.size(); i++){
+			for(int i = 0; i <= states.size(); i++){
 				if(newState){						//Current state has been updated
 					break;							//Stop searching
 					
 				}
 				
+				if(i == states.size()) {
+					return null;
+					
+				}
+				
 				for(int j = 0; j < alphabet.size(); j++){
 					if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
-						acceptString.pushChar(alphabet.get(j));							//Push Character into the String to be returned
+						acceptingString.pushChar(alphabet.get(j));							//Push Character into the String to be returned
 						curState = states.get(i);										//Current State = Previous State
 						newState = true;												
 						break;															//Stop searching
@@ -923,12 +1059,12 @@ public class DFAtest {
 			
 		}
 		
-		return acceptString;
+		return acceptingString;
 		
 	}
 	
-	//Function that returns a DFA that accepts where a given DFA rejects and vice versa
-	public static DFA complementDFA(DFA dfa){
+	//~(dfa1)
+	public static DFA complement(DFA dfa){
 		ArrayList<State> complementAcceptingStates = new ArrayList<State>();
 		
 		for(int i = 0; i < dfa.getStates().size(); i++){
@@ -939,28 +1075,29 @@ public class DFAtest {
 			
 		}
 		
-		DFA complementDFA = new DFA(dfa.getStates(), dfa.getAlphabet(), dfa.getStartState(), dfa.getNextStates(), complementAcceptingStates);
+		DFA complement = new DFA(dfa.getStates(), dfa.getAlphabet(), dfa.getStartState(), dfa.getNextStates(), complementAcceptingStates);
 		
-		return complementDFA;
+		return complement;
 		
 	}
 	
-	public static DFA unionDFA(DFA dfa1, DFA dfa2){
-		ArrayList<State> unionDFAStates = new ArrayList<State>();
+	//(dfa1 u dfa2)
+	public static DFA union(DFA dfa1, DFA dfa2){
+		ArrayList<State> unionStates = new ArrayList<State>();
 		Alphabet alphabet = dfa1.getAlphabet();
-		State unionDFAStartState;
-		ArrayList<State> unionDFANextStates = new ArrayList<State>();
-		ArrayList<State> unionDFAAcceptingStates = new ArrayList<State>();
+		State unionStartState;
+		ArrayList<State> unionNextStates = new ArrayList<State>();
+		ArrayList<State> unionAcceptingStates = new ArrayList<State>();
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			for(int j = 0; j < dfa2.getStates().size(); j++){
-				unionDFAStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//UnionDFA States[i+j] = da1States[i] + da2States[j]
+				unionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//UnionDFA States[i+j] = da1States[i] + da2States[j]
 				
 			}
 			
 		}
 		
-		unionDFAStartState = unionDFAStates.get(dfa2.getStates().size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//UnionDFA StartState = dfa1StartState + dfa2 + start state
+		unionStartState = unionStates.get(dfa2.getStates().size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//UnionDFA StartState = dfa1StartState + dfa2 + start state
 		
 		State dfa1NextState;
 		State dfa2NextState;
@@ -973,7 +1110,7 @@ public class DFAtest {
 				    
 					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//UnionDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
 					
-					unionDFANextStates.add(unionDFAStates.get(nextIndex));
+					unionNextStates.add(unionStates.get(nextIndex));
 				
 				}
 				
@@ -991,7 +1128,7 @@ public class DFAtest {
 				dfa2CurState = dfa2.getStates().get(j);
 				
 				if(dfa1.getAcceptingStates().contains(dfa1CurState) || dfa2.getAcceptingStates().contains(dfa2CurState)){
-					unionDFAAcceptingStates.add(unionDFAStates.get(dfa2.getStates().size() * i + j));	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[j]) or dfa2AcceptingStates.contains(dfa2States[j]}
+					unionAcceptingStates.add(unionStates.get(dfa2.getStates().size() * i + j));	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[j]) or dfa2AcceptingStates.contains(dfa2States[j]}
 					
 				}
 				
@@ -999,27 +1136,27 @@ public class DFAtest {
 			
 		}
 		
-		DFA unionDFA = new DFA(unionDFAStates, alphabet, unionDFAStartState, unionDFANextStates, unionDFAAcceptingStates);
+		DFA union = new DFA(unionStates, alphabet, unionStartState, unionNextStates, unionAcceptingStates);
 		
-		return unionDFA;
+		return union;
 	}
-	
-	public static DFA intersectDFA(DFA dfa1, DFA dfa2){
-		ArrayList<State> intersectDFAStates = new ArrayList<State>();
+	//(dfa1 n dfa2)
+	public static DFA intersection(DFA dfa1, DFA dfa2){
+		ArrayList<State> intersectionStates = new ArrayList<State>();
 		Alphabet alphabet = dfa1.getAlphabet();
-		State intersectDFAStartState;
-		ArrayList<State> intersectDFANextStates = new ArrayList<State>();
-		ArrayList<State> intersectDFAAcceptingStates = new ArrayList<State>();
+		State intersectionStartState;
+		ArrayList<State> intersectionNextStates = new ArrayList<State>();
+		ArrayList<State> intersectionAcceptingStates = new ArrayList<State>();
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			for(int j = 0; j < dfa2.getStates().size(); j++){
-				intersectDFAStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//IntersectDFA States[i+j] = da1States[i] + da2States[j]
+				intersectionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//IntersectDFA States[i+j] = da1States[i] + da2States[j]
 				
 			}
 			
 		}
 		
-		intersectDFAStartState = intersectDFAStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//IntersectDFA StartState = dfa1StartState + dfa2 + start state
+		intersectionStartState = intersectionStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//IntersectDFA StartState = dfa1StartState + dfa2 + start state
 		
 		State dfa1NextState;
 		State dfa2NextState;
@@ -1032,7 +1169,7 @@ public class DFAtest {
 				    
 					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//IntersectDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
 					
-					intersectDFANextStates.add(intersectDFAStates.get(nextIndex));
+					intersectionNextStates.add(intersectionStates.get(nextIndex));
 				
 				}
 				
@@ -1051,7 +1188,7 @@ public class DFAtest {
 				dfa2CurState = dfa2.getStates().get(j);
 				
 				if(dfa1.getAcceptingStates().contains(dfa1CurState) && dfa2.getAcceptingStates().contains(dfa2CurState)){
-					intersectDFAAcceptingStates.add( intersectDFAStates.get( (dfa2.getStates().size() * i) + j) );	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[i]) and dfa2AcceptingStates.contains(dfa2States[j]}		
+					intersectionAcceptingStates.add( intersectionStates.get( (dfa2.getStates().size() * i) + j) );	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[i]) and dfa2AcceptingStates.contains(dfa2States[j]}		
 				
 				}
 				
@@ -1059,10 +1196,19 @@ public class DFAtest {
 			
 		}
 		
-		DFA intersectDFA = new DFA(intersectDFAStates, alphabet, intersectDFAStartState, intersectDFANextStates, intersectDFAAcceptingStates);
+		DFA intersection = new DFA(intersectionStates, alphabet, intersectionStartState, intersectionNextStates, intersectionAcceptingStates);
 		
-		return intersectDFA;
+		return intersection;
 		
+	}
+	
+	//(dfa1 c dfa2)?
+	public static boolean subset(DFA dfa1, DFA dfa2){
+		DFA dfa2Compliment = complement(dfa2);				   //~(dfa2)
+		DFA dfaIntersection = intersection(dfa1, dfa2Compliment); //dfa1 n ~(dfa2)
+		
+		
+		return (acceptingString(dfaIntersection) == null);					   
 	}
 
 }
