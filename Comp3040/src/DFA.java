@@ -36,7 +36,7 @@ public class DFA {
 		
 	}
 	
-	public boolean acceptReject(){
+	private boolean acceptReject(){
 		boolean accepts = false;
 		
 		if(acceptingStates.contains(currentState)){

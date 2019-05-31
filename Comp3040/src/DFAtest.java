@@ -80,7 +80,7 @@ public class DFAtest {
 			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))
 		};
 		
-		private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A}
+		private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
 		
 		private static State oddDFAStartState =oddDFAStates.get(0);																				//StartStae = A
 		
@@ -266,9 +266,6 @@ public class DFAtest {
 	//----------------------------------------------------------------------------------------------------------------------
 	
 	//DFA that accepts a string that contains "ab" somewhere in it (The "abDFA")---------------------------------------------
-			private static ArrayList<Character> abTestCharacters =  new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1)));
-			private static AlphaString abTestString = new AlphaString(abcAlphabet, abTestCharacters);																		//Input = "abb"
-			
 			private static AlphaString abTestStrings[] = new AlphaString[]{
 					new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(1), abcAlphabet.get(1)))),
 				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0)))),
@@ -298,7 +295,7 @@ public class DFAtest {
 			private static DFA abDFA = new DFA(abDFAStates, abcAlphabet, abDFAStartState, abDFANextStates, abDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
 			
-	//DFA that accepts all strings of bits (The "allDFA")-------------------------------------------------------------------															//Input = "011"
+	//DFA that accepts all strings of bits (The "allDFA")-------------------------------------------------------------------															
 			private static AlphaString allTestStrings[] = new AlphaString[]{
 					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),
@@ -446,6 +443,13 @@ public class DFAtest {
 		boolean cont = true;
 		boolean validInput = true;
 		
+		boolean cont0 = false;
+		boolean cont1 = false;
+		boolean cont2 = false;
+		boolean cont3 = false;
+		boolean cont4 = false;
+		boolean cont5 = true;
+		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		
@@ -461,187 +465,362 @@ public class DFAtest {
 			validInput = true;
 			
 			System.out.println("0  - Quit ");
-			System.out.println("1  - DFA that accepts no strings of bits");
-			System.out.println("2  - DFA that only accepts the empty string");
-			System.out.println("3  - DFA that only accepts a string of a single character 'c'");
-			System.out.println("4  - DFA that only accepts a string of an odd binary number");
-			System.out.println("5  - DFA that only accepts a string of an even binary number");
-			System.out.println("6  - DFA that only accepts a string of a binary number of length 3");
-			System.out.println("7  - DFA that only accepts a string made of an even number of bits");
-			System.out.println("8  - DFA that only accepts a string made of an odd number of bits");
-			System.out.println("9  - DFA that only accepts a string of my first name, 'ben' in all lower case letters");
-			System.out.println("10 - DFA that only accepts a string that starts with 'az'");
-			System.out.println("11 - DFA that only accepts a string that contains 'ab'");
-			System.out.println("12 - DFA that accepts all strings of bits");
-			System.out.println("13 - DFA that only accepts a string that begins with 'a' and ends with 'c'");
-			System.out.println("14 - DFA that only accepts a string that begins with 'a' or ends with 'c'");
-			System.out.println("15 - DFA that only accepts a string that contains the binary number '01' or '10'");
-			System.out.println("16 - DFA that accepts every string but one made up of my first name, 'ben'");
-			System.out.println("17 - DFA that accepts a string made up of an even binary number or of an even number of bits");
-			System.out.println("18 - DFA that accepts a string made up of an even binary number or of an odd number of bits");
-			System.out.println("19 - DFA that accepts a string made up of an even binary number or of three bits");
-			System.out.println("20 - DFA that accepts a string made up of an even binary number or one that contains '01' or '10' ");
-			System.out.println("21 - DFA that accepts a string made up of an odd binary number or of an even number of bits");
-			System.out.println("22 - DFA that accepts a string made up of an odd binary number or of an odd number of bits");
-			System.out.println("23 - DFA that accepts a string made up of an odd binary number or of three bits");
-			System.out.println("24 - DFA that accepts a string made up of an odd binary number or one that contains '01' or '10' ");
-			System.out.println("25 - DFA that accepts a string that contains '01' or '10' or is made of an even number of bits");
-			System.out.println("26 - DFA that accepts a string that contains '01' or '10' or is made of of an odd number of bits");
-			System.out.println("27 - DFA that accepts a string that contains '01' or '10' made up of an odd binary number");
-			System.out.println("28 - DFA that accepts a string made up of an even binary number or one made up of an odd binary number");
+			System.out.println("1  - Initial DFA tests");
+			System.out.println("2  - Expanded DFA tests");
+			System.out.println("3  - Compliment DFA tests");
+			System.out.println("4  - Union DFA tests");
+			System.out.println("5  - Intersection DFA tests");
 			
-			System.out.println("\nWhich DFA would you like to test?: ");
-			
+			System.out.println("\nWhat kind of DFA would you like to test?: ");
 			
 			input = scanner.next();
-			
 			
 			switch(input){
 				case "0":
 					System.out.println("\nBye...");
 					cont = false;
 					break;
-					
+				
 				case "1":
-					testString = noTestString;
-					currentDFA = noDFA;
+					System.out.println("1  - DFA that accepts no strings of bits");
+					System.out.println("2  - DFA that only accepts the empty string");
+					System.out.println("3  - DFA that only accepts a string of a single character 'c'");
+					
+					System.out.println("\nWhich DFA would you like to test?: ");
+					
+					input = scanner.next();
+					switch(input) {
+						case "0":
+							System.out.println("\nBye...");
+							cont = false;
+							break;
+					
+						case "1":
+							testString = noTestString;
+							currentDFA = noDFA;
+							break;
+							
+						case "2":
+							testString = emptyTestString;
+							currentDFA = emptyDFA;
+							break;
+							
+						case "3":
+							testString = new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcTestCharacter)));
+							currentDFA = nDFA;
+							break;
+							
+						default:
+							validInput = false;
+							System.out.println("\nPlease enter a valid input!\n");
+							break;
+							
+					}
+					
 					break;
 					
 				case "2":
-					testString = emptyTestString;
-					currentDFA = emptyDFA;
+					
+					System.out.println("4  - DFA that only accepts a string of an odd binary number");
+					System.out.println("5  - DFA that only accepts a string of an even binary number");
+					System.out.println("6  - DFA that only accepts a string of a binary number of length 3");
+					System.out.println("7  - DFA that only accepts a string made of an even number of bits");
+					System.out.println("8  - DFA that only accepts a string made of an odd number of bits");
+					System.out.println("9  - DFA that only accepts a string of my first name, 'ben' in all lower case letters");
+					System.out.println("10 - DFA that only accepts a string that starts with 'az'");
+					System.out.println("11 - DFA that only accepts a string that contains 'ab'");
+					System.out.println("12 - DFA that accepts all strings of bits");
+					System.out.println("13 - DFA that only accepts a string that begins with 'a' and ends with 'c'");
+					System.out.println("14 - DFA that only accepts a string that begins with 'a' or ends with 'c'");
+					System.out.println("15 - DFA that only accepts a string that contains the binary number '01' or '10'");
+					
+					System.out.println("\nWhich DFA would you like to test?: ");
+					
+					input = scanner.next();
+					
+					switch(input) {	
+						case "0":
+							System.out.println("\nBye...");
+							break;
+					
+						case "4":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = oddDFA;
+							
+							break;
+							
+						case "5":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = evenDFA;
+							break;
+							
+						case "6":
+							testString = tbTestStrings[testStringIndex%12];
+							currentDFA = tbDFA;
+							break;
+							
+						case "7":
+							testString = elTestStrings[testStringIndex%12];
+							currentDFA = elDFA;
+							break;
+							
+						case "8":
+							testString = olTestStrings[testStringIndex%12];
+							currentDFA = olDFA;
+							break;
+						case "9":
+							testString = benTestStrings[testStringIndex%12];;
+							currentDFA = benDFA;
+							
+							break;
+							
+						case "10":
+							testString = azTestStrings[testStringIndex%12];		
+							currentDFA = azDFA;
+							
+							break;
+							
+						case "11":
+							testString = abTestStrings[testStringIndex%12];;
+							currentDFA = abDFA;
+							break;
+							
+						case "12":
+							testString = allTestStrings[testStringIndex%12];
+							currentDFA = allDFA;
+							break;
+							
+						case "13":
+							testString = acTestStrings[testStringIndex%12];;
+							currentDFA = acDFA;
+							break;
+							
+						case "14":
+							testString = acOrTestStrings[testStringIndex%12];;;
+							currentDFA = acOrDFA;
+							break;
+							
+						case "15":
+							testString = ooTestStrings[testStringIndex%12];
+							currentDFA = ooDFA;
+							break;
+							
+						default:
+							validInput = false;
+							System.out.println("\nPlease enter a valid input!\n");
+							break;
+							
+					}
+					
 					break;
 					
 				case "3":
-					testString = new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcTestCharacter)));
-					currentDFA = nDFA;
-					break;
+					System.out.println("16 - DFA that accepts every string but one made up of my first name, 'ben'");
 					
+					System.out.println("\nWhich DFA would you like to test?: ");
+					
+					input = scanner.next();
+					switch(input) {	
+						case "0":
+							System.out.println("\nBye...");;
+							break;
+					
+						case "16":
+							testString = benTestStrings[testStringIndex%12];
+							currentDFA = complementDFA(benDFA);
+							break;
+							
+						default:
+							validInput = false;
+							System.out.println("\nPlease enter a valid input!\n");
+							break;
+							
+					}
+					
+					break;
+				
 				case "4":
-					testString = oddTestStrings[testStringIndex%12];
-					currentDFA = oddDFA;
+					System.out.println("17 - DFA that accepts a string made up of an even binary number or of an even number of bits");
+					System.out.println("18 - DFA that accepts a string made up of an even binary number or of an odd number of bits");
+					System.out.println("19 - DFA that accepts a string made up of an even binary number or of three bits");
+					System.out.println("20 - DFA that accepts a string made up of an even binary number or one that contains '01' or '10' ");
+					System.out.println("21 - DFA that accepts a string made up of an odd binary number or of an even number of bits");
+					System.out.println("22 - DFA that accepts a string made up of an odd binary number or of an odd number of bits");
+					System.out.println("23 - DFA that accepts a string made up of an odd binary number or of three bits");
+					System.out.println("24 - DFA that accepts a string made up of an odd binary number or one that contains '01' or '10' ");
+					System.out.println("25 - DFA that accepts a string that contains '01' or '10' or is made of an even number of bits");
+					System.out.println("26 - DFA that accepts a string that contains '01' or '10' or is made of of an odd number of bits");
+					System.out.println("27 - DFA that accepts a string that contains 'ab' or that begins with an 'a' or ends with a 'c'");
+					System.out.println("28 - DFA that accepts a string made up of an even binary number or one made up of an odd binary number");
+					
+					System.out.println("\nWhich DFA would you like to test?: ");
+					
+					input = scanner.next();
+					
+					switch(input) {	
+						case "0":
+							System.out.println("\nBye...");
+							break;
+					
+						case "17":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(evenDFA, elDFA);
+							break;
+						
+						case "18":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(evenDFA, olDFA);
+							break;
+							
+						case "19":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(evenDFA, tbDFA);
+							break;
+							
+						case "20":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(evenDFA, ooDFA);
+							break;
+							
+						case "21":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(oddDFA, elDFA);
+							break;
+							
+						case "22":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(oddDFA, olDFA);
+							break;
+							
+						case "23":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(oddDFA, tbDFA);
+							break;
+							
+						case "24":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(oddDFA, ooDFA);
+							break;
+							
+						case "25":
+							testString = ooTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(ooDFA, elDFA);
+							break;
+							
+						case "26":
+							testString = ooTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(ooDFA, olDFA);
+							break;
+							
+						case "27":
+							testString = abTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(abDFA, acOrDFA);
+							break;
+							
+						case "28":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = unionDFA(evenDFA, oddDFA);
+							break;
+							
+						default:
+							validInput = false;
+							System.out.println("\nPlease enter a valid input!\n");
+							break;
+					}
 					
 					break;
 					
 				case "5":
-					testString = evenTestStrings[testStringIndex%12];
-					currentDFA = evenDFA;
-					break;
+					System.out.println("29 - DFA that accepts a string made up of an even binary number and of an even number of bits");
+					System.out.println("30 - DFA that accepts a string made up of an even binary number and of an odd number of bits");
+					System.out.println("31 - DFA that accepts a string made up of an even binary number and of three bits");
+					System.out.println("32 - DFA that accepts a string made up of an even binary number and one that contains '01' or '10' ");
+					System.out.println("33 - DFA that accepts a string made up of an odd binary number and of an even number of bits");
+					System.out.println("34 - DFA that accepts a string made up of an odd binary number and of an odd number of bits");
+					System.out.println("35 - DFA that accepts a string made up of an odd binary number and of three bits");
+					System.out.println("36 - DFA that accepts a string made up of an odd binary number and one that contains '01' or '10' ");
+					System.out.println("37 - DFA that accepts a string that contains '01' or '10' and is made of an even number of bits");
+					System.out.println("38 - DFA that accepts a string that contains '01' or '10' and is made of of an odd number of bits");
+					System.out.println("39 - DFA that accepts a string that contains 'ab' and that begins with an 'a' or ends with a 'c'");
+					System.out.println("40 - DFA that accepts a string made up of an even binary number and made up of an odd binary number");
 					
-				case "6":
-					testString = tbTestStrings[testStringIndex%12];
-					currentDFA = tbDFA;
-					break;
+					System.out.println("\nWhich DFA would you like to test?: ");
 					
-				case "7":
-					testString = elTestStrings[testStringIndex%12];
-					currentDFA = elDFA;
-					break;
+					input = scanner.next();
 					
-				case "8":
-					testString = olTestStrings[testStringIndex%12];
-					currentDFA = olDFA;
-					break;
-				case "9":
-					testString = benTestStrings[testStringIndex%12];;
-					currentDFA = benDFA;
+					switch(input) {	
+						case "0":
+							System.out.println("\nBye...");
+							cont = false;
+							break;
 					
-					break;
+						case "29":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(evenDFA, elDFA);
+							break;
+						
+						case "30":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(evenDFA, olDFA);
+							break;
+							
+						case "31":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(evenDFA, tbDFA);
+							break;
+							
+						case "32":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(evenDFA, ooDFA);
+							break;
+							
+						case "33":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(oddDFA, elDFA);
+							break;
+							
+						case "34":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(oddDFA, olDFA);
+							break;
+							
+						case "35":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(oddDFA, tbDFA);
+							break;
+							
+						case "36":
+							testString = oddTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(oddDFA, ooDFA);
+							break;
+							
+						case "37":
+							testString = ooTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(ooDFA, elDFA);
+							break;
+							
+						case "38":
+							testString = ooTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(ooDFA, olDFA);
+							break;
+							
+						case "39":
+							testString = abTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(abDFA, acOrDFA);
+							break;
+							
+						case "40":
+							testString = evenTestStrings[testStringIndex%12];
+							currentDFA = intersectDFA(evenDFA, oddDFA);
+							break;
+						
+						default:
+							validInput = false;
+							System.out.println("\nPlease enter a valid input!\n");
+							break;
+							
+					}
 					
-				case "10":
-					testString = azTestStrings[testStringIndex%12];		
-					currentDFA = azDFA;
-					
-					break;
-					
-				case "11":
-					testString = abTestStrings[testStringIndex%12];;
-					currentDFA = abDFA;
-					break;
-					
-				case "12":
-					testString = allTestStrings[testStringIndex%12];
-					currentDFA = allDFA;
-					break;
-					
-				case "13":
-					testString = acTestStrings[testStringIndex%12];;
-					currentDFA = acDFA;
-					break;
-					
-				case "14":
-					testString = acOrTestStrings[testStringIndex%12];;;
-					currentDFA = acOrDFA;
-					break;
-					
-				case "15":
-					testString = ooTestStrings[testStringIndex%12];
-					currentDFA = ooDFA;
-					break;
-					
-				case "16":
-					testString = benTestStrings[testStringIndex%12];
-					currentDFA = complementDFA(benDFA);
-					break;
-					
-				case "17":
-					testString = evenTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(evenDFA, elDFA);
-					break;
-				
-				case "18":
-					testString = evenTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(evenDFA, olDFA);
-					break;
-					
-				case "19":
-					testString = evenTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(evenDFA, tbDFA);
-					break;
-					
-				case "20":
-					testString = evenTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(evenDFA, ooDFA);
-					break;
-					
-				case "21":
-					testString = oddTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(oddDFA, elDFA);
-					break;
-					
-				case "22":
-					testString = oddTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(oddDFA, olDFA);
-					break;
-					
-				case "23":
-					testString = oddTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(oddDFA, tbDFA);
-					break;
-					
-				case "24":
-					testString = oddTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(oddDFA, ooDFA);
-					break;
-					
-				case "25":
-					testString = ooTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(ooDFA, elDFA);
-					break;
-					
-				case "26":
-					testString = ooTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(ooDFA, olDFA);
-					break;
-					
-				case "27":
-					testString = ooTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(ooDFA, evenDFA);
-					break;
-					
-				case "28":
-					testString = evenTestStrings[testStringIndex%12];
-					currentDFA = unionDFA(evenDFA, oddDFA);
 					break;
 										
 				default:
@@ -656,13 +835,11 @@ public class DFAtest {
 				
 				System.out.println("\nString to be tested: '" + testString.displayable() + "'");
 				
-				String accepts = (currentDFA.run(testString))? "String Accepted":"String Rejected";	//Run DFA and return whether 
-				
-				currentDFA.resetDFA();
+				String accepts = (currentDFA.run(testString))? "String Accepted":"String Rejected";	//Run DFA and return whether the string was accepted or not
 				
 				System.out.println("\n" + accepts + "\n");
 				
-				System.out.println("Trace: " + currentDFA.getTrace().displayable() + "\n");
+				System.out.println("Trace: " + currentDFA.getTrace().displayable() + "\n");			//Print the trace of states visited
 				
 				currentDFA.resetDFA();
 				
@@ -733,7 +910,7 @@ public class DFAtest {
 				
 				for(int j = 0; j < alphabet.size(); j++){
 					if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
-						acceptString.pushChar(alphabet.get(j));							//Puch Character into the String to be returned
+						acceptString.pushChar(alphabet.get(j));							//Push Character into the String to be returned
 						curState = states.get(i);										//Current State = Previous State
 						newState = true;												
 						break;															//Stop searching
@@ -783,15 +960,18 @@ public class DFAtest {
 			
 		}
 		
-		unionDFAStartState = unionDFAStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//UnionDFA StartState = dfa1StartState + dfa2 + start state
+		unionDFAStartState = unionDFAStates.get(dfa2.getStates().size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//UnionDFA StartState = dfa1StartState + dfa2 + start state
+		
+		State dfa1NextState;
+		State dfa2NextState;
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			for(int j = 0; j < dfa2.getStates().size(); j++){
 				for(int k = 0; k < alphabet.size(); k++){
-					State dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
-					State dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
+					dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
+					dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
 				    
-					int nextIndex = (alphabet.size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//UnionDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
+					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//UnionDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
 					
 					unionDFANextStates.add(unionDFAStates.get(nextIndex));
 				
@@ -801,17 +981,17 @@ public class DFAtest {
 			
 		}
 		
-		
+		State dfa1CurState;
+		State dfa2CurState;
 		
 		for(int i = 0; i < dfa1.getStates().size(); i++){
-			
-			State dfa1CurState = dfa1.getStates().get(i);
+			dfa1CurState = dfa1.getStates().get(i);
 			
 			for(int j = 0; j < dfa2.getStates().size(); j++){
-				State dfa2CurState = dfa2.getStates().get(j);
+				dfa2CurState = dfa2.getStates().get(j);
 				
 				if(dfa1.getAcceptingStates().contains(dfa1CurState) || dfa2.getAcceptingStates().contains(dfa2CurState)){
-					unionDFAAcceptingStates.add(unionDFAStates.get(alphabet.size() * i + j));	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[j]) or dfa2AcceptingStates.contains(dfa2States[j]}
+					unionDFAAcceptingStates.add(unionDFAStates.get(dfa2.getStates().size() * i + j));	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[j]) or dfa2AcceptingStates.contains(dfa2States[j]}
 					
 				}
 				
@@ -822,6 +1002,67 @@ public class DFAtest {
 		DFA unionDFA = new DFA(unionDFAStates, alphabet, unionDFAStartState, unionDFANextStates, unionDFAAcceptingStates);
 		
 		return unionDFA;
+	}
+	
+	public static DFA intersectDFA(DFA dfa1, DFA dfa2){
+		ArrayList<State> intersectDFAStates = new ArrayList<State>();
+		Alphabet alphabet = dfa1.getAlphabet();
+		State intersectDFAStartState;
+		ArrayList<State> intersectDFANextStates = new ArrayList<State>();
+		ArrayList<State> intersectDFAAcceptingStates = new ArrayList<State>();
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				intersectDFAStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//IntersectDFA States[i+j] = da1States[i] + da2States[j]
+				
+			}
+			
+		}
+		
+		intersectDFAStartState = intersectDFAStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//IntersectDFA StartState = dfa1StartState + dfa2 + start state
+		
+		State dfa1NextState;
+		State dfa2NextState;
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				for(int k = 0; k < alphabet.size(); k++){
+					dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
+					dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
+				    
+					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//IntersectDFA NextStates[i+j+k] = da1NextStates[i+k] + da2NextStates[j+k]
+					
+					intersectDFANextStates.add(intersectDFAStates.get(nextIndex));
+				
+				}
+				
+			}
+			
+		}
+		
+		
+		State dfa1CurState;
+		State dfa2CurState;
+		int q = 0;
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			dfa1CurState = dfa1.getStates().get(i);
+			
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				dfa2CurState = dfa2.getStates().get(j);
+				
+				if(dfa1.getAcceptingStates().contains(dfa1CurState) && dfa2.getAcceptingStates().contains(dfa2CurState)){
+					intersectDFAAcceptingStates.add( intersectDFAStates.get( (dfa2.getStates().size() * i) + j) );	//UnionDFA AcceptingStates = {dfa1States[i] + dfa2States[j] | dfa1AcceptingStates.contains(dfa1States[i]) and dfa2AcceptingStates.contains(dfa2States[j]}		
+				
+				}
+				
+			}
+			
+		}
+		
+		DFA intersectDFA = new DFA(intersectDFAStates, alphabet, intersectDFAStartState, intersectDFANextStates, intersectDFAAcceptingStates);
+		
+		return intersectDFA;
+		
 	}
 
 }
