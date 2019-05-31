@@ -16,6 +16,7 @@ public class DFAtest {
 		//a, b, and c
 		private static ArrayList<Character> abcSymbols =  new ArrayList<Character>(Arrays.asList(new Character("a"), new Character("b"), new Character("c")));
 		
+		
 		private static Alphabet abcAlphabet = new Alphabet(abcSymbols);
 		
 		//Lower-case English alphabet
@@ -473,9 +474,10 @@ public class DFAtest {
 			System.out.println("4  - Union of DFAs tests");
 			System.out.println("5  - Intersection of DFAs tests");
 			System.out.println("6  - Subset of DFAs tests");
-			System.out.println("6  - Subset of DFAs tests");
 			System.out.println("7  - Equality of DFAs tests");
-			System.out.println("\nWhat kind of DFA would you like to test?: ");
+			System.out.println("8  - Test union, intersection, and complement functions");
+			
+			System.out.println("\nWhat kind of test do you wish to run?: ");
 			
 			input = scanner.next();
 			
@@ -1087,6 +1089,14 @@ public class DFAtest {
 					
 					}
 					
+					break;
+					
+				case "8":
+					isEqual = equal( union( intersection( complement(evenDFA), complement(oddDFA) ), oddDFA), complement(evenDFA));		//(~(evenDFA) n ~(oddDFA)) u oddDFA = ~(evenDFA)					
+					accepts = (isEqual)?"It all works":"It doesn't all work";
+					System.out.println(accepts + "\n");
+					
+					dfaToTest = false;
 					break;
 					
 				default:
