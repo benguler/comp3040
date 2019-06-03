@@ -4,15 +4,18 @@ public class StateTable {
 	private ArrayList<State> currentStates;
 	private Alphabet alphabet;
 	private ArrayList<State> nextStates;		//For DFA
-	ArrayList<ArrayList<State>> branchStates;	//For NFA
+	private ArrayList<ArrayList<State>> branchStates;	//For NFA
 	
-	ArrayList<ArrayList<State>> dfaStateTable;
-	ArrayList<ArrayList<ArrayList<State>>> nfaStateTable;
+	Character epsilon;
+	
+	private ArrayList<ArrayList<State>> dfaStateTable;
+	private ArrayList<ArrayList<ArrayList<State>>> nfaStateTable;
 	
 	public StateTable(){
 		
 	}
 	
+	//Constructor for DFA's
 	public StateTable(ArrayList<State> currentStates, Alphabet alphabet, ArrayList<State> nextStates){
 		this.currentStates = currentStates; 
 		this.alphabet = alphabet;
@@ -32,17 +35,19 @@ public class StateTable {
 		
 	}
 	
+	//Constructor for NFA's
 	public StateTable(ArrayList<State> currentStates, Alphabet alphabet, ArrayList<ArrayList<State>> branchStates, Character epsilon){
 		this.currentStates = currentStates; 
 		this.alphabet = alphabet;
 		this.branchStates = branchStates;
+		this.epsilon = epsilon;
 		
 		this.nfaStateTable = new ArrayList<ArrayList<ArrayList<State>>>();
 		
 		for(int i = 0; i < currentStates.size(); i++){
 			this.nfaStateTable.add(new ArrayList<ArrayList<State>>());
 			
-			for(int j = 0; j < alphabet.size()+1; j++){												//+1 is for epsilon
+			for(int j = 0; j < alphabet.size()+1; j++){												//+1 is for epsilon, essentially epended on the end of the alphabet
 				(this.nfaStateTable.get(i)).add(this.branchStates.get(j + (i*alphabet.size())));
 				
 			}
@@ -72,7 +77,13 @@ public class StateTable {
 	}
 	
 	public ArrayList<State> nfaFindNextState(State state, Character character){
-		return (nfaStateTable.get(getStateIndex(state))).get(getCharIndex(character));
+		if(character == this.epsilon) {
+			return (nfaStateTable.get(getStateIndex(state))).get(alphabet.size());
+			
+		}else {
+			return (nfaStateTable.get(getStateIndex(state))).get(getCharIndex(character));
+			
+		}
 		
 	}
 	

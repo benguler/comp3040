@@ -1119,8 +1119,6 @@ public class DFAtest {
 				
 				System.out.println("Trace: " + currentDFA.getTrace().displayable() + "\n");		//Print the trace of states visited
 				
-				currentDFA.resetDFA();
-				
 			}
 			
 		}
