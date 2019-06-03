@@ -13,7 +13,7 @@ public class DFAtest {
 		
 		private static Alphabet biAlphabet = new Alphabet(biSymbols);
 		
-		//a, b, and c
+		//a, b, and c Alphabet
 		private static ArrayList<Character> abcSymbols =  new ArrayList<Character>(Arrays.asList(new Character("a"), new Character("b"), new Character("c")));
 		
 		
@@ -32,13 +32,13 @@ public class DFAtest {
 		private static ArrayList<Character> noTestCharacters =  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1)));
 		private static AlphaString noTestString = new AlphaString(biAlphabet, noTestCharacters);												//Input = "01"
 		
-		private static ArrayList<State> noDFAStates = new ArrayList<State>(Arrays.asList(new State("A")));										//States = {A}
+		private static ArrayList<State> noDFAStates = new ArrayList<State>(Arrays.asList(new State("A")));										//Q = {A}
 		
-		private static State noDFAStartState = noDFAStates.get(0);																				//StartStae = A
+		private static State noDFAStartState = noDFAStates.get(0);																				//q0 = A
 		
-		private static ArrayList<State> noDFANextStates = new ArrayList<State>(Arrays.asList(noDFAStates.get(0), noDFAStates.get(0)));			//(A, '0', A), (A, '1', A)
+		private static ArrayList<State> noDFANextStates = new ArrayList<State>(Arrays.asList(noDFAStates.get(0), noDFAStates.get(0)));			//Delta = {(A, '0', A), (A, '1', A)
 		
-		private static ArrayList<State> noDFAAcceptingStates = new ArrayList<State>();															//AcceptingStates = {}
+		private static ArrayList<State> noDFAAcceptingStates = new ArrayList<State>();															//F = {}
 		
 		private static DFA noDFA = new DFA(noDFAStates, biAlphabet, noDFAStartState, noDFANextStates, noDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -47,14 +47,14 @@ public class DFAtest {
 		private static ArrayList<Character> emptyTestCharacters = new ArrayList<Character>();
 		private static AlphaString emptyTestString =  new AlphaString(biAlphabet, emptyTestCharacters);											//input = ""
 		
-		private static ArrayList<State> emptyDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));					//States = {A, B}
+		private static ArrayList<State> emptyDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));					//Q = {A, B}
 		
-		private static State emptyDFAStartState = emptyDFAStates.get(0);																		//StartState = A
+		private static State emptyDFAStartState = emptyDFAStates.get(0);																		//qo = A
 		
-		private static ArrayList<State> emptyDFANextStates = new ArrayList<State>(Arrays.asList(emptyDFAStates.get(1), emptyDFAStates.get(1),	//(A, '0', B), (A, '1', B)
-																								emptyDFAStates.get(1), emptyDFAStates.get(1)));	//(B, '0', B), (B, '1', B)
+		private static ArrayList<State> emptyDFANextStates = new ArrayList<State>(Arrays.asList(emptyDFAStates.get(1), emptyDFAStates.get(1),	//Delta = {(A, '0', B), (A, '1', B)
+																								emptyDFAStates.get(1), emptyDFAStates.get(1)));			 //(B, '0', B), (B, '1', B)}
 		
-		private static ArrayList<State> emptyDFAAcceptingStates = new ArrayList<State>(Arrays.asList(emptyDFAStates.get(0)));					//Accepting states = {A}
+		private static ArrayList<State> emptyDFAAcceptingStates = new ArrayList<State>(Arrays.asList(emptyDFAStates.get(0)));					//F = {A}
 		
 		private static DFA emptyDFA = new DFA(emptyDFAStates, biAlphabet, emptyDFAStartState, emptyDFANextStates, emptyDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -81,14 +81,14 @@ public class DFAtest {
 			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 		};
 		
-		private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
+		private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
 		
-		private static State oddDFAStartState =oddDFAStates.get(0);																				//StartStae = A
+		private static State oddDFAStartState =oddDFAStates.get(0);																				//q0 = A
 		
-		private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//(A, '0', A), (A, '1', B)
+		private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//Delta = {(A, '0', A), (A, '1', B)
 																		                     oddDFAStates.get(0), oddDFAStates.get(1)));		//(B, '0', A), (B, '1', B)
 		
-		private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//AcceptingStates = {B}
+		private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
 		
 		private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -109,14 +109,14 @@ public class DFAtest {
 			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))		//1101
 		};
 				
-		private static ArrayList<State> evenDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
+		private static ArrayList<State> evenDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
 				
-		private static State evenDFAStartState =evenDFAStates.get(0);																				//StartStae = A
+		private static State evenDFAStartState =evenDFAStates.get(0);																				//q0 = A
 				
-		private static ArrayList<State>evenDFANextStates = new ArrayList<State>(Arrays.asList(evenDFAStates.get(1), evenDFAStates.get(0),			//(A, '0', B), (A, '1', A)
+		private static ArrayList<State>evenDFANextStates = new ArrayList<State>(Arrays.asList(evenDFAStates.get(1), evenDFAStates.get(0),			//Delta = {(A, '0', B), (A, '1', A)
 																				              evenDFAStates.get(1), evenDFAStates.get(0)));			//(B, '0', B), (B, '1', A)
 				
-		private static ArrayList<State>evenDFAAcceptingStates = new ArrayList<State>(Arrays.asList(evenDFAStates.get(1)));							//AcceptingStates = {B}
+		private static ArrayList<State>evenDFAAcceptingStates = new ArrayList<State>(Arrays.asList(evenDFAStates.get(1)));							//F = {B}
 				
 		private static DFA evenDFA = new DFA(evenDFAStates, biAlphabet,evenDFAStartState,evenDFANextStates,evenDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -138,17 +138,17 @@ public class DFAtest {
 			};
 			
 			private static ArrayList<State> tbDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 
-																											 new State("D"), new State("E")));		//States = {A, B, C, D, E}
+																											 new State("D"), new State("E")));		//Q = {A, B, C, D, E}
 			
-			private static State tbDFAStartState =tbDFAStates.get(0);																				//StartStae = A
+			private static State tbDFAStartState =tbDFAStates.get(0);																				//q0 = A
 			
-			private static ArrayList<State>tbDFANextStates = new ArrayList<State>(Arrays.asList(tbDFAStates.get(1),tbDFAStates.get(1),				//(A, '0', B), (A, '1', B)
+			private static ArrayList<State>tbDFANextStates = new ArrayList<State>(Arrays.asList(tbDFAStates.get(1),tbDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
 																			                    tbDFAStates.get(2),tbDFAStates.get(2),				//(B, '0', C), (B, '1', C)
 																			                    tbDFAStates.get(3),tbDFAStates.get(3),				//(C, '0', D), (C, '1', D)
 																			                    tbDFAStates.get(4),tbDFAStates.get(4),				//(D, '0', E), (D, '1', E)
 			 																					tbDFAStates.get(4),tbDFAStates.get(4)));			//(E, '0', E), (E, '1', E)
 			
-			private static ArrayList<State>tbDFAAcceptingStates = new ArrayList<State>(Arrays.asList( tbDFAStates.get(3)));							//AcceptingStates = {D}
+			private static ArrayList<State>tbDFAAcceptingStates = new ArrayList<State>(Arrays.asList( tbDFAStates.get(3)));							//F = {D}
 			
 			private static DFA tbDFA = new DFA(tbDFAStates, biAlphabet,tbDFAStartState,tbDFANextStates,tbDFAAcceptingStates) ;
 	//----------------------------------------------------------------------------------------------------------------------
@@ -169,15 +169,15 @@ public class DFAtest {
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
-			private static ArrayList<State> elDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
+			private static ArrayList<State> elDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
 			
-			private static State elDFAStartState =elDFAStates.get(0);																				//StartStae = A
+			private static State elDFAStartState =elDFAStates.get(0);																				//q0 = A
 			
-			private static ArrayList<State>elDFANextStates = new ArrayList<State>(Arrays.asList(elDFAStates.get(1),elDFAStates.get(1),				//(A, '0', B), (A, '1', B)
+			private static ArrayList<State>elDFANextStates = new ArrayList<State>(Arrays.asList(elDFAStates.get(1),elDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
 																			                    elDFAStates.get(0),elDFAStates.get(0)));			//(B, '0', A), (B, '1', A)
 																			                   
 			
-			private static ArrayList<State>elDFAAcceptingStates = new ArrayList<State>(Arrays.asList( elDFAStates.get(0)));							//AcceptingStates = {A}
+			private static ArrayList<State>elDFAAcceptingStates = new ArrayList<State>(Arrays.asList( elDFAStates.get(0)));							//F = {A}
 			
 			private static DFA elDFA = new DFA(elDFAStates, biAlphabet,elDFAStartState,elDFANextStates,elDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -198,15 +198,15 @@ public class DFAtest {
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
-			private static ArrayList<State> olDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//States = {A, B}
+			private static ArrayList<State> olDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
 			
-			private static State olDFAStartState =olDFAStates.get(0);																				//StartStae = A
+			private static State olDFAStartState =olDFAStates.get(0);																				//q0 = A
 			
-			private static ArrayList<State> olDFANextStates = new ArrayList<State>(Arrays.asList(olDFAStates.get(1),olDFAStates.get(1),				//(A, '0', B), (A, '1', B)
+			private static ArrayList<State> olDFANextStates = new ArrayList<State>(Arrays.asList(olDFAStates.get(1),olDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
 																			                    olDFAStates.get(0),olDFAStates.get(0)));			//(B, '0', A), (B, '1', A)
 																			                   
 			
-			private static ArrayList<State> olDFAAcceptingStates = new ArrayList<State>(Arrays.asList( olDFAStates.get(1)));						//AcceptingStates = {B}
+			private static ArrayList<State> olDFAAcceptingStates = new ArrayList<State>(Arrays.asList( olDFAStates.get(1)));						//F = {B}
 			
 			private static DFA olDFA = new DFA(olDFAStates, biAlphabet,olDFAStartState,olDFANextStates,olDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -230,14 +230,14 @@ public class DFAtest {
 				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13))))		//lben
 			};
 			
-			private static ArrayList<State> benDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 								//States = {A, B, C, D, E}
+			private static ArrayList<State> benDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 								//Q = {A, B, C, D, E}
 					 																		  new State("D"), new State("E")));
 			
 			private static State benDFAStartState = benDFAStates.get(0);																									//StartState = A
 			
 			private static ArrayList<State> benDFANextStates = new ArrayList<State>();
 			
-			private static ArrayList<State> benDFAAcceptingStates = new ArrayList<State>(Arrays.asList(benDFAStates.get(3)));												//AcceptingStates = {D}
+			private static ArrayList<State> benDFAAcceptingStates = new ArrayList<State>(Arrays.asList(benDFAStates.get(3)));												//F = {D}
 			
 			private static DFA benDFA;
 	//----------------------------------------------------------------------------------------------------------------------
@@ -258,14 +258,14 @@ public class DFAtest {
 				    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(25), engAlphabet.get(6), engAlphabet.get(13))))		//azgn
 			};
 			
-			private static ArrayList<State> azDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 								//States = {A, B, C, D}
+			private static ArrayList<State> azDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 								//Q = {A, B, C, D}
 					 																		  new State("D")));
 			
 			private static State azDFAStartState = azDFAStates.get(0);																										//StartState = A
 			
 			private static ArrayList<State> azDFANextStates = new ArrayList<State>();																						
 			
-			private static ArrayList<State> azDFAAcceptingStates = new ArrayList<State>(Arrays.asList(azDFAStates.get(3)));													//AcceptingStates = {D}
+			private static ArrayList<State> azDFAAcceptingStates = new ArrayList<State>(Arrays.asList(azDFAStates.get(3)));													//F = {D}
 			
 			private static DFA azDFA;
 	//----------------------------------------------------------------------------------------------------------------------
@@ -286,16 +286,16 @@ public class DFAtest {
 				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(2))))	//acbc
 			};
 			
-			private static ArrayList<State> abDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));								//States = {A, B, C}
+			private static ArrayList<State> abDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));								//Q = {A, B, C}
 				
-			private static State abDFAStartState = abDFAStates.get(0);																										//StartStae = A
+			private static State abDFAStartState = abDFAStates.get(0);																										//q0 = A
 			
-			private static ArrayList<State> abDFANextStates = new ArrayList<State>(Arrays.asList(abDFAStates.get(1), abDFAStates.get(0), abDFAStates.get(0),				//(A, 'a', B), (A, 'b', A), (A, 'c', A)
+			private static ArrayList<State> abDFANextStates = new ArrayList<State>(Arrays.asList(abDFAStates.get(1), abDFAStates.get(0), abDFAStates.get(0),				//Delta = {(A, 'a', B), (A, 'b', A), (A, 'c', A)
 																								 abDFAStates.get(1), abDFAStates.get(2), abDFAStates.get(0),                //(B, 'a', B), (B, 'b', C), (B, 'c', A)
 																			                     abDFAStates.get(2), abDFAStates.get(2), abDFAStates.get(2)));				//(C, 'a', C), (C, 'b', C), (C, 'c', C)
 																			                   
 			
-			private static ArrayList<State> abDFAAcceptingStates = new ArrayList<State>(Arrays.asList( abDFAStates.get(2)));												//AcceptingStates = {C}
+			private static ArrayList<State> abDFAAcceptingStates = new ArrayList<State>(Arrays.asList( abDFAStates.get(2)));												//F = {C}
 			
 			private static DFA abDFA = new DFA(abDFAStates, abcAlphabet, abDFAStartState, abDFANextStates, abDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -316,14 +316,14 @@ public class DFAtest {
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))		//bbab
 			};
 			
-			private static ArrayList<State> allDFAStates = new ArrayList<State>(Arrays.asList(new State("A")));																//States = {A}
+			private static ArrayList<State> allDFAStates = new ArrayList<State>(Arrays.asList(new State("A")));																//Q = {A}
 			
-			private static State allDFAStartState =allDFAStates.get(0);																										//StartStae = A
+			private static State allDFAStartState =allDFAStates.get(0);																										//q0 = A
 			
-			private static ArrayList<State> allDFANextStates = new ArrayList<State>(Arrays.asList(allDFAStates.get(0),allDFAStates.get(0)));								//(A, '0', A), (A, '1', A)
+			private static ArrayList<State> allDFANextStates = new ArrayList<State>(Arrays.asList(allDFAStates.get(0),allDFAStates.get(0)));								//Delta = {(A, '0', A), (A, '1', A)
 																			                   
 			
-			private static ArrayList<State> allDFAAcceptingStates = new ArrayList<State>(Arrays.asList(allDFAStates.get(0)));												//AcceptingStates = {A}
+			private static ArrayList<State> allDFAAcceptingStates = new ArrayList<State>(Arrays.asList(allDFAStates.get(0)));												//F = {A}
 			
 			private static DFA allDFA = new DFA(allDFAStates, biAlphabet,allDFAStartState,allDFANextStates,allDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -344,16 +344,16 @@ public class DFAtest {
 				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(0), abcAlphabet.get(2), abcAlphabet.get(1), abcAlphabet.get(2))))	//acbc
 			};											//Input = "abc"
 			
-			private static ArrayList<State> acDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));				//States = {A, B, C, D}
+			private static ArrayList<State> acDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));				//Q = {A, B, C, D}
 			
 			private static State acDFAStartState = acDFAStates.get(0);																										//StartingState = A
 			
-			private static ArrayList<State> acDFANextStates =  new ArrayList<State>(Arrays.asList(acDFAStates.get(2), acDFAStates.get(1), acDFAStates.get(1),				//(A, 'a', C), (A, 'b', B), (A, 'c', B) 
+			private static ArrayList<State> acDFANextStates =  new ArrayList<State>(Arrays.asList(acDFAStates.get(2), acDFAStates.get(1), acDFAStates.get(1),				//Delta = {(A, 'a', C), (A, 'b', B), (A, 'c', B) 
 					 																			  acDFAStates.get(1), acDFAStates.get(1), acDFAStates.get(1),				//(B, 'a', B), (B, 'b', B), (B, 'c', B)
 					 																			  acDFAStates.get(2), acDFAStates.get(2), acDFAStates.get(3),				//(C, 'a', C), (C, 'b', C), (C, 'c', D)
 					 																			  acDFAStates.get(2), acDFAStates.get(2), acDFAStates.get(3)));				//(D, 'a', C), (D, 'b', C), (D, 'c', D)
 			
-			private static ArrayList<State> acDFAAcceptingStates = new ArrayList<State>(Arrays.asList(acDFAStates.get(3)));													//AcceptingStates = {D}
+			private static ArrayList<State> acDFAAcceptingStates = new ArrayList<State>(Arrays.asList(acDFAStates.get(3)));													//F = {D}
 			
 			private static DFA acDFA = new DFA(acDFAStates, abcAlphabet, acDFAStartState, acDFANextStates, acDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -374,16 +374,16 @@ public class DFAtest {
 				    new AlphaString(abcAlphabet, new ArrayList<Character>(Arrays.asList(abcAlphabet.get(1), abcAlphabet.get(1), abcAlphabet.get(0), abcAlphabet.get(2))))	//bbac
 			};																//Input = "abc"
 			
-			private static ArrayList<State> acOrDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));				//States = {A, B, C, D}
+			private static ArrayList<State> acOrDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));				//Q = {A, B, C, D}
 			
 			private static State acOrDFAStartState = acOrDFAStates.get(0);																										//StartingState = A
 			
-			private static ArrayList<State> acOrDFANextStates =  new ArrayList<State>(Arrays.asList(acOrDFAStates.get(1), acOrDFAStates.get(3), acOrDFAStates.get(2),			//(A, 'a', B), (A, 'b', D), (A, 'c', C) 
+			private static ArrayList<State> acOrDFANextStates =  new ArrayList<State>(Arrays.asList(acOrDFAStates.get(1), acOrDFAStates.get(3), acOrDFAStates.get(2),			//Delta = {(A, 'a', B), (A, 'b', D), (A, 'c', C) 
 					 																			    acOrDFAStates.get(1), acOrDFAStates.get(1), acOrDFAStates.get(1),			//(B, 'a', B), (B, 'b', B), (B, 'c', B)
 					 																			    acOrDFAStates.get(3), acOrDFAStates.get(3), acOrDFAStates.get(2),			//(C, 'a', D), (C, 'b', D), (C, 'c', C)
 					 																			    acOrDFAStates.get(3), acOrDFAStates.get(3), acOrDFAStates.get(2)));			//(D, 'a', D), (D, 'b', D), (D, 'c', C)
 			
-			private static ArrayList<State> acOrDFAAcceptingStates = new ArrayList<State>(Arrays.asList(acOrDFAStates.get(1), acOrDFAStates.get(2)));							//AcceptingStates = {B, C}
+			private static ArrayList<State> acOrDFAAcceptingStates = new ArrayList<State>(Arrays.asList(acOrDFAStates.get(1), acOrDFAStates.get(2)));							//F = {B, C}
 			
 			private static DFA acOrDFA = new DFA(acOrDFAStates, abcAlphabet, acOrDFAStartState, acOrDFANextStates, acOrDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -405,16 +405,16 @@ public class DFAtest {
 			};
 			
 			private static ArrayList<State> ooDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 
-																											 new State("D")));						//States = {A, B, C, D}
+																											 new State("D")));						//Q = {A, B, C, D}
 			
-			private static State ooDFAStartState =ooDFAStates.get(0);																				//StartStae = A
+			private static State ooDFAStartState =ooDFAStates.get(0);																				//q0 = A
 			
-			private static ArrayList<State>ooDFANextStates = new ArrayList<State>(Arrays.asList(ooDFAStates.get(1),ooDFAStates.get(2),				//(A, '0', B), (A, '1', C)
-																			                    ooDFAStates.get(1),ooDFAStates.get(3),				//(B, '0', B), (B, '1', D)
-																			                    ooDFAStates.get(3),ooDFAStates.get(2),				//(C, '0', D), (C, '1', C)
-			 																					ooDFAStates.get(3),ooDFAStates.get(3)));			//(D, '0', D), (D, '1', D)
+			private static ArrayList<State>ooDFANextStates = new ArrayList<State>(Arrays.asList(ooDFAStates.get(1),ooDFAStates.get(2),				//Delta = {(A, '0', B), (A, '1', C)
+																			                    ooDFAStates.get(1),ooDFAStates.get(3),						 //(B, '0', B), (B, '1', D)
+																			                    ooDFAStates.get(3),ooDFAStates.get(2),						 //(C, '0', D), (C, '1', C)
+			 																					ooDFAStates.get(3),ooDFAStates.get(3)));					 //(D, '0', D), (D, '1', D)}
 			
-			private static ArrayList<State>ooDFAAcceptingStates = new ArrayList<State>(Arrays.asList(ooDFAStates.get(3)));							//AcceptingStates = {D}
+			private static ArrayList<State>ooDFAAcceptingStates = new ArrayList<State>(Arrays.asList(ooDFAStates.get(3)));							//F = {D}
 			
 			private static DFA ooDFA = new DFA(ooDFAStates, biAlphabet,ooDFAStartState,ooDFANextStates,ooDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
@@ -422,23 +422,25 @@ public class DFAtest {
 	public static void main(String[] args) { 
 		
 		//Define benDFA--------------------------------------------------------------------------------------------------------
-			initializeStates(engAlphabet, benDFAStates, benDFANextStates, benDFAStates.get(4)); //([ALL States], [ALL Characters], E])
-			//Except for
-			benDFANextStates.set((26*0 + 1), benDFAStates.get(1));								//(A, 'b', B)
-			benDFANextStates.set((26*1 + 4), benDFAStates.get(2));								//(B, 'e', C)
-			benDFANextStates.set((26*2 + 13), benDFAStates.get(3));								//(C, 'n', D)
+			initializeStates(engAlphabet, benDFAStates, benDFANextStates, benDFAStates.get(4)); //Delta = {([ALL States], [ALL Characters], E])}
+																								//Except for																		
+			
+			
+			benDFANextStates.set((26*0 + 1), benDFAStates.get(1));								//{(A, 'b', B)
+			benDFANextStates.set((26*1 + 4), benDFAStates.get(2));								 //(B, 'e', C)
+			benDFANextStates.set((26*2 + 13), benDFAStates.get(3));							     //(C, 'n', D)}
 			
 			benDFA = new DFA(benDFAStates, engAlphabet, benDFAStartState, benDFANextStates, benDFAAcceptingStates);
 		//------------------------------------------------------------------------------------------------------------------------
 		
 		//Define azDFA---------------------------------------------------------------------------------------------------------
-			initializeStates(engAlphabet, azDFAStates, azDFANextStates, azDFAStates.get(2));//([ALL States], [ALL Characters], C])
-			//Except for
-			azDFANextStates.set((26*0 + 0), azDFAStates.get(1));							//(A, 'a', B)
-			azDFANextStates.set((26*1 + 25), azDFAStates.get(3));							//(B, 'z', D)
-			
-			for(int i = 0; i < engAlphabet.size(); i++){
-			azDFANextStates.set((26*3 + i), azDFAStates.get(3));						//(D, [All Characters], D)
+			initializeStates(engAlphabet, azDFAStates, azDFANextStates, azDFAStates.get(2)); 	//Delta = {([ALL States], [ALL Characters], C])}
+																							 	//Except for
+			azDFANextStates.set((26*0 + 0), azDFAStates.get(1));								//{(A, 'a', B)
+			azDFANextStates.set((26*1 + 25), azDFAStates.get(3));							     //(B, 'z', D)
+																								 //(D, [All Characters], D)}
+			for(int i = 0; i < engAlphabet.size(); i++){											 
+			azDFANextStates.set((26*3 + i), azDFAStates.get(3));						             
 			
 			}
 			
@@ -1115,7 +1117,7 @@ public class DFAtest {
 				
 				System.out.println("\n" + accepts + "\n");
 				
-				System.out.println("Trace: " + currentDFA.getTrace().displayable() + "\n");			//Print the trace of states visited
+				System.out.println("Trace: " + currentDFA.getTrace().displayable() + "\n");		//Print the trace of states visited
 				
 				currentDFA.resetDFA();
 				
@@ -1136,7 +1138,7 @@ public class DFAtest {
 	
 	//Function that returns a DFA with a language consisting of a single character
 	public static DFA nDFA(Alphabet alphabet, Character character){
-		ArrayList<State> states = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));	//States = {A, B, C}
+		ArrayList<State> states = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));	//Q = {A, B, C}
 		
 		ArrayList<State> nextStates = new ArrayList<State>();
 		
@@ -1147,9 +1149,9 @@ public class DFAtest {
 		
 		nextStates.set(alphabet.findIndex(character), states.get(1));													//Except for (A, [accepting character], B)
 		
-		State startState = states.get(0);																				//StartState = A
+		State startState = states.get(0);																				//q0 = A
 		
-		ArrayList<State> acceptingStates = new ArrayList<State>(Arrays.asList(states.get(1)));							//AcceptingStates = {B}
+		ArrayList<State> acceptingStates = new ArrayList<State>(Arrays.asList(states.get(1)));							//F = {B}
 		
 		DFA nDFA = new DFA(states, alphabet, startState, nextStates, acceptingStates);
 		
@@ -1254,7 +1256,7 @@ public class DFAtest {
 					dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
 					dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
 				    
-					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//( qi+j, c, ((qai, c)+(qaj, c)) )
+					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//Delta = {( qi+j, c, ((qai, c)+(qaj, c)) )}
 					
 					unionNextStates.add(unionStates.get(nextIndex));
 				
