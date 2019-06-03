@@ -42,7 +42,7 @@ public class StateTable {
 		for(int i = 0; i < currentStates.size(); i++){
 			this.nfaStateTable.add(new ArrayList<ArrayList<State>>());
 			
-			for(int j = 0; j < alphabet.size(); j++){
+			for(int j = 0; j < alphabet.size()+1; j++){												//+1 is for epsilon
 				(this.nfaStateTable.get(i)).add(this.branchStates.get(j + (i*alphabet.size())));
 				
 			}
