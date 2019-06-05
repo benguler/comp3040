@@ -6,10 +6,12 @@ public class Trace {
 	
 	public Trace(){
 		this.trace = new ArrayList<State>();
+		
 	}
 	
 	public Trace(ArrayList<State> trace){
 		this.trace = trace;
+		
 	}
 	
 	public void addState(State state){
@@ -32,6 +34,16 @@ public class Trace {
 	
 	public void clear(){
 		this.trace.clear();
+		
+	}
+	
+	public State get(int i) {
+		return trace.get(i);
+		
+	}
+	
+	public int size(){
+		return trace.size();
 		
 	}
 	

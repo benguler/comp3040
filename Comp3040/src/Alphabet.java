@@ -30,6 +30,7 @@ public class Alphabet {
 	
 	public int findIndex(Character character){
 		return alphabet.indexOf(character);
+	
 	}
 	
 }

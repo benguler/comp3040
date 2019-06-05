@@ -47,8 +47,8 @@ public class StateTable {
 		for(int i = 0; i < currentStates.size(); i++){
 			this.nfaStateTable.add(new ArrayList<ArrayList<State>>());
 			
-			for(int j = 0; j < alphabet.size()+1; j++){												//+1 is for epsilon, essentially epended on the end of the alphabet
-				(this.nfaStateTable.get(i)).add(this.branchStates.get(j + (i*alphabet.size())));
+			for(int j = 0; j < alphabet.size()+1; j++){												//+1 is for epsilon, essentially appended on the end of the alphabet
+				(this.nfaStateTable.get(i)).add(this.branchStates.get(j + (i*(alphabet.size()+1))));
 				
 			}
 			
@@ -81,14 +81,14 @@ public class StateTable {
 			return (nfaStateTable.get(getStateIndex(state))).get(alphabet.size());
 			
 		}else {
-			return (nfaStateTable.get(getStateIndex(state))).get(getCharIndex(character));
+			return (nfaStateTable.get( getStateIndex(state)) ).get( getCharIndex(character) );
 			
 		}
 		
 	}
 	
-	public State nfaGet(int i, int j, int k){
-		return (nfaStateTable.get(i)).get(j).get(k);
+	public ArrayList<State> nfaGet(int i, int j){
+		return (nfaStateTable.get(i)).get(j);
 		
 	}
 	

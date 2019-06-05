@@ -48,12 +48,12 @@ public class DFA {
 		
 		resetDFA();
 		
-		this.trace.addState(returnCurrentState());
+		this.trace.addState(getCurrentState());
 		
 		for(int i = 0; i <  string.length(); i++){
 			currentState = findNextState(string.getChar(i));
 			
-			this.trace.addState(returnCurrentState());
+			this.trace.addState(getCurrentState());
 			
 		}
 		
@@ -61,7 +61,7 @@ public class DFA {
 		
 	}
 	
-	public State returnCurrentState(){
+	public State getCurrentState(){
 		return currentState;
 		
 	}

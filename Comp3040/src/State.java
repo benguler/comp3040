@@ -17,9 +17,4 @@ public class State {
 		
 	}
 	
-	public boolean isSame(State state){
-		return (this.identifier == state.getIdentifier());
-		
-	}
-	
 }
