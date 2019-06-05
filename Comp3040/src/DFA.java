@@ -48,7 +48,7 @@ public class DFA {
 		
 		resetDFA();
 		
-		this.trace.addState(getCurrentState());
+		this.trace.addState(getCurrentState());				//Add the beginning state
 		
 		for(int i = 0; i <  string.length(); i++){
 			currentState = findNextState(string.getChar(i));

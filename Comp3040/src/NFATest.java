@@ -58,7 +58,7 @@ public class NFATest {
 		private static NFA evenNFA = new NFA(evenNFAStates, biAlphabet,evenNFAStartState,evenNFANextStates,evenNFAAcceptingStates, epsilon);
 	//----------------------------------------------------------------------------------------------------------------------
 
-	//NFA that accepts a binary number with a one at the 2nd or 3rd position from the end in the string (The "stDFA")-------
+	//NFA that accepts a binary number with a 1 at the 2nd or 3rd position from the end in the string (The "stDFA")-------
 		private static ArrayList<State> stNFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));						//Q = {A, B, C, D}
 		
 		private static State stNFAStartState = stNFAStates.get(0);																				//q0 = A
@@ -91,7 +91,7 @@ public class NFATest {
 		
 		System.out.println("\n" + accepts);
 		
-		accepts = (oddNFA.run(string))? "String Accepted":"String Rejected";					//Tests string through an NFA. Breaks the transition functions. Was working before
+		accepts = (oddNFA.run(string))? "String Accepted":"String Rejected";					//Tests string through an NFA. Breaks the transition functions. Was working before. Might reimplement previous method 
 		
 		System.out.println("\n" + accepts);														
 		
@@ -142,7 +142,7 @@ public class NFATest {
 			
 		}
 		
-		if(trace.get(0) != nfa.getStartState()){													//If trace[0] is not in start states
+		if(trace.get(0) != nfa.getStartState()){													//If trace[0] is equal to q0
 			System.out.println("\nfailed test 2");
 			return false;
 			

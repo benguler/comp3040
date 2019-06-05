@@ -37,16 +37,12 @@ public class AlphaString {
 	}
 	
 	public void addChar(Character character){				//Add char at alphabet[i] to string
-		int i = alphabet.findIndex(character);
-		
-		string.add(alphabet.get(i));
+		string.add(character);
 		
 	}
 	
 	public void pushChar(Character character){
-		int i = alphabet.findIndex(character);
-		
-		string.add(0, alphabet.get(i));
+		string.add(0, character);
 	}
 	
 	public void setChar(int n, Character character){		//Sets the nth character of a string to the new character 

@@ -11,7 +11,7 @@ public class NFA {
 	private Alphabet alphabet; 								//Sigma	[Also serves as the x-axis of the state map]
 	private State startState; 								//q0
 	private ArrayList<ArrayList<State>> nextStates;			//What fills the cells in the state map[The "--> Q" in Delta]
-	private StateTable stateTable;							//Delta : Q X Sigma or Epsilon --> Q 
+	private StateTable stateTable;							//Delta : Q X Sigma or Epsilon --> P(Q) 
 	private ArrayList<State> acceptingStates;				//F
 	
 	private ArrayList<State> currentStates;

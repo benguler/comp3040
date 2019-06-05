@@ -11,7 +11,7 @@ public class Nth {
 	
 	private static Alphabet alphabet = new Alphabet(symbols);
 	
-	private static int n = 100;
+	private static int n = 16+16;
 	
 	public static void main(String[] args) {
 		AlphaString nthString = nthString(alphabet, n);
@@ -28,7 +28,7 @@ public class Nth {
 		int exp = 0;
 		int stringLength = 0;										//Length of the nth string
 		
-		if(m < Math.pow(alphabetSize, exp)){						//If m = 0, return empty string
+		if(m < Math.pow(alphabetSize, exp)){						//If n = 0, return empty string
 			return nthString;
 			
 		}

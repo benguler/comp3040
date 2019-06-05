@@ -1185,7 +1185,7 @@ public class DFAtest {
 					
 				}
 				
-				if(i == states.size()) {
+				if(i == states.size()) {			//No states point to c
 					return null;
 					
 				}
