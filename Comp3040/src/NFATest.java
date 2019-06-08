@@ -81,9 +81,6 @@ public class NFATest {
 		String accepts;
 		
 		AlphaString string = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));	//0111
-		//AlphaString string = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(1))));	//1001
-		
-		//Trace trace = new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(1))));	//A A B C D
 		
 		Trace trace = new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(1), stNFAStates.get(2), stNFAStates.get(3))));	
 		
@@ -192,8 +189,12 @@ public class NFATest {
 			
 		}
 			
-		return nfa.getAcceptingStates().contains(curState);
+		return nfa.getAcceptingStates().contains(curState) && index == string.length()-1;			//Checks if curstate is in accepted states and curstate is the last state
 		
 	}
+	
+	//public static NFA union(NFA nfa1, NFA nfa2) {
+		
+	//}
 	
 }
