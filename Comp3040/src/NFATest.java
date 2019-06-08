@@ -58,15 +58,15 @@ public class NFATest {
 		private static NFA evenNFA = new NFA(evenNFAStates, biAlphabet,evenNFAStartState,evenNFANextStates,evenNFAAcceptingStates, epsilon);
 	//----------------------------------------------------------------------------------------------------------------------
 
-	//NFA that accepts a binary number with a 1 at the 2nd or 3rd position from the end in the string (The "stDFA")-------
+	//NFA that accepts a binary number with a 1 at the 2nd or 3rd position from the end in the string (The "stDFA")-------					//I.E. 1000 or 0100, but not 0010 or 0001
 		private static ArrayList<State> stNFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));						//Q = {A, B, C, D}
 		
 		private static State stNFAStartState = stNFAStates.get(0);																				//q0 = A
 		
 		private static ArrayList<ArrayList<State>>stNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
 				 																					 newList(stNFAStates.get(0)), newList(stNFAStates.get(0), stNFAStates.get(1)), newList(),	//Delta = {(A, '0', {A}),(A, 1, {A, B}).(A, epsilon, {})
-				 																					 newList(stNFAStates.get(2)), newList(stNFAStates.get(2)), newList(stNFAStates.get(2)),		//		   (B, '0', {C}),(B, '0', {C}), (B, epsilon, {C})
-																									 newList(stNFAStates.get(3)), newList(stNFAStates.get(3)), newList(),						//		   (C, '0', {D}),(C, '0', {D}), (C, epsilon, {})
+				 																					 newList(stNFAStates.get(2)), newList(stNFAStates.get(2)), newList(stNFAStates.get(2)),		//		   (B, '0', {C}),(B, '1', {C}), (B, epsilon, {C})
+																									 newList(stNFAStates.get(3)), newList(stNFAStates.get(3)), newList(),						//		   (C, '0', {D}),(C, '1', {D}), (C, epsilon, {})
 																									 newList(), newList(), newList())															//		   (D, '0', {}), (D, '1', {}), (D, epsilon, {})				
 																									);	
 																									
@@ -80,22 +80,21 @@ public class NFATest {
 		
 		String accepts;
 		
-		AlphaString string = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1))));	//1001
+		AlphaString string = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));	//0111
+		//AlphaString string = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(1))));	//1001
 		
-		Trace trace = new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(1))));	//A A A A B
+		//Trace trace = new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(1))));	//A A B C D
+		
+		Trace trace = new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(1), stNFAStates.get(2), stNFAStates.get(3))));	
 		
 		System.out.println(string.displayable());
 		System.out.println(trace.displayable());
 		
-		accepts = (traceTest(oddNFA, string, trace, true))? "Trace Accepted":"Trace Rejected";	//Tests trace given an NFA, string, and 
+		accepts = (stringTest(string, stNFA, stNFA.getStartState(), 0))? "String Accepted":"String Rejected";					//Tests string through an NFA. Breaks the transition functions. Was working before. Might reimplement previous method 
 		
-		System.out.println("\n" + accepts);
+		System.out.println("\n" + accepts);											
 		
-		accepts = (oddNFA.run(string))? "String Accepted":"String Rejected";					//Tests string through an NFA. Breaks the transition functions. Was working before. Might reimplement previous method 
-		
-		System.out.println("\n" + accepts);														
-		
-		accepts = (traceTest(oddNFA, string, trace, true))? "Trace Accepted":"Trace Rejected";	//Should return correctly, but doesn't. Does return correctly when placed before the string test. Running the NFA somehow messes up the transitions. Why?
+		accepts = (traceTest(stNFA, string, trace, true))? "Trace Accepted":"Trace Rejected";	//Tests trace given an NFA, string, and 
 		
 		System.out.println("\n" + accepts);
 		
@@ -137,20 +136,17 @@ public class NFATest {
 	public static boolean traceTest(NFA nfa, AlphaString string, Trace trace, Boolean result) {
 		
 		if(trace.size() != string.length()+1) {														//If trace.size() is not equal to the number of characters + 1
-			System.out.println("\nfailed test 1");
 			return false;
 			
 		}
 		
 		if(trace.get(0) != nfa.getStartState()){													//If trace[0] is equal to q0
-			System.out.println("\nfailed test 2");
 			return false;
 			
 		}
 		
 		for(int i = string.length(); i > 0; i--){
 			if(!nfa.findNextStates(trace.get(i-1), string.getChar(i-1)).contains(trace.get(i)) && !nfa.findNextStates(trace.get(i-1), epsilon).contains(trace.get(i))){   //If stateTable[trace[i-1][string[i-1] or epsilon].contains(trace[i]) == false 
-				System.out.println("\nfailed test 3");
 				return false;
 				
 			}
@@ -163,8 +159,40 @@ public class NFATest {
 			
 		}
 																						//Otherwise
-		System.out.println("\nfailed test 4");
 		return false;
+		
+	}
+	
+	public static boolean stringTest(AlphaString string, NFA nfa, State curState, int index) {		
+		boolean accept = false;
+		
+		ArrayList<State> branch = new ArrayList<State>();
+		
+		branch = nfa.findNextStates(curState, string.getChar(index));								//Get (curState, string[index])
+		ArrayList<State> epBranch = new ArrayList<State>();
+		
+		for(State branchling : branch) {
+			epBranch.addAll(nfa.findNextStates(branchling, epsilon));									//And (branchling, epsilon)
+			
+		}
+		
+		branch.addAll(epBranch);
+		
+		for(int i = 0; i < branch.size(); i++) {													//Search through branching states
+			
+			if(index < string.length()-1){													
+				 accept = stringTest(string, nfa, branch.get(i), index+1);							//Keep searching branches
+				 
+			}
+			
+			if(accept) {																			//If string is accepted											
+				return true;																		//Return true and stop searching
+				
+			}
+			
+		}
+			
+		return nfa.getAcceptingStates().contains(curState);
 		
 	}
 	

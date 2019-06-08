@@ -6,7 +6,7 @@ public class TTNode {
 	private State state;
 	private Character edge;
 	
-	private ArrayList<TTNode> childNodes;
+	private ArrayList<TTNode> childNodes  = new ArrayList<TTNode>();;
 	
 	public TTNode() {
 		
@@ -19,7 +19,6 @@ public class TTNode {
 	public TTNode(TTNode parentNode, State state, Character edge){
 		this.parentNode = parentNode;
 		this.state = state;
-		this.childNodes = new ArrayList<TTNode>();
 		this.edge = edge;
 		
 	}

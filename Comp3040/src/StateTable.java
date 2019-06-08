@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class StateTable {
 	private ArrayList<State> currentStates;
 	private Alphabet alphabet;
-	private ArrayList<State> nextStates;		//For DFA
+	private ArrayList<State> nextStates;				//For DFA
 	private ArrayList<ArrayList<State>> branchStates;	//For NFA
 	
 	Character epsilon;
@@ -91,5 +91,6 @@ public class StateTable {
 		return (nfaStateTable.get(i)).get(j);
 		
 	}
+	
 	
 }
