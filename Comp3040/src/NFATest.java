@@ -27,7 +27,7 @@ public class NFATest {
 	//---------------------------------------------------------------------------------------------------------------------
 	
 	//NFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
-		private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+		private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {A, B}
 		
 		private static State oddNFAStartState = oddNFAStates.get(0);																			//q0 = A
 		
@@ -43,7 +43,7 @@ public class NFATest {
 	//----------------------------------------------------------------------------------------------------------------------
 		
 	//NFA that accepts even binary #s (The "evenDFA")-----------------------------------------------------------------------
-		private static ArrayList<State> evenNFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+		private static ArrayList<State> evenNFAStates = new ArrayList<State>(Arrays.asList(new State("even0"), new State("even1")));						//Q = {A, B}
 		
 		private static State evenNFAStartState = evenNFAStates.get(0);																				//q0 = A
 		
@@ -59,7 +59,7 @@ public class NFATest {
 	//----------------------------------------------------------------------------------------------------------------------
 
 	//NFA that accepts a binary number with a 1 at the 2nd or 3rd position from the end in the string (The "stDFA")-------					//I.E. 1000 or 0100, but not 0010 or 0001
-		private static ArrayList<State> stNFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), new State("D")));						//Q = {A, B, C, D}
+		private static ArrayList<State> stNFAStates = new ArrayList<State>(Arrays.asList(new State("st0"), new State("st1"), new State("st2"), new State("st3")));						//Q = {A, B, C, D}
 		
 		private static State stNFAStartState = stNFAStates.get(0);																				//q0 = A
 		
@@ -80,18 +80,21 @@ public class NFATest {
 		
 		String accepts;
 		
-		AlphaString string = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));	//0111
+		AlphaString string = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1))));	//0111
 		
-		Trace trace = new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(1), stNFAStates.get(2), stNFAStates.get(3))));	
+		Trace trace = new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(0), oddNFAStates.get(1))));	
 		
 		System.out.println(string.displayable());
 		System.out.println(trace.displayable());
 		
-		accepts = (stringTest(string, stNFA, stNFA.getStartState(), 0))? "String Accepted":"String Rejected";					//Tests string through an NFA. Breaks the transition functions. Was working before. Might reimplement previous method 
+		NFA union = union(stNFA, oddNFA);
+		
+		accepts = (stringTest(string, union, union.getStartState(), 0))? "String Accepted":"String Rejected";					//Tests string through an NFA. Breaks the transition functions. Was working before. Might reimplement previous method 
+		//accepts = (stringTest(string, oddNFA, oddNFA.getStartState(), 0))? "String Accepted":"String Rejected";	
 		
 		System.out.println("\n" + accepts);											
 		
-		accepts = (traceTest(stNFA, string, trace, true))? "Trace Accepted":"Trace Rejected";	//Tests trace given an NFA, string, and 
+		accepts = (traceTest(oddNFA, string, trace, true))? "Trace Accepted":"Trace Rejected";	//Tests trace given an NFA, string, and 
 		
 		System.out.println("\n" + accepts);
 		
@@ -155,7 +158,7 @@ public class NFATest {
 			return true;
 			
 		}
-																						//Otherwise
+																									//Otherwise
 		return false;
 		
 	}
@@ -163,38 +166,68 @@ public class NFATest {
 	public static boolean stringTest(AlphaString string, NFA nfa, State curState, int index) {		
 		boolean accept = false;
 		
-		ArrayList<State> branch = new ArrayList<State>();
-		
-		branch = nfa.findNextStates(curState, string.getChar(index));								//Get (curState, string[index])
-		ArrayList<State> epBranch = new ArrayList<State>();
-		
-		for(State branchling : branch) {
-			epBranch.addAll(nfa.findNextStates(branchling, epsilon));									//And (branchling, epsilon)
+		ArrayList<State> branch = new ArrayList<State>();												
+		if(string.length() != 0){																		//If testing the empty string, check if startState is an accepting state			
+			branch = nfa.findNextStates(curState, string.getChar(index));								//Get (curState, string[index])
 			
-		}
-		
-		branch.addAll(epBranch);
-		
-		for(int i = 0; i < branch.size(); i++) {													//Search through branching states
+			for(State epState : nfa.findNextStates(curState, epsilon)) {
+				branch.addAll(nfa.findNextStates(epState, string.getChar(index)));
+				
+			}																		
 			
-			if(index < string.length()-1){													
-				 accept = stringTest(string, nfa, branch.get(i), index+1);							//Keep searching branches
-				 
-			}
-			
-			if(accept) {																			//If string is accepted											
-				return true;																		//Return true and stop searching
+			for(State branchling : branch) {															//Search through branching states
+				if(index < string.length()-1){
+					accept = stringTest(string, nfa, branchling, index+1);								//Keep searching
+					 
+				}
+				
+				if(accept) {																			//If string is accepted											
+					return true;																		//Return true and stop searching
+					
+				}
+				
+				if(nfa.getAcceptingStates().contains(branchling) && index == string.length()-1) {		//If curState is an accepting state and curState is at the bottom of the tree
+					return true;																		//Return true and stop searching
+					
+				}
 				
 			}
+																										//Otherwise
+			return false;	
+			
+		}else{
+			return (nfa.getAcceptingStates().contains(curState) && index == string.length()-1);
 			
 		}
-			
-		return nfa.getAcceptingStates().contains(curState) && index == string.length()-1;			//Checks if curstate is in accepted states and curstate is the last state
 		
 	}
 	
-	//public static NFA union(NFA nfa1, NFA nfa2) {
+	public static NFA union(NFA nfa1, NFA nfa2) {
+		ArrayList<State> uStates = new ArrayList<State>();
+		Alphabet alphabet = nfa1.getAlphabet();
+		State uStartState = new State("uStart");
+		ArrayList<ArrayList<State>> uNextStates = new ArrayList<ArrayList<State>>();
+		ArrayList<State> uAcceptingStates = new ArrayList<State>();
 		
-	//}
+		uStates.add(uStartState);												//uStates = {uStart
+		uStates.addAll(nfa1.getStates());										//			 + [nfa1 States] 
+		uStates.addAll(nfa2.getStates());										//			 + [nfa2 States]}
+		
+		for(int i = 0; i < nfa1.getAlphabet().size(); i++){
+				uNextStates.add(newList());										//(uStartState, C e Sigma, {} )
+				
+		}
+	
+		uNextStates.add(newList(nfa1.getStartState(), nfa2.getStartState()));	//(uStartState, epsilon, {Start1, Start2} )
+		
+		uNextStates.addAll(nfa1.getNextStates());								//Preserve the transitions of the first NFA
+		uNextStates.addAll(nfa2.getNextStates());								//As well as the second
+		
+		uAcceptingStates.addAll(nfa1.getAcceptingStates());						//uAcceptingStates = {[nfa1 Accepting States]
+		uAcceptingStates.addAll(nfa2.getAcceptingStates());						//+[nfa2 Accepting States]}
+		
+		return new NFA(uStates, alphabet, uStartState, uNextStates, uAcceptingStates, epsilon);
+		
+	}
 	
 }
