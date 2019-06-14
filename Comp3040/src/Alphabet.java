@@ -33,4 +33,9 @@ public class Alphabet {
 	
 	}
 	
+	public ArrayList<Character> getList(){
+		return alphabet;
+		
+	}
+	
 }

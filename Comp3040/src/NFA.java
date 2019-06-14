@@ -91,51 +91,38 @@ public class NFA {
 		ArrayList<ArrayList<State>> newStates = new ArrayList<ArrayList<State>>();
 		
 		ArrayList<State> branch = new ArrayList<State>();		
-		ArrayList<State> epsilonBranch = new ArrayList<State>();
 		ArrayList<State> temp = new ArrayList<State>();	
 		
 		for(int i = 0; i <  string.length(); i++){
 			newStates.clear();
 			
-			branch.clear();
-			epsilonBranch.clear();
-			temp.clear();
+			branch = new ArrayList<State>();
+			temp = new ArrayList<State>();
 			
-			trace = new Trace(this.currentStates);
-			//System.out.print(trace.displayable() + "- " + string.getChar(i).displayable() + " - ");
-			
-			for(int j = 0; j < this.currentStates.size(); j++) {
-				branch = this.stateTable.nfaFindNextState(this.currentStates.get(j), string.getChar(i));		//Eventually begins returning an empty set regardless of the given character or state
+			for(int j = 0; j < this.currentStates.size(); j++) {																		//Find next set of states that are transitioned to
+				branch = this.stateTable.nfaFindNextState(this.currentStates.get(j), string.getChar(i));									
 				
 				if(branch.isEmpty() && this.currentStates.get(j).getIdentifier() == "A") {
 					System.out.println(i);
 					
 					System.out.println("Why doesn't this work?");
 					
-				}
-			
-				for (State branchling : branch){
-					epsilonBranch = this.stateTable.nfaFindNextState(branchling, this.epsilon);			//Find any states resulting from the epsilon transitions, if the exist
-					temp.addAll(epsilonBranch);	
-					
-				}
-				
-				branch.addAll(temp);																	//Append those states to the branch
+				}													
 				
 				newStates.add(branch);
 				
 				for (State branchling : branch){
 					TTNode node = new TTNode( this.traceTree.getNode(this.traceTree.getDepth()-1, j), branchling, string.getChar(i));
-					this.traceTree.addNode(node);																			//Add node to trace tree containing new state
-					this.traceTree.getNode(this.traceTree.getDepth()-1, j).addChildNode(node); 									//Add node to set of child nodes for the node containing the corresponding state. 
+					this.traceTree.addNode(node);																						//Add node to trace tree containing new state
+					this.traceTree.getNode(this.traceTree.getDepth()-1, j).addChildNode(node); 											//Add node to set of child nodes for the node containing the corresponding state. 
 					
 				}
 				
 			}
 			
-			this.traceTree.incrimentDepth();
+			this.traceTree.incrimentDepth();																							//No working with lower level of tree
 			
-			this.currentStates.clear();
+			this.currentStates = new ArrayList<State>();
 			
 			for(ArrayList<State> states : newStates) {
 				this.currentStates.addAll(states);
@@ -143,9 +130,6 @@ public class NFA {
 			}
 			
 		}
-		
-		trace = new Trace(this.currentStates);
-		//System.out.print(trace.displayable());
 		
 		return acceptReject();
 		
