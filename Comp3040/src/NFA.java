@@ -18,7 +18,7 @@ public class NFA {
 	
 	private TraceTree traceTree;
 	
-	Trace trace;
+	private Trace trace;
 	
 	public NFA(){
 		
@@ -35,22 +35,9 @@ public class NFA {
 		
 		this.currentStates.add(startState);
 		
-		ArrayList<State> epStart = new ArrayList<State>();
+		this.currentStates.addAll(this.stateTable.nfaFindNextState(startState, epsilon));
 		
 		this.traceTree = new TraceTree();
-		
-		for(State curState : this.currentStates) {
-			for(State epState : this.stateTable.nfaFindNextState(curState, epsilon)){
-				epStart.add(epState);
-				
-			}
-			
-		}
-		
-		for(State epState : epStart) {
-			this.currentStates.add(epState);
-			
-		}
 		
 		for(State curState : this.currentStates) {
 			this.traceTree.addNode(new TTNode(curState));
@@ -68,6 +55,8 @@ public class NFA {
 	
 	public void resetNFA(){
 		this.currentStates = new ArrayList<State>(Arrays.asList(startState));
+		
+		this.currentStates.addAll(this.stateTable.nfaFindNextState(startState, epsilon));
 		
 	}
 	
@@ -90,15 +79,12 @@ public class NFA {
 		
 		ArrayList<ArrayList<State>> newStates = new ArrayList<ArrayList<State>>();
 		
-		ArrayList<State> branch = new ArrayList<State>();		
-		ArrayList<State> temp = new ArrayList<State>();	
+		ArrayList<State> branch = new ArrayList<State>();	
 		
 		for(int i = 0; i <  string.length(); i++){
 			newStates.clear();
 			
 			branch = new ArrayList<State>();
-			temp = new ArrayList<State>();
-			
 			for(int j = 0; j < this.currentStates.size(); j++) {																		//Find next set of states that are transitioned to
 				branch = this.stateTable.nfaFindNextState(this.currentStates.get(j), string.getChar(i));									
 				

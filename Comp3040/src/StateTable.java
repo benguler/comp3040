@@ -87,7 +87,7 @@ public class StateTable {
 			temp1.addAll((nfaStateTable.get(getStateIndex(state))).get(alphabet.size()));
 			
 			do{
-				temp2.clear();
+				temp2 = new ArrayList<State>();
 				
 				for(State nState :  temp1) {													//Keep looking for epsilon transitions
 						temp2.addAll(( nfaStateTable.get( getStateIndex(nState)) ).get( alphabet.size() ));
@@ -108,7 +108,7 @@ public class StateTable {
 			temp1.addAll(( nfaStateTable.get( getStateIndex(state)) ).get( getCharIndex(character) ));
 			
 			do{																					//Keep looking for epsilon transitions
-				temp2.clear();
+				temp2 = new ArrayList<State>();
 				
 				for(State nState :  temp1) {
 						temp2.addAll(( nfaStateTable.get( getStateIndex(nState)) ).get( alphabet.size() ));
