@@ -3,8 +3,8 @@ import java.util.Arrays;
 
 public class NFATest {
 	
-//Initialize Alphabet(s)-----------------------------------------------------------------------------------------------
-		private static final Character epsilon = new Character(""); //ϵ
+	//Initialize Alphabet(s)-----------------------------------------------------------------------------------------------
+		private static final Character epsilon = new Character(""); 
 
 		//The binary numbers
 		private static ArrayList<Character> biSymbols =  new ArrayList<Character>(Arrays.asList(new Character("0"), new Character("1")));

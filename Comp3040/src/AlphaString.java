@@ -21,40 +21,47 @@ public class AlphaString {
 		
 	}
 	
+	public AlphaString(Alphabet alphabet, Character character){
+		this.alphabet = alphabet;
+	
+		this.string.add(character);
+		
+	}
+	
 	public int length(){
-		return string.size();
+		return this.string.size();
 		
 	}
 	
 	public Character getChar(int i){
-		return string.get(i);
+		return this.string.get(i);
 		
 	}
 	
 	public int getCharPosition(Character character){
-		return string.indexOf(character);
+		return this.string.indexOf(character);
 		
 	}
 	
 	public void addChar(Character character){				//Add char at alphabet[i] to string
-		string.add(character);
+		this.string.add(character);
 		
 	}
 	
 	public void pushChar(Character character){
-		string.add(0, character);
+		this.string.add(0, character);
 	}
 	
 	public void setChar(int n, Character character){		//Sets the nth character of a string to the new character 
-		string.set(n, character);
+		this.string.set(n, character);
 		
 	}
 	
 	public String displayable(){
 		String display = "";
 		
-		for(int i = 0; i < string.size(); i++){
-			display += string.get(i).displayable();
+		for(int i = 0; i < this.string.size(); i++){
+			display += this.string.get(i).displayable();
 			
 		}
 		
@@ -62,5 +69,9 @@ public class AlphaString {
 		
 	}
 	
+	public ArrayList<Character> getChars(){
+		return this.string;
+		
+	}
 	
 }
