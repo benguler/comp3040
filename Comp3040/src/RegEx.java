@@ -13,4 +13,10 @@ public interface RegEx {
 	
 	public String displayable();
 	
+	public boolean isUnion();
+	
+	public boolean isConcat();
+	
+	public boolean isStar();
+	
 }

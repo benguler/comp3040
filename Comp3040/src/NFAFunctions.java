@@ -345,11 +345,6 @@ public class NFAFunctions {
 		
 		for(State curState : dfa.getAcceptingStates()) {
 			
-			if(dfa.run(acceptingString)) {
-				return acceptingString;
-				
-			}
-			
 			while(curState != startState ){				//Until we arrive at the starting state
 				newState = false;
 				
@@ -385,12 +380,18 @@ public class NFAFunctions {
 				}
 				
 				if(nextAccept) {
-					nextAccept = false;
 					break;
 					
 				}
 				
 			}
+			
+			if(dfa.run(acceptingString) && !nextAccept) {
+				return acceptingString;
+				
+			}
+			
+			nextAccept = false;
 			
 		}
 		

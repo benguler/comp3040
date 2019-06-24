@@ -56,5 +56,31 @@ public class RegStar implements RegEx {
 		return ("(" + reg.displayable() + ")*");
 		
 	}
+
+	public RegEx getReg() {
+		return reg;
+	}
+
+	public void setReg(RegEx reg) {
+		this.reg = reg;
+	}
+
+	@Override
+	public boolean isUnion() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isConcat() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isStar() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 }

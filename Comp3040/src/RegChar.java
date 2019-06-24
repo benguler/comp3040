@@ -56,5 +56,23 @@ public class RegChar implements RegEx {
 		return ("'"+c.displayable()+"'") ;
 		
 	}
+
+	@Override
+	public boolean isUnion() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isConcat() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isStar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

@@ -52,5 +52,23 @@ public class RegEmpty implements RegEx {
 		return "[Theta]";
 		
 	}
+
+	@Override
+	public boolean isUnion() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isConcat() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isStar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

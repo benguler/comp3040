@@ -56,5 +56,39 @@ public class RegConcat implements RegEx{
 		return ("(" + reg1.displayable() + " o " + reg2.displayable() + ")");
 		
 	}
+
+	public RegEx getReg1() {
+		return reg1;
+	}
+
+	public void setReg1(RegEx reg1) {
+		this.reg1 = reg1;
+	}
+
+	public RegEx getReg2() {
+		return reg2;
+	}
+
+	public void setReg2(RegEx reg2) {
+		this.reg2 = reg2;
+	}
+
+	@Override
+	public boolean isUnion() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isConcat() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isStar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

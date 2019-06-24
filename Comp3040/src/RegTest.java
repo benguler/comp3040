@@ -241,7 +241,7 @@ public class RegTest{
 		accepts = (func.equal(func.concatenation(oddNFA, evenNFA), regOddEven.compile()))? " == ":" != ";	
 		System.out.println("    oddNFA o evenNFA " + accepts + regOddEven.displayable()+ "\n");
 		
-		//RegEx func.equality tests
+		//RegEx equality tests
 		System.out.println("Equality Tests:\n");
 		
 		accepts = (regEqual(regAll, new RegUnion(new RegUnion(regOdd, regEven), new RegEpsilon(biAlphabet))))? " == 4":" != 4";	
@@ -283,6 +283,37 @@ public class RegTest{
 		accepts = (regEqual(new RegStar(regEpsilon), regEpsilon))? " == ":" != ";	
 		eqPrint(new RegStar(regEpsilon), accepts, regEpsilon);
 		
+		//RegEx simplifier tests
+		
+		System.out.println("Simplifier Tests:\n");
+		
+		RegEx temp; 
+		
+		temp = new RegUnion(new RegChar(abcAlphabet.get(0), abcAlphabet), new RegEmpty(abcAlphabet));
+		
+		accepts = (regEqual(temp, simplify(temp)))? " == ":" != ";	
+		eqPrint(temp, accepts, simplify(temp));
+		
+		temp = new RegConcat(new RegChar(abcAlphabet.get(0), abcAlphabet), new RegEpsilon(abcAlphabet));
+		
+		accepts = (regEqual(temp, simplify(temp)))? " == ":" != ";	
+		eqPrint(temp, accepts, simplify(temp));
+		
+		temp = new RegConcat(new RegChar(abcAlphabet.get(0), abcAlphabet), new RegEmpty(abcAlphabet));
+		
+		accepts = (regEqual(temp, simplify(temp)))? " == ":" != ";	
+		eqPrint(temp, accepts, simplify(temp));
+		
+		temp = new RegUnion(new RegConcat(new RegChar(abcAlphabet.get(0), abcAlphabet), new RegChar(abcAlphabet.get(1), abcAlphabet)), new RegConcat(new RegChar(abcAlphabet.get(0), abcAlphabet), new RegChar(abcAlphabet.get(2), abcAlphabet)));
+		
+		accepts = (regEqual(temp, simplify(temp)))? " == ":" != ";	
+		eqPrint(temp, accepts, simplify(temp));
+		
+		temp = new RegStar(new RegStar(new RegUnion(new RegConcat(new RegChar(abcAlphabet.get(0), abcAlphabet), new RegChar(abcAlphabet.get(1), abcAlphabet)), new RegConcat(new RegChar(abcAlphabet.get(0), abcAlphabet), new RegChar(abcAlphabet.get(2), abcAlphabet)))));
+
+		accepts = (regEqual(temp, simplify(temp)))? " == ":" != ";	
+		eqPrint(temp, accepts, simplify(temp));
+		
 	}
 	
 	public static void printReg(RegEx reg, String string){
@@ -302,6 +333,70 @@ public class RegTest{
 		
 		return func.equal(nfa1, nfa2);
 	
+	}
+	
+	public static RegEx simplify(RegEx reg) {
+		if(reg.isUnion()) {
+			RegUnion temp = (RegUnion) reg;
+			
+			if(regEqual(temp.getReg1(), temp.getReg2())) {																							//a u a -> a
+				return simplify(temp.getReg1());
+				
+			}
+			
+			if(!regEqual(temp.getReg1(), new RegEmpty(reg.getAlphabet())) && regEqual(temp.getReg2(), new RegEmpty(reg.getAlphabet()))) {			//a u [theta] -> a
+				return simplify(temp.getReg1());
+				
+			}else if(regEqual(temp.getReg1(), new RegEmpty(reg.getAlphabet())) && !regEqual(temp.getReg2(), new RegEmpty(reg.getAlphabet()))) {		//[theta] u b -> b
+				return simplify(temp.getReg2());
+				
+			}
+			
+			if(temp.getReg1().isConcat() && temp.getReg1().isConcat()) {
+				RegConcat subTemp1 = (RegConcat)temp.getReg1();
+				RegConcat subTemp2 = (RegConcat)temp.getReg2();
+				
+				if(regEqual(subTemp1.getReg1(), subTemp2.getReg1())) {																				//(a o b) u (a o c)  -> a o (b u c)
+					return new RegConcat(simplify(subTemp1.getReg1()), simplify(new RegUnion(subTemp1.getReg2(), subTemp2.getReg2())));				
+					
+				}else if(regEqual(subTemp1.getReg2(), subTemp2.getReg2())) {																		//(a o c) u (b o c)  -> (a u b) o c
+					return new RegConcat(simplify(new RegUnion(subTemp1.getReg1(), subTemp2.getReg1())), simplify(subTemp1.getReg2()));				
+					
+				}
+				
+			}
+			
+			return new RegUnion(simplify(temp.getReg1()), simplify(temp.getReg2()));
+			
+		}else if(reg.isConcat()) {
+			RegConcat temp = (RegConcat) reg;
+			
+			if(regEqual(temp.getReg1(), new RegEmpty(reg.getAlphabet())) || regEqual(temp.getReg2(), new RegEmpty(reg.getAlphabet()))) {			//a o [theta] -> [theta], [theta] o a -> [theta]
+				return new RegEmpty(reg.getAlphabet());
+				
+			}
+			
+			if(regEqual(temp.getReg2(), new RegEpsilon(reg.getAlphabet()))) {																	 //a o [epsilon] -> a, [epsilon] o [epsilon] -> [epsilon]
+				return simplify(temp.getReg1());
+				
+			}else if(regEqual(temp.getReg1(), new RegEpsilon(reg.getAlphabet())) && !regEqual(temp.getReg2(), new RegEpsilon(reg.getAlphabet()))) {	//[epsilon] o b -> b
+				return simplify(temp.getReg2());
+				
+			}
+			
+			return new RegConcat(simplify(temp.getReg1()), simplify(temp.getReg2()));
+			
+		//If the reg is *, simplify its reg
+		}else if(reg.isStar()) {
+			RegStar temp = (RegStar) reg;
+			
+			return new RegStar(simplify(temp.getReg()));
+			
+		}
+		
+		//If the reg is empty, char, or epsilon, cannot simplify any further
+		return reg;
+		
 	}
 	
 	public static void eqPrint(RegEx reg1, String acc, RegEx reg2) {
