@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class RegConcat extends NFAFunctions implements RegEx{
+public class RegConcat implements RegEx{
 
 	private RegEx reg1;
 	private RegEx reg2;
@@ -13,7 +13,7 @@ public class RegConcat extends NFAFunctions implements RegEx{
 
 	@Override
 	public NFA compile() {
-		return concatenation(this.reg1.compile(), this.reg2.compile());
+		return func.concatenation(this.reg1.compile(), this.reg2.compile());
 		
 	}
 
@@ -42,7 +42,7 @@ public class RegConcat extends NFAFunctions implements RegEx{
 
 	@Override
 	public boolean accepts() {
-		DFA dfa = nfaToDFA(this.compile());
+		DFA dfa = func.nfaToDFA(this.compile());
 		return (dfa.run(this.generate()));
 		
 	}

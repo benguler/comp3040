@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random; 
 
-public class RegStar extends NFAFunctions implements RegEx {
+public class RegStar implements RegEx {
 	
 	private RegEx reg;
 	
@@ -13,20 +13,20 @@ public class RegStar extends NFAFunctions implements RegEx {
 
 	@Override
 	public NFA compile() {
-		return kleene(reg.compile());
+		return func.kleene(reg.compile());
 		
 	}
 
 	@Override
 	public AlphaString generate() {
 		
-		Alphabet alphabet = reg.getAlphabet();
+		Alphabet alphabet = this.reg.getAlphabet();
 		
 		ArrayList<Character> chars = this.reg.generate().getChars();
 		
 		AlphaString string = new AlphaString(alphabet);
 		
-		int randInt = rand.nextInt(21);		
+		int randInt = this.rand.nextInt(21);		
 		
 		for(int i = 0; i < randInt; i++) {								//[epsilon] - [string]^20 
 			for(Character c : chars) {
@@ -42,7 +42,7 @@ public class RegStar extends NFAFunctions implements RegEx {
 
 	@Override
 	public boolean accepts() {
-		DFA dfa = nfaToDFA(this.compile());
+		DFA dfa = func.nfaToDFA(this.compile());
 		return (dfa.run(this.generate()));
 		
 	}

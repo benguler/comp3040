@@ -77,25 +77,44 @@ public class StateTable {
 	}
 	
 	public ArrayList<State> nfaFindNextState(State state, Character character){
-		ArrayList<State> next;
+		ArrayList<State> next  = new ArrayList<State>();;
 		ArrayList<State> temp1 = new ArrayList<State>();
 		ArrayList<State> temp2 = new ArrayList<State>();
 		
 		if(character == this.epsilon) {															//Find just the epsilon transition, and any resulting epsilon transitions resulting from that
-			next = ( nfaStateTable.get( getStateIndex(state)) ).get( alphabet.size() );
-			 
-			temp1.addAll((nfaStateTable.get(getStateIndex(state))).get(alphabet.size()));
+			if(currentStates.contains(state)) {													//Workaround for bug where nfa comes to contain state of other nfa
+				next = ( nfaStateTable.get( getStateIndex(state)) ).get( alphabet.size() );
+				 
+				temp1.addAll((nfaStateTable.get(getStateIndex(state))).get(alphabet.size()));
+			
+			}
 			
 			do{
 				temp2 = new ArrayList<State>();
 				
 				for(State nState :  temp1) {													//Keep looking for epsilon transitions
+					if(currentStates.contains(nState)) {										//Workaround for bug where nfa comes to contain state of other nfa
 						temp2.addAll(( nfaStateTable.get( getStateIndex(nState)) ).get( alphabet.size() ));
+						
+					}
 						
 				}
 				
-				next.addAll(temp2);
+				ArrayList<State> nextTemp = next;
 				
+				if(!nextTemp.containsAll(temp2)) {
+					for(State temp : temp2) {
+						if(!next.contains(temp)) {
+							next.add(temp);
+						}
+						
+					}
+					
+				}else {
+					break;
+					
+				}
+			
 				temp1 = temp2;
 				
 			}while(!temp2.isEmpty());															//There are still states being transitioned to
@@ -103,19 +122,38 @@ public class StateTable {
 			return next;
 																						
 		}else {																					//Find a transistion based on a character, any resulting epsilon transitions, and any resulting epsilon transitions
-			next = ( nfaStateTable.get( getStateIndex(state)) ).get( getCharIndex(character) );
-
-			temp1.addAll(( nfaStateTable.get( getStateIndex(state)) ).get( getCharIndex(character) ));
+			
+			if(currentStates.contains(state)) {													//Workaround for bug where nfa comes to contain state of other nfa
+				next = ( nfaStateTable.get( getStateIndex(state)) ).get( getCharIndex(character) );
+	
+				temp1.addAll(( nfaStateTable.get( getStateIndex(state)) ).get( getCharIndex(character) ));
+			
+			}
 			
 			do{																					//Keep looking for epsilon transitions
 				temp2 = new ArrayList<State>();
 				
 				for(State nState :  temp1) {
+					if(currentStates.contains(nState)) {										
 						temp2.addAll(( nfaStateTable.get( getStateIndex(nState)) ).get( alphabet.size() ));
+					}
 						
 				}
 				
-				next.addAll(temp2);
+				ArrayList<State> nextTemp = next;
+				
+				if(!nextTemp.containsAll(temp2)) {
+					for(State temp : temp2) {
+						if(!next.contains(temp)) {
+							next.add(temp);
+						}
+						
+					}
+					
+				}else {
+					break;
+					
+				}
 				
 				temp1 = temp2;
 				

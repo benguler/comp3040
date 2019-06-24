@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class RegEmpty extends NFAFunctions implements RegEx {
+public class RegEmpty implements RegEx {
 	
 	private Alphabet alphabet;
 	
@@ -11,21 +11,21 @@ public class RegEmpty extends NFAFunctions implements RegEx {
 
 	@Override
 	public NFA compile() {
-		ArrayList<State> states = new ArrayList<State>(newList(new State("empty0")));
+		ArrayList<State> states = new ArrayList<State>(func.newList(new State("empty0")));
 		ArrayList<ArrayList<State>> next = new ArrayList<ArrayList<State>>();
 		
 		State start = states.get(0);
 
 		for(int j = 0; j < this.alphabet.size(); j++) {
-			next.add(newList(states.get(0)));
+			next.add(func.newList(states.get(0)));
 			
 		}
 		
-		next.add(newList());
+		next.add(func.newList());
 		
-		ArrayList<State> accepting = new ArrayList<State>(newList(states.get(2)));
+		ArrayList<State> accepting = new ArrayList<State>(func.newList());
 		
-		return new NFA(states, this.alphabet, start, next, accepting, epsilon);
+		return new NFA(states, this.alphabet, start, next, accepting, func.epsilon);
 		
 	}
 
@@ -37,8 +37,7 @@ public class RegEmpty extends NFAFunctions implements RegEx {
 
 	@Override
 	public boolean accepts() {
-		DFA dfa = nfaToDFA(this.compile());
-		return (dfa.run(this.generate()));
+		return false;
 		
 	}
 

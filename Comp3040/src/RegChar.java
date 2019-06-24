@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class RegChar extends NFAFunctions implements RegEx {
+public class RegChar implements RegEx {
 	
 	private Character c;
 	private Alphabet alphabet;
@@ -12,25 +12,25 @@ public class RegChar extends NFAFunctions implements RegEx {
 
 	@Override
 	public NFA compile() {
-		ArrayList<State> states = new ArrayList<State>(newList(new State("char0"), new State("char11"), new State("char2")));
+		ArrayList<State> states = new ArrayList<State>(func.newList(new State("char0"), new State("char1"), new State("char2")));
 		ArrayList<ArrayList<State>> next = new ArrayList<ArrayList<State>>();
 		
 		State start = states.get(0);
 		
 		for(int i = 0; i < states.size(); i++) {
 			for(int j = 0; j < this.alphabet.size(); j++) {
-				next.add(newList(states.get(1)));
+				next.add(func.newList(states.get(1)));
 			}
 			
-			next.add(newList());
+			next.add(func.newList());
 			
 		}
 		
-		next.set(this.alphabet.findIndex(c), newList(states.get(2)));
+		next.set(this.alphabet.findIndex(c), func.newList(states.get(2)));
 		
-		ArrayList<State> accepting = new ArrayList<State>(newList(states.get(2)));
+		ArrayList<State> accepting = new ArrayList<State>(func.newList(states.get(2)));
 		
-		return new NFA(states, this.alphabet, start, next, accepting, epsilon);
+		return new NFA(states, this.alphabet, start, next, accepting, func.epsilon);
 		
 	}
 
@@ -42,7 +42,7 @@ public class RegChar extends NFAFunctions implements RegEx {
 
 	@Override
 	public boolean accepts() {
-		DFA dfa = nfaToDFA(this.compile());
+		DFA dfa = func.nfaToDFA(this.compile());
 		return (dfa.run(this.generate()));
 		
 	}

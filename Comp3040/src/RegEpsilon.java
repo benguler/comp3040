@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class RegEpsilon extends NFAFunctions implements RegEx {
+public class RegEpsilon implements RegEx {
 
 	private Alphabet alphabet;
 	
@@ -10,23 +10,23 @@ public class RegEpsilon extends NFAFunctions implements RegEx {
 
 	@Override
 	public NFA compile() {
-		ArrayList<State> states = new ArrayList<State>(newList(new State("ep0"), new State("ep1")));
+		ArrayList<State> states = new ArrayList<State>(func.newList(new State("ep0"), new State("ep1")));
 		ArrayList<ArrayList<State>> next = new ArrayList<ArrayList<State>>();
 		
 		State start = states.get(0);
 		
 		for(int i = 0; i < states.size(); i++) {
 			for(int j = 0; j < this.alphabet.size(); j++) {
-				next.add(newList(states.get(1)));
+				next.add(func.newList(states.get(1)));
 			}
 			
-			next.add(newList());
+			next.add(func.newList());
 			
 		}
 		
-		ArrayList<State> accepting = new ArrayList<State>(newList(states.get(0)));
+		ArrayList<State> accepting = new ArrayList<State>(func.newList(states.get(0)));
 		
-		return new NFA(states, this.alphabet, start, next, accepting, epsilon);
+		return new NFA(states, this.alphabet, start, next, accepting, func.epsilon);
 		
 	}
 
@@ -38,7 +38,7 @@ public class RegEpsilon extends NFAFunctions implements RegEx {
 
 	@Override
 	public boolean accepts() {
-		DFA dfa = nfaToDFA(this.compile());
+		DFA dfa = func.nfaToDFA(this.compile());
 		return (dfa.run(this.generate()));
 		
 	}

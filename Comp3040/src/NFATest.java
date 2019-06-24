@@ -122,7 +122,7 @@ public class NFATest {
 			};
 	//----------------------------------------------------------------------------------------------------------------------
 			
-			//NFA that accepts binary #s of even length (The "evenLNFA")-------------------------------------------------------------
+	//NFA that accepts binary #s of even length (The "evenLNFA")-------------------------------------------------------------
 			private static ArrayList<State> evenLNFAStates = new ArrayList<State>(Arrays.asList(new State("evenL0"), new State("evenL1")));						//Q = {A, B}
 			
 			private static State evenLNFAStartState = evenLNFAStates.get(0);																			//q0 = A
@@ -436,13 +436,23 @@ public class NFATest {
 		AlphaString string3 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0))));	
 		
 	
-		accepts = (ozLastNFA.run(string2))? "String Accepted":"String Rejected";	
+		accepts = (oddNFA.run(string2))? "String Accepted":"String Rejected";	
 		System.out.println("\n" + accepts);
 		
-		accepts = (nfaToDFA(ozLastNFA).run(string2))? "String Accepted":"String Rejected";	
+		accepts = (nfaToDFA(evenNFA).run(string2))? "String Accepted":"String Rejected";	
 		System.out.println("\n" + accepts);
 		
-		accepts = (stringTest(string2, ozLastNFA, ozLastNFA.getStartState(), 0))? "String Accepted":"String Rejected";	
+		accepts = (nfaToDFA(oddNFA).run(string2))? "String Accepted":"String Rejected";	
+		System.out.println("\n" + accepts);
+		
+		NFA test = kleene(oddNFA);
+		
+		accepts = (stringTest(string2,test, test.getStartState(), 0))? "String Accepted":"String Rejected";	
+		System.out.println("\n" + accepts);
+		
+		test = kleene(allNFA);
+		
+		accepts = (stringTest(string2,test, test.getStartState(), 0))? "String Accepted":"String Rejected";	
 		System.out.println("\n" + accepts);
 		
 		accepts = (stringTest(string1, zzoNFA, zzoNFA.getStartState(), 0))? "String Accepted":"String Rejected";	

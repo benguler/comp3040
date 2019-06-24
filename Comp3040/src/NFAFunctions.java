@@ -5,9 +5,13 @@ import java.util.Arrays;
 
 public class NFAFunctions {
 	
-	public final static Character epsilon = new Character(""); 
+	public NFAFunctions() {
+		
+	}
 	
-	protected ArrayList<State> newList(State...states){
+	public static final Character epsilon = new Character(""); 
+	
+	public ArrayList<State> newList(State...states){
 		
 		ArrayList<State> newList = new ArrayList<State>();
 		
@@ -21,7 +25,7 @@ public class NFAFunctions {
 	}
 	
 	//DFA -> NFA
-	protected NFA dfaToNFA(DFA dfa) {
+	public NFA dfaToNFA(DFA dfa) {
 		ArrayList<ArrayList<State>> nfaNextStates = new ArrayList<ArrayList<State>>();
 		State nfaStartState = dfa.getStartState();
 		
@@ -42,7 +46,7 @@ public class NFAFunctions {
 	}
 	
 	//Given an NFA, string, trace, and result, return whether when the string is run the the DFA, the Trace existes within the resulting tree and ends in the result
-	protected boolean traceTest(NFA nfa, AlphaString string, Trace trace, Boolean result) {
+	public boolean traceTest(NFA nfa, AlphaString string, Trace trace, Boolean result) {
 		
 		if(trace.size() != string.length()+1) {														//If trace.size() is not equal to the number of characters + 1
 			return false;
@@ -73,7 +77,7 @@ public class NFAFunctions {
 	}
 	
 	//Given a string and an NFA, return whether that string is accepted by that NFA (Assuming the string and NFA share an alphabet)
-	protected static boolean stringTest(AlphaString string, NFA nfa, State curState, int index) {		
+	public boolean stringTest(AlphaString string, NFA nfa, State curState, int index) {		
 		boolean accept = false;
 		
 		ArrayList<State> branch = new ArrayList<State>();	
@@ -120,7 +124,7 @@ public class NFAFunctions {
 	}
 	
 	//Union of 2 NFA's
-	protected NFA union(NFA nfa1, NFA nfa2) {
+	public NFA union(NFA nfa1, NFA nfa2) {
 		ArrayList<State> uStates = new ArrayList<State>();
 		Alphabet alphabet = nfa1.getAlphabet();
 		State uStartState = new State("uStart");
@@ -149,7 +153,7 @@ public class NFAFunctions {
 	}
 	
 	//Concatenation of 2 NFA's
-	protected NFA concatenation(NFA nfa1, NFA nfa2) {
+	public NFA concatenation(NFA nfa1, NFA nfa2) {
 		ArrayList<State> concatStates = new ArrayList<State>();
 		Alphabet alphabet = nfa1.getAlphabet();
 		State concatStartState = nfa1.getStartState();
@@ -182,7 +186,7 @@ public class NFAFunctions {
 	}
 	
 	//Given an NFA, return a new NFA that accepts a string that can be broken into N parts that are accepted by the given NFA
-	protected NFA kleene(NFA nfa) {
+	public NFA kleene(NFA nfa) {
 		ArrayList<State> kleeneStates = new ArrayList<State>();
 		Alphabet alphabet = nfa.getAlphabet();
 		State kleeneStartState = new State("kleene 0");
@@ -224,7 +228,7 @@ public class NFAFunctions {
 	}
 	
 	//NFA -> DFA
-	protected static DFA nfaToDFA(NFA nfa) {
+	public DFA nfaToDFA(NFA nfa) {
 		NFA snfa = nfa;
 		
 		ArrayList<State> dfaStates = new ArrayList<State>();
@@ -251,9 +255,12 @@ public class NFAFunctions {
 		while(index < states.size()) {														
 			for(Character c : alphabet.getList()) {
 				newState  = new ArrayList<State>();
-			
+				
+				ArrayList<State> temp;
+				
 				for(State state : states.get(index)){
-					for(State tran : snfa.findNextStates(state, c)) {
+					temp =  snfa.findNextStates(state, c);
+					for(State tran : temp) {
 						if(!newState.contains(tran)){
 							newState.add(tran);								//Essentially combine states based on the transitions. 
 	
@@ -310,22 +317,21 @@ public class NFAFunctions {
 	
 	}
 	
-	public static boolean nfaEqual(NFA nfa1, NFA nfa2) {
+	public boolean equal(NFA nfa1, NFA nfa2) {
 		DFA dfa1 = nfaToDFA(nfa1);
 		DFA dfa2 = nfaToDFA(nfa2);
 		
-		return(subset(dfa1, dfa2) && subset(dfa2, dfa1)); 			//(dfa1 c dfa2) and (dfa2 c dfa1) -> dfa1 == dfa2
+		return equal(dfa1, dfa2);
 		
 	}
 	
-	public static AlphaString acceptingString(DFA dfa){
+	public AlphaString acceptingString(DFA dfa){
 		
 		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
 			return null;							//Return null
 		}
 		
 		ArrayList<State> states = dfa.getStates(); 
-		State curState = dfa.getAcceptingStates().get(0);	//Current state = acceptingStates[0] - i.e. the first accepting state
 		State startState = dfa.getStartState();
 		
 		StateTable stateTable = dfa.getStateTable();
@@ -335,42 +341,65 @@ public class NFAFunctions {
 		AlphaString acceptingString = new AlphaString(alphabet);
 		
 		boolean newState;
-				
-		while(curState != startState){				//Until we arrive at the starting state
-			newState = false;
+		boolean nextAccept = false;
+		
+		for(State curState : dfa.getAcceptingStates()) {
 			
-			for(int i = 0; i <= states.size(); i++){
-				if(newState){						//Current state has been updated
-					break;							//Stop searching
-					
-				}
+			if(dfa.run(acceptingString)) {
+				return acceptingString;
 				
-				if(i == states.size()) {			//No states point to c
-					return null;
-					
-				}
+			}
+			
+			while(curState != startState ){				//Until we arrive at the starting state
+				newState = false;
 				
-				for(int j = 0; j < alphabet.size(); j++){
-					if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
-						acceptingString.pushChar(alphabet.get(j));							//Push Character into the String to be returned
-						curState = states.get(i);										//Current State = Previous State
-						newState = true;												
-						break;															//Stop searching
+				for(int i = 0; i <= states.size(); i++){
+					if(newState){						//Current state has been updated
+						break;							//Stop searching
 						
 					}
 					
-				}	
+					if(i == states.size()) {			//No states point to curState through c
+						if(curState == dfa.getAcceptingStates().get(dfa.getAcceptingStates().size()-1)) {
+							return null;
+							
+						}
+						
+						acceptingString = new AlphaString(alphabet);
+						nextAccept = true;
+						break;
+						
+					}
+					
+					for(int j = 0; j < alphabet.size(); j++){
+						if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
+							acceptingString.pushChar(alphabet.get(j));						//Push Character into the String to be returned
+							curState = states.get(i);										//Current State = Previous State
+							newState = true;												
+							break;															//Stop searching
+							
+						}
+						
+					}	
+					
+				}
+				
+				if(nextAccept) {
+					nextAccept = false;
+					break;
+					
+				}
 				
 			}
 			
 		}
 		
-		return acceptingString;
+		return null;
 		
 	}
 	
 	//~(dfa1)
-	public static DFA complement(DFA dfa){
+	public DFA complement(DFA dfa){
 		ArrayList<State> complementAcceptingStates = new ArrayList<State>();
 		
 		for(int i = 0; i < dfa.getStates().size(); i++){
@@ -388,7 +417,7 @@ public class NFAFunctions {
 	}
 	
 	//(dfa1 u dfa2)
-	public static DFA union(DFA dfa1, DFA dfa2){
+	public DFA union(DFA dfa1, DFA dfa2){
 		ArrayList<State> unionStates = new ArrayList<State>();
 		Alphabet alphabet = dfa1.getAlphabet();
 		State unionStartState;
@@ -447,7 +476,7 @@ public class NFAFunctions {
 		return union;
 	}
 	//(dfa1 n dfa2)
-	public static DFA intersection(DFA dfa1, DFA dfa2){
+	public DFA intersection(DFA dfa1, DFA dfa2){
 		ArrayList<State> intersectionStates = new ArrayList<State>();
 		Alphabet alphabet = dfa1.getAlphabet();
 		State intersectionStartState;
@@ -486,7 +515,6 @@ public class NFAFunctions {
 		
 		State dfa1CurState;
 		State dfa2CurState;
-		int q = 0;
 		for(int i = 0; i < dfa1.getStates().size(); i++){
 			dfa1CurState = dfa1.getStates().get(i);
 			
@@ -509,16 +537,17 @@ public class NFAFunctions {
 	}
 	
 	//(dfa1 c dfa2)?
-	public static boolean subset(DFA dfa1, DFA dfa2){
+	public boolean subset(DFA dfa1, DFA dfa2){
 		DFA dfa2Compliment = complement(dfa2);				   		//~(dfa2)
 		DFA dfaIntersection = intersection(dfa1, dfa2Compliment);	//dfa1 n ~(dfa2)
 		
+		return (acceptingString(dfaIntersection) == null);				   
 		
-		return (acceptingString(dfaIntersection) == null);					   
 	}
 	
 	//(dfa1 == dfa2)?
 	public boolean equal(DFA dfa1, DFA dfa2) {
+		
 		return(subset(dfa1, dfa2) && subset(dfa2, dfa1)); 			//(dfa1 c dfa2) and (dfa2 c dfa1) -> dfa1 == dfa2
 		
 	}

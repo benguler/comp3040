@@ -1165,7 +1165,7 @@ public class DFAtest {
 		}
 		
 		ArrayList<State> states = dfa.getStates(); 
-		State curState = dfa.getAcceptingStates().get(0);	//Current state = acceptingStates[0] - i.e. the first accepting state
+		//State curState = dfa.getAcceptingStates().get(0);	//Current state = acceptingStates[0] - i.e. the first accepting state
 		State startState = dfa.getStartState();
 		
 		StateTable stateTable = dfa.getStateTable();
@@ -1175,31 +1175,47 @@ public class DFAtest {
 		AlphaString acceptingString = new AlphaString(alphabet);
 		
 		boolean newState;
+		boolean nextAccept = false;
+		
+		for(State curState : dfa.getAcceptingStates()) {
+			while(curState != startState){				//Until we arrive at the starting state
+				newState = false;
 				
-		while(curState != startState){				//Until we arrive at the starting state
-			newState = false;
-			
-			for(int i = 0; i <= states.size(); i++){
-				if(newState){						//Current state has been updated
-					break;							//Stop searching
-					
-				}
-				
-				if(i == states.size()) {			//No states point to c
-					return null;
-					
-				}
-				
-				for(int j = 0; j < alphabet.size(); j++){
-					if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
-						acceptingString.pushChar(alphabet.get(j));							//Push Character into the String to be returned
-						curState = states.get(i);										//Current State = Previous State
-						newState = true;												
-						break;															//Stop searching
+				for(int i = 0; i <= states.size(); i++){
+					if(newState){						//Current state has been updated
+						break;							//Stop searching
 						
 					}
 					
-				}	
+					if(i == states.size()) {			//No states point to c
+						if(curState == dfa.getAcceptingStates().get(dfa.getAcceptingStates().size()-1)) {
+							return null;
+						}
+						
+						acceptingString = new AlphaString(alphabet);
+						nextAccept = true;
+						break;
+						
+					}
+					
+					for(int j = 0; j < alphabet.size(); j++){
+						if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
+							acceptingString.pushChar(alphabet.get(j));							//Push Character into the String to be returned
+							curState = states.get(i);										//Current State = Previous State
+							newState = true;												
+							break;															//Stop searching
+							
+						}
+						
+					}	
+					
+				}
+				
+				if(nextAccept) {
+					nextAccept = false;
+					break;
+					
+				}
 				
 			}
 			
