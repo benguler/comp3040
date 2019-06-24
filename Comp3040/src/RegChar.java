@@ -52,4 +52,9 @@ public class RegChar implements RegEx {
 		
 	}
 	
+	public String displayable() {
+		return ("'"+c.displayable()+"'") ;
+		
+	}
+	
 }

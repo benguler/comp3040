@@ -11,4 +11,6 @@ public interface RegEx {
 	
 	public Alphabet getAlphabet();
 	
+	public String displayable();
+	
 }

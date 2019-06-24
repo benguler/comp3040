@@ -38,4 +38,9 @@ public class RegUnion implements RegEx {
 		
 	}
 	
+	public String displayable() {
+		return ("(" + reg1.displayable() + " u " + reg2.displayable() + ")");
+		
+	}
+	
 }

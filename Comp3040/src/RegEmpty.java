@@ -46,5 +46,11 @@ public class RegEmpty implements RegEx {
 		return this.alphabet;
 		
 	}
+
+	@Override
+	public String displayable() {
+		return "[Theta]";
+		
+	}
 	
 }

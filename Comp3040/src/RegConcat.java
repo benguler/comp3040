@@ -52,4 +52,9 @@ public class RegConcat implements RegEx{
 		
 	}
 	
+	public String displayable() {
+		return ("(" + reg1.displayable() + " o " + reg2.displayable() + ")");
+		
+	}
+	
 }

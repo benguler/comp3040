@@ -227,61 +227,61 @@ public class RegTest{
 		String accepts;
 		
 		//Test if RegEx compiler works
-		System.out.println("Compiler Tests:");
+		System.out.println("Compiler Tests:\n");
 		
-		accepts = (func.equal(oddNFA, regOdd.compile()))? "Equal 0":"Unequal 0";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (func.equal(oddNFA, regOdd.compile()))? " == ":" != ";	
+		System.out.println("    oddNFA " + accepts + regOdd.displayable()+ "\n");
 		
-		accepts = (func.equal(evenNFA, regEven.compile()))? "Equal 1":"Unequal 1";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (func.equal(evenNFA, regEven.compile()))? " == ":" != ";	
+		System.out.println("    evenNFA " + accepts + regEven.displayable()+ "\n");
 		
-		accepts = (func.equal(oddNFA, regEven.compile()))? "Equal 2":"Unequal 2";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (func.equal(oddNFA, regEven.compile()))? " == ":" != ";	
+		System.out.println("    oddNFA " + accepts + regEven.displayable()+ "\n");
 		
-		accepts = (func.equal(func.concatenation(oddNFA, evenNFA), regOddEven.compile()))? "Equal 3":"Unequal 3";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (func.equal(func.concatenation(oddNFA, evenNFA), regOddEven.compile()))? " == ":" != ";	
+		System.out.println("    oddNFA o evenNFA " + accepts + regOddEven.displayable()+ "\n");
 		
 		//RegEx func.equality tests
-		System.out.println("Equality Tests:");
+		System.out.println("Equality Tests:\n");
 		
-		accepts = (regEqual(regAll, new RegUnion(new RegUnion(regOdd, regEven), new RegEpsilon(biAlphabet))))? "Equal 4":"Unequal 4";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(regAll, new RegUnion(new RegUnion(regOdd, regEven), new RegEpsilon(biAlphabet))))? " == 4":" != 4";	
+		eqPrint(regAll, accepts, new RegUnion(new RegUnion(regOdd, regEven), new RegEpsilon(biAlphabet)));
 		
-		accepts = (regEqual(regNotEp, new RegUnion(regOdd, regEven)))? "Equal 5":"Unequal 5";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(regNotEp, new RegUnion(regOdd, regEven)))? " == ":" != ";	
+		eqPrint(regNotEp, accepts, new RegUnion(regOdd, regEven));
 		
-		accepts = (regEqual(regNotEp, new RegUnion(regOdd, regEven)))? "Equal 6":"Unequal 6";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(regNotEp, new RegUnion(regOdd, regEven)))? " == ":" != ";	
+		eqPrint(regNotEp, accepts, new RegUnion(regOdd, regEven));
 		
-		accepts = (regEqual(regOdd, regEven))? "Equal 7":"Unequal 7";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(regOdd, regEven))? " == ":" != ";	
+		eqPrint(regOdd, accepts, regEven);
 		
-		accepts = (regEqual(regNone, new RegConcat(regAll, new RegEmpty(biAlphabet))))? "Equal 8":"Unequal 8";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(regNone, new RegConcat(regAll, new RegEmpty(biAlphabet))))? " == ":" != ";	
+		eqPrint(regNone, accepts, new RegConcat(regAll, new RegEmpty(biAlphabet)));
 		
-		accepts = (regEqual(regBen, regABCUnion))? "Equal 9":"Unequal 9";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(regBen, regABCUnion))? " == ":" != ";	
+		eqPrint(regBen, accepts, regABCUnion);
 		
-		accepts = (regEqual(new RegUnion(regOdd, regEven), new RegUnion(regOdd, regEven)))? "Equal 10":"Unequal 10";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(new RegUnion(regOdd, regEven), new RegUnion(regOdd, regEven)))? " == ":" != ";	
+		eqPrint(new RegUnion(regOdd, regEven), accepts, new RegUnion(regOdd, regEven));
 		
-		accepts = (regEqual(new RegUnion(regOdd, regEven), new RegUnion(regEven, regOdd)))? "Equal 11":"Unequal 11";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(new RegUnion(regOdd, regEven), new RegUnion(regEven, regOdd)))? " == ":" != ";	
+		eqPrint(new RegUnion(regOdd, regEven), accepts, new RegUnion(regOdd, regEven));
 
-		accepts = (regEqual(new RegUnion(regBen, regABCUnion), new RegUnion(regBen, regABCUnion)))? "Equal 12":"Unequal 12";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(new RegUnion(regBen, regABCUnion), new RegUnion(regBen, regABCUnion)))? " == ":" != ";	
+		eqPrint(new RegUnion(regBen, regABCUnion), accepts, new RegUnion(regBen, regABCUnion));
 		
-		accepts = (regEqual(new RegUnion(regBen, regABCUnion), new RegUnion(regABCUnion, regBen)))? "Equal 13":"Unequal 13";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(new RegUnion(regBen, regABCUnion), new RegUnion(regABCUnion, regBen)))? " == ":" != ";	
+		eqPrint(new RegUnion(regBen, regABCUnion), accepts, new RegUnion(regABCUnion, regBen));
 		
-		accepts = (regEqual(regNone, regNone))? "Equal 14":"Unequal 14";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(regNone, regNone))? " == ":" != ";	
+		eqPrint(regNone, accepts, regNone);
 		
-		accepts = (regEqual(new RegStar(regNone), regNone))? "Equal 15":"Unequal 15";											//(theta)* accepts epsilon, where theta accepts nothing
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(new RegStar(regNone), regNone))? " == ":" != ";											//(theta)* accepts epsilon, where theta accepts nothing
+		eqPrint(new RegStar(regNone), accepts, regNone);
 		
-		accepts = (regEqual(new RegStar(regEpsilon), regEpsilon))? "Equal 16":"Unequal 16";	
-		System.out.println("    " + accepts + "\n");
+		accepts = (regEqual(new RegStar(regEpsilon), regEpsilon))? " == ":" != ";	
+		eqPrint(new RegStar(regEpsilon), accepts, regEpsilon);
 		
 	}
 	
@@ -302,6 +302,11 @@ public class RegTest{
 		
 		return func.equal(nfa1, nfa2);
 	
+	}
+	
+	public static void eqPrint(RegEx reg1, String acc, RegEx reg2) {
+		System.out.println("    " + reg1.displayable() + acc + reg2.displayable() + "\n");
+		
 	}
 	
 }

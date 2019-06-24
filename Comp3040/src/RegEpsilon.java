@@ -47,5 +47,11 @@ public class RegEpsilon implements RegEx {
 		return this.alphabet;
 		
 	}
+
+	@Override
+	public String displayable() {
+		return "[epsilon]";
+		
+	}
 	
 }
