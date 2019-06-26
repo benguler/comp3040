@@ -25,21 +25,23 @@ public class NFATest {
 		
 		private static Alphabet engAlphabet = new Alphabet(engSymbols);
 	//---------------------------------------------------------------------------------------------------------------------
-		
-	private static AlphaString testStrings[] = new AlphaString[]{
-			new AlphaString(biAlphabet),																														//[epsilon]
-			new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0)))),															//0
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1)))),											//01
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),						//011
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),						//100
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0)))),						//110
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),	//1001
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
-		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),	//0101
-	};
+	
+	//Strings used to test NFA's--------------------------------------------------------------------------------------------
+		private static AlphaString testStrings[] = new AlphaString[]{
+				new AlphaString(biAlphabet),																														//[epsilon]
+				new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0)))),															//0
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1)))),											//01
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),						//011
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),						//100
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0)))),						//110
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),	//1001
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),	//0101
+		};
+	//----------------------------------------------------------------------------------------------------------------------
 	
 	//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
 			private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
@@ -52,7 +54,7 @@ public class NFATest {
 			private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
 			
 			private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
-		//----------------------------------------------------------------------------------------------------------------------	
+	//----------------------------------------------------------------------------------------------------------------------	
 		
 	//NFA that accepts odd binary #s (The "oddNFA")-------------------------------------------------------------------------
 		private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {A, B}
@@ -467,10 +469,116 @@ public class NFATest {
 		AlphaString string2 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));
 		AlphaString string3 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0))));	
 		
+		System.out.print("Generate Trace Trees: \n");
+		
+		System.out.print("	oddNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			allNFA.run(testStrings[i]);
+			oddNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for oddNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	evenNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			evenNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for evenNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	oddLNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			oddLNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for oddLNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	evenLNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			evenLNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for evenLNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	stNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			stNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for stNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zzNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			zzNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for zzNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	ooNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			ooNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for ooNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zOroNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			zOroNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for zOroNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zOroEndNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			zOroEndNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for zOroEndNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zoNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			zoNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for zoNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	ozNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			ozLastNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for ozLastNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	allNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			allNFA.run(testStrings[i]);
+			System.out.print("	Created trace tree for allNFA and string '" + testStrings[i].displayable() + "'\n");
+			
+		}
+		
+		System.out.print("\n");
+	
 	
 		/*accepts = (oddNFA.run(string2))? "String Accepted":"String Rejected";	
 		System.out.println("\n" + accepts);
