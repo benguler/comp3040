@@ -69,8 +69,25 @@ public class AlphaString {
 		
 	}
 	
+	public Alphabet getAlphabet() {
+		return this.alphabet;
+		
+	}
+	
 	public ArrayList<Character> getChars(){
 		return this.string;
+		
+	}
+	
+	public AlphaString subString(int s, int e) {
+		ArrayList<Character> chars = new ArrayList<Character>();
+		
+		for(int i = s; i <= e; i++) {
+			chars.add(this.getChar(i));
+			
+		}
+		
+		return new AlphaString(this.alphabet, chars);
 		
 	}
 	

@@ -399,6 +399,15 @@ public class RegTest{
 		
 	}
 	
+	/*public static RegEx dfaToReg(DFA dfa) {
+		NFA nfa = func.dfaToNFA(dfa);
+		
+		for(State state : nfa.getStates()) {
+			
+		}
+		
+	}*/
+	
 	public static void eqPrint(RegEx reg1, String acc, RegEx reg2) {
 		System.out.println("    " + reg1.displayable() + acc + reg2.displayable() + "\n");
 		

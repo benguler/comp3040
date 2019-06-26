@@ -31,8 +31,8 @@ public class DFA {
 		
 	}
 	
-	private State findNextState(Character character){
-		return this.stateTable.findNextState(currentState, character);
+	public State findNextState(State state, Character character){
+		return this.stateTable.findNextState(state, character);
 		
 	}
 	
@@ -51,7 +51,7 @@ public class DFA {
 		this.trace.addState(getCurrentState());				//Add the beginning state
 		
 		for(int i = 0; i <  string.length(); i++){
-			currentState = findNextState(string.getChar(i));
+			currentState = findNextState(currentState, string.getChar(i));
 			
 			this.trace.addState(getCurrentState());
 			

@@ -24,22 +24,60 @@ public class NFAFunctions {
 		
 	}
 	
-	//DFA -> NFA
+	public ArrayList<RegEx> newList(boolean foo, RegEx...regs){
+		
+		ArrayList<RegEx> newList = new ArrayList<RegEx>();
+		
+		for(RegEx reg : regs) {
+			newList.add(reg);
+			
+		}
+		
+		return newList;
+		
+	}
+	
 	public NFA dfaToNFA(DFA dfa) {
+		ArrayList<State> nfaStates = new ArrayList<State>();
+		
+		nfaStates.add(new State("start"));
+		nfaStates.addAll(dfa.getStates());
+		nfaStates.add(new State("accept"));
+		
 		ArrayList<ArrayList<State>> nfaNextStates = new ArrayList<ArrayList<State>>();
-		State nfaStartState = dfa.getStartState();
+		ArrayList<State> nfaAcceptingStates = new ArrayList<State>();
 		
-		for(State state : dfa.getNextStates()) {
-			nfaNextStates.add(new ArrayList<State>(Arrays.asList(state)));
+		State nfaStartState = nfaStates.get(0);
+		nfaAcceptingStates.add(nfaStates.get(nfaStates.size()-1));
+		
+		for(Character c : dfa.getAlphabet().getList()) {
+			nfaNextStates.add(newList());
+		}
+		
+		nfaNextStates.add(newList(dfa.getStartState()));
+		
+		for(State state : dfa.getStates()) {
+
+			for(Character c : dfa.getAlphabet().getList()) {
+				nfaNextStates.add(newList(dfa.findNextState(state, c)));
+			}
+			
+			if(dfa.getAcceptingStates().contains(state)) {
+				nfaNextStates.add(nfaAcceptingStates);
+				
+			}else {
+				nfaNextStates.add(newList());
+				
+			}
 			
 		}
 		
-		for(int i = 0; i < dfa.getStates().size(); i++) {
-			nfaNextStates.add( i*dfa.getAlphabet().size() + i, new ArrayList<State>( Arrays.asList( dfa.getStates().get(i) ) ) );	//Delta += ([A State], epsilon, [That State])
+		for(int i = 0; i < dfa.getAlphabet().size()+1; i++) {
+			nfaNextStates.add(newList());
 			
 		}
 		
-		NFA nfa = new NFA(dfa.getStates(), dfa.getAlphabet(), nfaStartState, nfaNextStates, dfa.getAcceptingStates(), epsilon);
+		NFA nfa = new NFA(nfaStates, dfa.getAlphabet(), nfaStartState, nfaNextStates, nfaAcceptingStates, epsilon);
 		
 		return nfa;
 		

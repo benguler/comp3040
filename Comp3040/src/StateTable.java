@@ -5,11 +5,13 @@ public class StateTable {
 	private Alphabet alphabet;
 	private ArrayList<State> nextStates;				//For DFA
 	private ArrayList<ArrayList<State>> branchStates;	//For NFA
+	private ArrayList<RegEx> currentRegs;						
 	
-	Character epsilon;
+	private Character epsilon;
 	
 	private ArrayList<ArrayList<State>> dfaStateTable;
 	private ArrayList<ArrayList<ArrayList<State>>> nfaStateTable;
+	private ArrayList<ArrayList<RegEx>> gnfaRegTable;
 	
 	public StateTable(){
 		
@@ -49,6 +51,28 @@ public class StateTable {
 			
 			for(int j = 0; j < alphabet.size()+1; j++){												//+1 is for epsilon, essentially appended on the end of the alphabet
 				(this.nfaStateTable.get(i)).add(this.branchStates.get(j + (i*(alphabet.size()+1))));
+				
+			}
+			
+		}
+		
+	}
+	
+	//Constructor for GNFA's. Not really a state table, but a RegEx table
+	
+	public StateTable(ArrayList<State> currentStates, ArrayList<RegEx> currentRegs, Alphabet alphabet, Character epsilon){
+		this.currentStates = currentStates;
+		this.currentRegs = currentRegs; 
+		this.alphabet = alphabet;
+		this.epsilon = epsilon;
+		
+		this.gnfaRegTable = new ArrayList<ArrayList<RegEx>>();
+		
+		for(int i = 0; i < currentStates.size(); i++){
+			this.gnfaRegTable.add(new ArrayList<RegEx>());
+			
+			for(int j = 0; j < currentStates.size(); j++){
+				(this.gnfaRegTable.get(i)).add(this.currentRegs.get(j + (i*currentStates.size())));
 				
 			}
 			
@@ -167,6 +191,11 @@ public class StateTable {
 	
 	public ArrayList<State> nfaGet(int i, int j){
 		return (nfaStateTable.get(i)).get(j);
+		
+	}
+	
+	public RegEx findReg(State state1, State state2){
+		return (gnfaRegTable.get(getStateIndex(state1))).get(getStateIndex(state2));
 		
 	}
 	

@@ -25,7 +25,35 @@ public class NFATest {
 		
 		private static Alphabet engAlphabet = new Alphabet(engSymbols);
 	//---------------------------------------------------------------------------------------------------------------------
+		
+	private static AlphaString testStrings[] = new AlphaString[]{
+			new AlphaString(biAlphabet),																														//[epsilon]
+			new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0)))),															//0
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1)))),											//01
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),						//011
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0)))),						//100
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),						//111
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0)))),						//110
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),	//1001
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
+		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),	//0101
+	};
 	
+	//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
+			private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+			
+			private static State oddDFAStartState =oddDFAStates.get(0);																				//q0 = A
+			
+			private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//Delta = {(A, '0', A), (A, '1', B)
+																			                     oddDFAStates.get(0), oddDFAStates.get(1)));		//(B, '0', A), (B, '1', B)
+			
+			private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
+			
+			private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
+		//----------------------------------------------------------------------------------------------------------------------	
+		
 	//NFA that accepts odd binary #s (The "oddNFA")-------------------------------------------------------------------------
 		private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {A, B}
 		
@@ -106,18 +134,18 @@ public class NFATest {
 			private static NFA oddLNFA = new NFA(oddLNFAStates, biAlphabet,oddLNFAStartState,oddLNFANextStates,oddLNFAAcceptingStates, epsilon);
 			
 			private static Trace oddLTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1), oddNFAStates.get(0), oddNFAStates.get(1)))),
 					
 			};
 	//----------------------------------------------------------------------------------------------------------------------
@@ -138,18 +166,18 @@ public class NFATest {
 			private static NFA evenLNFA = new NFA(evenLNFAStates, biAlphabet,evenLNFAStartState,evenLNFANextStates,evenLNFAAcceptingStates, epsilon);
 			
 			private static Trace evenLTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1), evenNFAStates.get(0), evenNFAStates.get(1)))),
 					
 			};
 	//----------------------------------------------------------------------------------------------------------------------
@@ -163,7 +191,7 @@ public class NFATest {
 		private static ArrayList<ArrayList<State>>stNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
 				 																					 newList(stNFAStates.get(0)), newList(stNFAStates.get(0), stNFAStates.get(1)), newList(),	//Delta = {(st0, '0', {st0}),(st0, 1, {st0, st1}).(st0, epsilon, {})
 				 																					 newList(stNFAStates.get(2)), newList(stNFAStates.get(2)), newList(stNFAStates.get(2)),		//		   (st1, '0', {st2}),(st1, '1', {st2}), (st1, epsilon, {st2})
-																									 newList(stNFAStates.get(3)), newList(stNFAStates.get(3)), newList(),						//		   (st2, '0', {D}),(st2, '1', {st3}), (st2, epsilon, {})
+																									 newList(stNFAStates.get(3)), newList(stNFAStates.get(3)), newList(),						//		   (st2, '0', {st3}),(st2, '1', {st3}), (st2, epsilon, {})
 																									 newList(), newList(), newList())															//		   (st3, '0', {}), (st3, '1', {}), (st3, epsilon, {})				
 																									);	
 																									
@@ -173,32 +201,33 @@ public class NFATest {
 		private static NFA stNFA = new NFA(stNFAStates, biAlphabet, stNFAStartState,stNFANextStates,stNFAAcceptingStates, epsilon);
 		
 		private static Trace stTestTraces[] = new Trace[] {
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList()))
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(1), stNFAStates.get(2), stNFAStates.get(3)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(2), stNFAStates.get(3)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(1), stNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(2), stNFAStates.get(3)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(1), stNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(0), stNFAStates.get(1), stNFAStates.get(2), stNFAStates.get(3))))
 				
 		};
 	//----------------------------------------------------------------------------------------------------------------------
 	
 	//NFA that accepts a binary number that contains 00 (The "zzNFA")-------------------------------------------------------
-		private static ArrayList<State> zzNFAStates = new ArrayList<State>(Arrays.asList(new State("zz0"), new State("zz1"), new State("zz2")));						//Q = {zz0, zz1, zz2, zz3}
+		private static ArrayList<State> zzNFAStates = new ArrayList<State>(Arrays.asList(new State("zz0"), new State("zz1"), new State("zz2")));						//Q = {zz0, zz1, zz2}
 		
 		private static State zzNFAStartState = zzNFAStates.get(0);																				//q0 = zz0
 		
 		private static ArrayList<ArrayList<State>> zzNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
-																													newList(zzNFAStates.get(0), zzNFAStates.get(1)), newList(zzNFAStates.get(0)), newList(), 
-																													newList(zzNFAStates.get(2)), newList(), newList(),  
-																													newList(zzNFAStates.get(2)), newList(zzNFAStates.get(2)), newList()
-				 																					)				
+																													newList(zzNFAStates.get(0), zzNFAStates.get(1)), newList(zzNFAStates.get(0)), newList(), 	//Delta = {(zz0, 0 {zz0, zz1}), (zz0, l {zz0}), (zz0, epsilon {})
+																													newList(zzNFAStates.get(2)), newList(), newList(),  										//		   (zz1, 0 {zz2}), (zz1, l {}), (zz1, epsilon {})
+																													newList(zzNFAStates.get(2)), newList(zzNFAStates.get(2)), newList()							//		   (zz2, 0 {zz2}), (zz2, l {zz2}), (zz2, epsilon {})
+																													
+																													)
 																									);	
 																									
 		
@@ -207,24 +236,25 @@ public class NFATest {
 		private static NFA zzNFA = new NFA(zzNFAStates, biAlphabet, zzNFAStartState,zzNFANextStates,zzNFAAcceptingStates, epsilon);
 		
 		private static Trace zzTestTraces[] = new Trace[] {
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList())),
-				new Trace(new ArrayList<State>(Arrays.asList()))
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(1), zzNFAStates.get(2), zzNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(1)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(1), zzNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(1), zzNFAStates.get(2), zzNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(1), zzNFAStates.get(2)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0)))),
+				new Trace(new ArrayList<State>(Arrays.asList(zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0), zzNFAStates.get(0)))),
+				
 				
 		};
 	//------------------------------------------------------------------------------------------------------------------
 		
 	//NFA that accepts a binary number that contains 11 (The "ooNFA")-------------------------------------------------------
-			private static ArrayList<State> ooNFAStates = new ArrayList<State>(Arrays.asList(new State("oo0"), new State("oo1"), new State("oo2")));						//Q = {oo0, oo1, oo2, oo3}
+			private static ArrayList<State> ooNFAStates = new ArrayList<State>(Arrays.asList(new State("oo0"), new State("oo1"), new State("oo2")));						//Q = {oo0, oo1, oo2}
 			
 			private static State ooNFAStartState = ooNFAStates.get(0);																				//q0 = oo0
 			
@@ -241,18 +271,18 @@ public class NFATest {
 			private static NFA ooNFA = new NFA(ooNFAStates, biAlphabet, ooNFAStartState,ooNFANextStates,ooNFAAcceptingStates, epsilon);
 			
 			private static Trace ooTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(1), ooNFAStates.get(2), ooNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(1), ooNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(1), ooNFAStates.get(2), ooNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(1), ooNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0), ooNFAStates.get(0)))),
 					
 			};
 	//------------------------------------------------------------------------------------------------------------------
@@ -276,18 +306,18 @@ public class NFATest {
 			private static NFA zOroNFA = new NFA(zOroNFAStates, biAlphabet, zOroNFAStartState,zOroNFANextStates,zOroNFAAcceptingStates, epsilon);
 			
 			private static Trace zOroTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(1), zOroNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(1), zOroNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(2), zOroNFAStates.get(3), zOroNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(2), zOroNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(2), zOroNFAStates.get(3), zOroNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(0), zOroNFAStates.get(2)))),
 					
 			};
 	//------------------------------------------------------------------------------------------------------------------
@@ -311,53 +341,53 @@ public class NFATest {
 			private static NFA zOroEndNFA = new NFA(zOroEndNFAStates, biAlphabet, zOroEndNFAStartState,zOroEndNFANextStates,zOroEndNFAAcceptingStates, epsilon);
 			
 			private static Trace zOroEndTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(1), zOroEndNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(1), zOroEndNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(2), zOroEndNFAStates.get(3), zOroEndNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(2), zOroEndNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(1), zOroEndNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(0), zOroEndNFAStates.get(2)))),
 					
 			};
 	//------------------------------------------------------------------------------------------------------------------
 		
-	//NFA that accepts a binary number in the form of 0* or (01)* (The "zzoNFA")--------------------------------------------------		
-			private static ArrayList<State> zzoNFAStates = new ArrayList<State>(Arrays.asList(new State("zzo0"), new State("zzo1"), new State("zzo2"), new State("zzo3")));						//Q = {zzo0, zzo1, zzo2, zzo3}
+	//NFA that accepts a binary number in the form of (01)* (The "zoNFA")--------------------------------------------------		
+			private static ArrayList<State> zoNFAStates = new ArrayList<State>(Arrays.asList(new State("zo0"), new State("zo1"), new State("zo2")));						//Q = {zo0, zo1, zo2}
 			
-			private static State zzoNFAStartState = zzoNFAStates.get(0);																				//q0 = zzo0
+			private static State zoNFAStartState = zoNFAStates.get(0);																				//q0 = zo0
 			
-			private static ArrayList<ArrayList<State>> zzoNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
-																														newList(zzoNFAStates.get(1), zzoNFAStates.get(3)), newList(), newList(), 
-																														newList(), newList(zzoNFAStates.get(2)), newList(), 
-																														newList(zzoNFAStates.get(1)), newList(), newList(), 
-																														newList(zzoNFAStates.get(3)), newList(), newList()
+			private static ArrayList<ArrayList<State>> zoNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
+																														newList(zoNFAStates.get(1)), newList(zoNFAStates.get(2)), newList(), 
+																														newList(zoNFAStates.get(2)), newList(zoNFAStates.get(0)), newList(), 
+																														newList(zoNFAStates.get(2)), newList(zoNFAStates.get(2)), newList() 
 					 																					)				
 																										);	
 																										
 			
-			private static ArrayList<State> zzoNFAAcceptingStates = new ArrayList<State>(Arrays.asList(zzoNFAStates.get(2), zzoNFAStates.get(3)));						//F = {zzo2, zzo3}
+			private static ArrayList<State> zoNFAAcceptingStates = new ArrayList<State>(Arrays.asList(zoNFAStates.get(0)));						//F = {zo0}
 			
-			private static NFA zzoNFA = new NFA(zzoNFAStates, biAlphabet, zzoNFAStartState,zzoNFANextStates,zzoNFAAcceptingStates, epsilon);
+			private static NFA zoNFA = new NFA(zoNFAStates, biAlphabet, zoNFAStartState, zoNFANextStates, zoNFAAcceptingStates, epsilon);
 			
-			private static Trace zzoTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+			private static Trace zoTestTraces[] = new Trace[] {
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(2), zoNFAStates.get(2), zoNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(2), zoNFAStates.get(2), zoNFAStates.get(2), zoNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(2), zoNFAStates.get(2), zoNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(2), zoNFAStates.get(2), zoNFAStates.get(2), zoNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(2), zoNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(2), zoNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(2)))),
 					
 			};
 	//------------------------------------------------------------------------------------------------------------------
@@ -381,18 +411,18 @@ public class NFATest {
 			private static NFA ozLastNFA = new NFA(ozLastNFAStates, biAlphabet, ozLastNFAStartState,ozLastNFANextStates,ozLastNFAAcceptingStates, epsilon);
 			
 			private static Trace ozLastTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(0), ozLastNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0), ozLastNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(3)))),
+					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2)))),
 					
 			};
 	//------------------------------------------------------------------------------------------------------------------
@@ -413,18 +443,20 @@ public class NFATest {
 			private static NFA allNFA = new NFA(allNFAStates, biAlphabet,allNFAStartState,allNFANextStates,allNFAAcceptingStates, epsilon);
 			
 			private static Trace allTestTraces[] = new Trace[] {
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList())),
-					new Trace(new ArrayList<State>(Arrays.asList()))
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(1)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0)))),
+					new Trace(new ArrayList<State>(Arrays.asList(allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(0), allNFAStates.get(1)))),
 					
 			};
 	//----------------------------------------------------------------------------------------------------------------------
@@ -435,8 +467,15 @@ public class NFATest {
 		AlphaString string2 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));
 		AlphaString string3 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0))));	
 		
+		for(int i = 0; i < testStrings.length; i++) {
+			allNFA.run(testStrings[i]);
+			
+		}
 	
-		accepts = (oddNFA.run(string2))? "String Accepted":"String Rejected";	
+		/*accepts = (oddNFA.run(string2))? "String Accepted":"String Rejected";	
+		System.out.println("\n" + accepts);
+		
+		accepts = (dfaToNFA(oddDFA).run(string2))? "String Accepted":"String Rejected";	
 		System.out.println("\n" + accepts);
 		
 		accepts = (nfaToDFA(evenNFA).run(string2))? "String Accepted":"String Rejected";	
@@ -456,7 +495,7 @@ public class NFATest {
 		System.out.println("\n" + accepts);
 		
 		accepts = (stringTest(string1, zzoNFA, zzoNFA.getStartState(), 0))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);
+		System.out.println("\n" + accepts);*/
 		
 	}
 	
@@ -475,26 +514,52 @@ public class NFATest {
 	
 	//DFA -> NFA
 	public static NFA dfaToNFA(DFA dfa) {
+		ArrayList<State> nfaStates = new ArrayList<State>();
+		
+		nfaStates.add(new State("start"));
+		nfaStates.addAll(dfa.getStates());
+		nfaStates.add(new State("accept"));
+		
 		ArrayList<ArrayList<State>> nfaNextStates = new ArrayList<ArrayList<State>>();
-		State nfaStartState = dfa.getStartState();
+		ArrayList<State> nfaAcceptingStates = new ArrayList<State>();
 		
-		for(State state : dfa.getNextStates()) {
-			nfaNextStates.add(new ArrayList<State>(Arrays.asList(state)));
+		State nfaStartState = nfaStates.get(0);
+		nfaAcceptingStates.add(nfaStates.get(nfaStates.size()-1));
+		
+		for(Character c : dfa.getAlphabet().getList()) {
+			nfaNextStates.add(newList());
+		}
+		
+		nfaNextStates.add(newList(dfa.getStartState()));
+		
+		for(State state : dfa.getStates()) {
+
+			for(Character c : dfa.getAlphabet().getList()) {
+				nfaNextStates.add(newList(dfa.findNextState(state, c)));
+			}
+			
+			if(dfa.getAcceptingStates().contains(state)) {
+				nfaNextStates.add(nfaAcceptingStates);
+				
+			}else {
+				nfaNextStates.add(newList());
+				
+			}
 			
 		}
 		
-		for(int i = 0; i < dfa.getStates().size(); i++) {
-			nfaNextStates.add( i*dfa.getAlphabet().size() + i, new ArrayList<State>( Arrays.asList( dfa.getStates().get(i) ) ) );	//Delta += ([A State], epsilon, [That State])
+		for(int i = 0; i < dfa.getAlphabet().size()+1; i++) {
+			nfaNextStates.add(newList());
 			
 		}
 		
-		NFA nfa = new NFA(dfa.getStates(), dfa.getAlphabet(), nfaStartState, nfaNextStates, dfa.getAcceptingStates(), epsilon);
+		NFA nfa = new NFA(nfaStates, dfa.getAlphabet(), nfaStartState, nfaNextStates, nfaAcceptingStates, epsilon);
 		
 		return nfa;
 		
 	}
 	
-	//Given an NFA, string, trace, and result, return whether when the string is run the the DFA, the Trace existes within the resulting tree and ends in the result
+	//Given an NFA, string, trace, and result, return whether when the string is run the the DFA, the Trace exists within the resulting tree and ends in the result
 	public static boolean traceTest(NFA nfa, AlphaString string, Trace trace, Boolean result) {
 		
 		if(trace.size() != string.length()+1) {														//If trace.size() is not equal to the number of characters + 1
@@ -536,7 +601,7 @@ public class NFATest {
 			temp.clear();
 			branch = nfa.findNextStates(curState, string.getChar(index));								//Get (curState, string[index])
 			
-			if(curState == nfa.getStartState()) {
+			if(curState == nfa.getStartState() || nfa.findNextStates(nfa.getStartState(), epsilon).contains(curState)) {
 				for(State epState : nfa.findNextStates(curState, epsilon)) {
 					branch.addAll(nfa.findNextStates(epState, string.getChar(index)));
 					

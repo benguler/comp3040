@@ -58,6 +58,15 @@ public class NFA {
 		
 		this.currentStates.addAll(this.stateTable.nfaFindNextState(startState, epsilon));
 		
+		this.traceTree.reset();
+		
+		for(State curState : this.currentStates) {
+			this.traceTree.addNode(new TTNode(curState));
+			
+		}
+		
+		this.traceTree.incrimentDepth();
+		
 	}
 	
 	private boolean acceptReject() {
@@ -86,14 +95,7 @@ public class NFA {
 			
 			branch = new ArrayList<State>();
 			for(int j = 0; j < this.currentStates.size(); j++) {																		//Find next set of states that are transitioned to
-				branch = this.stateTable.nfaFindNextState(this.currentStates.get(j), string.getChar(i));									
-				
-				if(branch.isEmpty() && this.currentStates.get(j).getIdentifier() == "A") {
-					System.out.println(i);
-					
-					System.out.println("Why doesn't this work?");
-					
-				}													
+				branch = this.stateTable.nfaFindNextState(this.currentStates.get(j), string.getChar(i));																			
 				
 				newStates.add(branch);
 				
@@ -106,7 +108,7 @@ public class NFA {
 				
 			}
 			
-			this.traceTree.incrimentDepth();																							//No working with lower level of tree
+			this.traceTree.incrimentDepth();																							
 			
 			this.currentStates = new ArrayList<State>();
 			

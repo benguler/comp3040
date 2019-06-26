@@ -32,4 +32,11 @@ public class TraceTree {
 				
 	}
 	
+	public void reset() {
+		this.nodes = new ArrayList<ArrayList<TTNode>>();
+		this.nodes.add(new ArrayList<TTNode>());
+		this.depth = 0;
+		
+	}
+	
 }

@@ -36,7 +36,7 @@ public class RegEmpty implements RegEx {
 	}
 
 	@Override
-	public boolean accepts() {
+	public boolean accepts(AlphaString string) {
 		return false;
 		
 	}

@@ -41,9 +41,9 @@ public class RegChar implements RegEx {
 	}
 
 	@Override
-	public boolean accepts() {
+	public boolean accepts(AlphaString string) {
 		DFA dfa = func.nfaToDFA(this.compile());
-		return (dfa.run(this.generate()));
+		return (dfa.run(string));
 		
 	}
 	

@@ -7,7 +7,7 @@ public interface RegEx {
 	
 	public AlphaString generate();
 	
-	public boolean accepts();
+	public boolean accepts(AlphaString string);
 	
 	public Alphabet getAlphabet();
 	
