@@ -40,6 +40,8 @@ public class NFATest {
 			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//1000
 			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1)))),	//1011
 			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1)))),	//0101
+			    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),	//0000
+			    
 		};
 	//----------------------------------------------------------------------------------------------------------------------
 	
@@ -741,6 +743,68 @@ public class NFATest {
 		i = 7;
 		
 		System.out.print("		oddLNFA o evenNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		System.out.print("Kleene Star Tests: \n");
+		
+		test = kleene(oddNFA);
+		i = 11;
+		
+		System.out.print("		oddNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(evenNFA);
+		i = 1;
+		
+		System.out.print("		evenNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(oddLNFA);
+		i = 8;
+		
+		System.out.print("		oddLNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(evenLNFA);
+		i = 10;
+		
+		System.out.print("		evenLNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(stNFA);
+		i = 4;
+		
+		System.out.print("		stNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(zzNFA);
+		i = 9;
+		
+		System.out.print("		zzNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(ooNFA);
+		i = 10;
+		
+		System.out.print("		ooNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(zOroNFA);
+		i = 10;
+		
+		System.out.print("		zOroNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(zOroEndNFA);
+		i = 12;
+		
+		System.out.print("		zOroEndNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(zoNFA);
+		i = 11;
+		
+		System.out.print("		zoNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(ozLastNFA);
+		i = 2;
+		
+		System.out.print("		ozLastNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = kleene(allNFA);
+		i = 0;
+		
+		System.out.print("		allNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
 	
 		/*accepts = (oddNFA.run(string2))? "String Accepted":"String Rejected";	
 		System.out.println("\n" + accepts);
