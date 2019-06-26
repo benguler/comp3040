@@ -392,9 +392,9 @@ public class NFATest {
 					new Trace(new ArrayList<State>(Arrays.asList(zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(1), zoNFAStates.get(0), zoNFAStates.get(2)))),
 					
 			};
-	//------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------
 			
-	//NFA that accepts a binary number that only contains 1's or where the last character is zero (The "ozLastNFA")---------				
+	//NFA that accepts a binary number that only contains 1's or where the last character is zero or the string is empty (The "ozLastNFA")--			
 			private static ArrayList<State> ozLastNFAStates = new ArrayList<State>(Arrays.asList(new State("ozLast0"), new State("ozLast1"), new State("ozLast2"), new State("ozLast3")));						//Q = {ozLast0, ozLast1, ozLast2, ozLast3}
 			
 			private static State ozLastNFAStartState = ozLastNFAStates.get(1);																				//q0 = ozLast1
@@ -427,7 +427,7 @@ public class NFATest {
 					new Trace(new ArrayList<State>(Arrays.asList(ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2), ozLastNFAStates.get(2)))),
 					
 			};
-	//------------------------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------------
 			
 	//NFA that accepts all binary #s (The "allNFA")-------------------------------------------------------------------------
 			private static ArrayList<State> allNFAStates = new ArrayList<State>(Arrays.asList(new State("all0"), new State("all1")));						//Q = {A, B}
@@ -474,7 +474,7 @@ public class NFATest {
 		System.out.print("	oddNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			oddNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for oddNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for oddNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -483,7 +483,7 @@ public class NFATest {
 		System.out.print("	evenNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			evenNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for evenNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for evenNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -492,7 +492,7 @@ public class NFATest {
 		System.out.print("	oddLNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			oddLNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for oddLNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for oddLNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -501,7 +501,7 @@ public class NFATest {
 		System.out.print("	evenLNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			evenLNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for evenLNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for evenLNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -510,7 +510,7 @@ public class NFATest {
 		System.out.print("	stNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			stNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for stNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for stNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -519,7 +519,7 @@ public class NFATest {
 		System.out.print("	zzNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zzNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for zzNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zzNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -528,7 +528,7 @@ public class NFATest {
 		System.out.print("	ooNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			ooNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for ooNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for ooNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -537,7 +537,7 @@ public class NFATest {
 		System.out.print("	zOroNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zOroNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for zOroNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zOroNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -546,7 +546,7 @@ public class NFATest {
 		System.out.print("	zOroEndNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zOroEndNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for zOroEndNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zOroEndNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -555,7 +555,7 @@ public class NFATest {
 		System.out.print("	zoNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zoNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for zoNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zoNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -564,7 +564,7 @@ public class NFATest {
 		System.out.print("	ozLastNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			ozLastNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for ozLastNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for ozLastNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -573,7 +573,7 @@ public class NFATest {
 		System.out.print("	allNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			allNFA.run(testStrings[i]);
-			System.out.print("	Created trace tree for allNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for allNFA and string '" + testStrings[i].displayable() + "'\n");
 			
 		}
 		
@@ -583,7 +583,7 @@ public class NFATest {
 		
 		System.out.print("	oddNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	oddNFA ('" + testStrings[i].displayable() + "') = " + oddNFA.run(testStrings[i]) + " \n");
+			System.out.print("		oddNFA ('" + testStrings[i].displayable() + "') = " + oddNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -591,7 +591,7 @@ public class NFATest {
 		
 		System.out.print("	evenNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	evenNFA ('" + testStrings[i].displayable() + "') = " + evenNFA.run(testStrings[i]) + " \n");
+			System.out.print("		evenNFA ('" + testStrings[i].displayable() + "') = " + evenNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -599,7 +599,7 @@ public class NFATest {
 		
 		System.out.print("	oddLNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	oddLNFA ('" + testStrings[i].displayable() + "') = " + oddLNFA.run(testStrings[i]) + " \n");
+			System.out.print("		oddLNFA ('" + testStrings[i].displayable() + "') = " + oddLNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -607,7 +607,7 @@ public class NFATest {
 		
 		System.out.print("	evenLNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	evenLNFA ('" + testStrings[i].displayable() + "') = " + evenLNFA.run(testStrings[i]) + " \n");
+			System.out.print("		evenLNFA ('" + testStrings[i].displayable() + "') = " + evenLNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -615,7 +615,7 @@ public class NFATest {
 		
 		System.out.print("	stNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	stNFA ('" + testStrings[i].displayable() + "') = " + stNFA.run(testStrings[i]) + " \n");
+			System.out.print("		stNFA ('" + testStrings[i].displayable() + "') = " + stringTest(testStrings[i], stNFA, stNFA.getStartState(), 0) + " \n");
 			
 		}
 		
@@ -623,7 +623,7 @@ public class NFATest {
 		
 		System.out.print("	zzNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	zzNFA ('" + testStrings[i].displayable() + "') = " + zzNFA.run(testStrings[i]) + " \n");
+			System.out.print("		zzNFA ('" + testStrings[i].displayable() + "') = " + zzNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -631,7 +631,7 @@ public class NFATest {
 		
 		System.out.print("	ooNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	ooNFA ('" + testStrings[i].displayable() + "') = " + ooNFA.run(testStrings[i]) + " \n");
+			System.out.print("		ooNFA ('" + testStrings[i].displayable() + "') = " + ooNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -639,7 +639,7 @@ public class NFATest {
 		
 		System.out.print("	zOroNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	zOroNFA ('" + testStrings[i].displayable() + "') = " + zOroNFA.run(testStrings[i]) + " \n");
+			System.out.print("		zOroNFA ('" + testStrings[i].displayable() + "') = " + zOroNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -647,7 +647,7 @@ public class NFATest {
 		
 		System.out.print("	zOroEndNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	zOroEndNFA ('" + testStrings[i].displayable() + "') = " + zOroEndNFA.run(testStrings[i]) + " \n");
+			System.out.print("		zOroEndNFA ('" + testStrings[i].displayable() + "') = " + zOroEndNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -655,7 +655,7 @@ public class NFATest {
 		
 		System.out.print("	zoNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	zoNFA ('" + testStrings[i].displayable() + "') = " + zoNFA.run(testStrings[i]) + " \n");
+			System.out.print("		zoNFA ('" + testStrings[i].displayable() + "') = " + zoNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
@@ -663,7 +663,7 @@ public class NFATest {
 		
 		System.out.print("	ozLastNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	ozLastNFA ('" + testStrings[i].displayable() + "') = " + ozLastNFA.run(testStrings[i]) + " \n");
+			System.out.print("		ozLastNFA ('" + testStrings[i].displayable() + "') = " + stringTest(testStrings[i], ozLastNFA, ozLastNFA.getStartState(), 0) + " \n");
 			
 		}
 		
@@ -671,12 +671,76 @@ public class NFATest {
 		
 		System.out.print("	allNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("	allNFA ('" + testStrings[i].displayable() + "') = " + allNFA.run(testStrings[i]) + " \n");
+			System.out.print("		allNFA ('" + testStrings[i].displayable() + "') = " + allNFA.run(testStrings[i]) + " \n");
 			
 		}
 		
 		System.out.print("\n");
 	
+		System.out.print("Concatenation Tests: \n");
+		
+		NFA test;
+		int i;
+		
+		test = concatenation(evenNFA, oddNFA);
+		i = 4;
+		
+		System.out.print("		evenNFA o oddNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(evenNFA, zoNFA);
+		i = 8;
+		
+		System.out.print("		evenNFA o zoNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(evenNFA, oddLNFA);
+		i = 4;
+		
+		System.out.print("		evenNFA o oddLNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(evenNFA, evenLNFA);
+		i = 9;
+		
+		System.out.print("		evenNFA o evenLNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(stNFA, oddNFA);
+		i = 8;
+		
+		System.out.print("		stNFA o oddNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(evenNFA, zOroEndNFA);
+		i = 10;
+		
+		System.out.print("		evenNFA o zOroEndNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(stNFA, evenNFA);
+		i = 9;
+		
+		System.out.print("		stNFA o evenNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(oddNFA, ozLastNFA);
+		i = 9;
+		
+		System.out.print("		oddNFA o ozLastNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(oddNFA, zzNFA);
+		i = 5;
+		
+		System.out.print("		oddNFA o zzNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(ozLastNFA, stNFA);
+		i = 10;
+		
+		System.out.print("		ozLastNFA o stNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(ozLastNFA, ozLastNFA);
+		i = 3;
+		
+		System.out.print("		ozLastNFA o ozLastNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		
+		test = concatenation(oddLNFA, evenLNFA);
+		i = 7;
+		
+		System.out.print("		oddLNFA o evenNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
 	
 		/*accepts = (oddNFA.run(string2))? "String Accepted":"String Rejected";	
 		System.out.println("\n" + accepts);
@@ -803,7 +867,7 @@ public class NFATest {
 		ArrayList<State> branch = new ArrayList<State>();	
 		ArrayList<State> temp = new ArrayList<State>();	
 		
-		if(string.length() != 0){																		//If testing the empty string, just check if startState is an accepting state	
+		if(string.length() > 0){																		//If testing the empty string, just check if startState is an accepting state	
 			temp.clear();
 			branch = nfa.findNextStates(curState, string.getChar(index));								//Get (curState, string[index])
 			
@@ -837,7 +901,23 @@ public class NFATest {
 			return false;	
 			
 		}else{
-			return (nfa.getAcceptingStates().contains(curState) && index == string.length()-1);
+			//return (nfa.getAcceptingStates().contains(curState));
+			
+			if(nfa.getAcceptingStates().contains(curState)) {
+				return true;
+				
+			}else {
+				for(State state : nfa.findNextStates(curState, epsilon)) {
+					if(nfa.getAcceptingStates().contains(state)) {
+						return true;
+						
+					}
+					
+				}
+				
+			}
+			
+			return false;
 			
 		}
 		

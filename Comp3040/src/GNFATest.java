@@ -34,10 +34,10 @@ public class GNFATest {
 	private static RegEx reg1 = new RegConcat(new RegConcat(new RegChar(biAlphabet.get(1), biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet)), new RegConcat(new RegChar(biAlphabet.get(0), biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet)));
 	
 	private static ArrayList<RegEx> testRegs = new ArrayList<RegEx>(Arrays.asList(
-															new RegEmpty(biAlphabet), new RegEpsilon(biAlphabet), new RegEmpty(biAlphabet), new RegEmpty(biAlphabet),
+															new RegEmpty(biAlphabet), new RegEpsilon(biAlphabet), new RegEmpty(biAlphabet), new RegEmpty(biAlphabet),		//No other state connecting to the start state is represented by empty RegEx's
 															new RegEmpty(biAlphabet), reg0, reg1, new RegEmpty(biAlphabet),
 															new RegEmpty(biAlphabet), new RegEmpty(biAlphabet), reg0, new RegEpsilon(biAlphabet),
-															new RegEmpty(biAlphabet), new RegEmpty(biAlphabet), new RegEmpty(biAlphabet), new RegEmpty(biAlphabet)
+															new RegEmpty(biAlphabet), new RegEmpty(biAlphabet), new RegEmpty(biAlphabet), new RegEmpty(biAlphabet)			//The accepting state connecting to no other states is represented with empty RegEx's
 															));
 	
 	private static State testAccept = testStates.get(3); 
