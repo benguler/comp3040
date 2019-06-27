@@ -61,7 +61,7 @@ public class DFA {
 		
 	}
 	
-	public State getCurrentState(){
+	private State getCurrentState(){
 		return currentState;
 		
 	}

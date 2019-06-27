@@ -18,8 +18,6 @@ public class NFA {
 	
 	private TraceTree traceTree;
 	
-	private Trace trace;
-	
 	public NFA(){
 		
 	}

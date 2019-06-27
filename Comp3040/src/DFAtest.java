@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 //Create and test various DFAs and DFA-related functions
 
@@ -153,7 +154,7 @@ public class DFAtest {
 			private static DFA tbDFA = new DFA(tbDFAStates, biAlphabet,tbDFAStartState,tbDFANextStates,tbDFAAcceptingStates) ;
 	//----------------------------------------------------------------------------------------------------------------------
 			
-	//DFA that accepts even length binary #s (The "elDFA")------------------------------------------------------------------
+	//DFA that accepts even length binary #s (The "evenLDFA")------------------------------------------------------------------
 			private static AlphaString elTestStrings[] = new AlphaString[]{
 					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000	
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
@@ -169,20 +170,20 @@ public class DFAtest {
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
-			private static ArrayList<State> elDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+			private static ArrayList<State> evenLDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
 			
-			private static State elDFAStartState =elDFAStates.get(0);																				//q0 = A
+			private static State evenLDFAStartState =evenLDFAStates.get(0);																				//q0 = A
 			
-			private static ArrayList<State>elDFANextStates = new ArrayList<State>(Arrays.asList(elDFAStates.get(1),elDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
-																			                    elDFAStates.get(0),elDFAStates.get(0)));			//(B, '0', A), (B, '1', A)
+			private static ArrayList<State>evenLDFANextStates = new ArrayList<State>(Arrays.asList(evenLDFAStates.get(1),evenLDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
+																			                    evenLDFAStates.get(0),evenLDFAStates.get(0)));			//(B, '0', A), (B, '1', A)
 																			                   
 			
-			private static ArrayList<State>elDFAAcceptingStates = new ArrayList<State>(Arrays.asList( elDFAStates.get(0)));							//F = {A}
+			private static ArrayList<State>evenLDFAAcceptingStates = new ArrayList<State>(Arrays.asList( evenLDFAStates.get(0)));							//F = {A}
 			
-			private static DFA elDFA = new DFA(elDFAStates, biAlphabet,elDFAStartState,elDFANextStates,elDFAAcceptingStates);
+			private static DFA evenLDFA = new DFA(evenLDFAStates, biAlphabet,evenLDFAStartState,evenLDFANextStates,evenLDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
 			
-	//DFA that accepts odd length binary #s (The olDFA")-------------------------------------------------------------------
+	//DFA that accepts odd length binary #s (The oddLDFA")-------------------------------------------------------------------
 			private static AlphaString olTestStrings[] = new AlphaString[]{
 					new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000	
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
@@ -198,17 +199,17 @@ public class DFAtest {
 				    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 			};
 			
-			private static ArrayList<State> olDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+			private static ArrayList<State> oddLDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
 			
-			private static State olDFAStartState =olDFAStates.get(0);																				//q0 = A
+			private static State oddLDFAStartState =oddLDFAStates.get(0);																				//q0 = A
 			
-			private static ArrayList<State> olDFANextStates = new ArrayList<State>(Arrays.asList(olDFAStates.get(1),olDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
-																			                    olDFAStates.get(0),olDFAStates.get(0)));			//(B, '0', A), (B, '1', A)
+			private static ArrayList<State> oddLDFANextStates = new ArrayList<State>(Arrays.asList(oddLDFAStates.get(1),oddLDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
+																			                    oddLDFAStates.get(0),oddLDFAStates.get(0)));			//		   (B, '0', A), (B, '1', A)
 																			                   
 			
-			private static ArrayList<State> olDFAAcceptingStates = new ArrayList<State>(Arrays.asList( olDFAStates.get(1)));						//F = {B}
+			private static ArrayList<State> oddLDFAAcceptingStates = new ArrayList<State>(Arrays.asList( oddLDFAStates.get(1)));						//F = {B}
 			
-			private static DFA olDFA = new DFA(olDFAStates, biAlphabet,olDFAStartState,olDFANextStates,olDFAAcceptingStates);
+			private static DFA oddLDFA = new DFA(oddLDFAStates, biAlphabet,oddLDFAStartState,oddLDFANextStates,oddLDFAAcceptingStates);
 	//----------------------------------------------------------------------------------------------------------------------
 			
 	//DFA that accepts a string of my name "ben" (The benDFA")---------------------------------------------------------------
@@ -446,7 +447,7 @@ public class DFAtest {
 			
 			azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
 		//------------------------------------------------------------------------------------------------------------------------
-		
+			
 		boolean cont = true;
 		boolean dfaToTest = true;
 		
@@ -569,12 +570,12 @@ public class DFAtest {
 							
 						case "4":
 							testString = elTestStrings[testStringIndex%12];
-							currentDFA = elDFA;
+							currentDFA = evenLDFA;
 							break;
 							
 						case "5":
 							testString = olTestStrings[testStringIndex%12];
-							currentDFA = olDFA;
+							currentDFA = oddLDFA;
 							break;
 							
 						case "6":
@@ -675,12 +676,12 @@ public class DFAtest {
 					
 						case "1":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = union(evenDFA, elDFA);
+							currentDFA = union(evenDFA, evenLDFA);
 							break;
 						
 						case "2":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = union(evenDFA, olDFA);
+							currentDFA = union(evenDFA, oddLDFA);
 							break;
 							
 						case "3":
@@ -695,12 +696,12 @@ public class DFAtest {
 							
 						case "5":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = union(oddDFA, elDFA);
+							currentDFA = union(oddDFA, evenLDFA);
 							break;
 							
 						case "6":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = union(oddDFA, olDFA);
+							currentDFA = union(oddDFA, oddLDFA);
 							break;
 							
 						case "7":
@@ -715,12 +716,12 @@ public class DFAtest {
 							
 						case "9":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = union(ooDFA, elDFA);
+							currentDFA = union(ooDFA, evenLDFA);
 							break;
 							
 						case "10":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = union(ooDFA, olDFA);
+							currentDFA = union(ooDFA, oddLDFA);
 							break;
 							
 						case "11":
@@ -768,12 +769,12 @@ public class DFAtest {
 					
 						case "1":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = intersection(evenDFA, elDFA);
+							currentDFA = intersection(evenDFA, evenLDFA);
 							break;
 						
 						case "2":
 							testString = evenTestStrings[testStringIndex%12];
-							currentDFA = intersection(evenDFA, olDFA);
+							currentDFA = intersection(evenDFA, oddLDFA);
 							break;
 							
 						case "3":
@@ -788,12 +789,12 @@ public class DFAtest {
 							
 						case "5":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = intersection(oddDFA, elDFA);
+							currentDFA = intersection(oddDFA, evenLDFA);
 							break;
 							
 						case "6":
 							testString = oddTestStrings[testStringIndex%12];
-							currentDFA = intersection(oddDFA, olDFA);
+							currentDFA = intersection(oddDFA, oddLDFA);
 							break;
 							
 						case "7":
@@ -808,12 +809,12 @@ public class DFAtest {
 							
 						case "9":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = intersection(ooDFA, elDFA);
+							currentDFA = intersection(ooDFA, evenLDFA);
 							break;
 							
 						case "10":
 							testString = ooTestStrings[testStringIndex%12];
-							currentDFA = intersection(ooDFA, olDFA);
+							currentDFA = intersection(ooDFA, oddLDFA);
 							break;
 							
 						case "11":
@@ -847,8 +848,8 @@ public class DFAtest {
 					System.out.println("8  - Is benDFA a subset of azDFA?");
 					System.out.println("9  - Is noDFA a subset of noDFA?");
 					System.out.println("10 - Is allDFA a subset of noDFA?");
-					System.out.println("11 - Is tbDFA a subset of olDFA?");
-					System.out.println("12 - Is tbDFA a subset of elDFA?");
+					System.out.println("11 - Is tbDFA a subset of oddLDFA?");
+					System.out.println("12 - Is tbDFA a subset of evenLDFA?");
 					System.out.println("\nWhich statement would you like to test?: ");
 					
 					input = scanner.next();
@@ -940,16 +941,16 @@ public class DFAtest {
 							break;
 						
 						case "11":
-							isSubset = subset(tbDFA, olDFA);
-							accepts = (isSubset)?"tbDFA is a subset of olDFA":"tbDFA is not a subset of olDFA";
+							isSubset = subset(tbDFA, oddLDFA);
+							accepts = (isSubset)?"tbDFA is a subset of oddLDFA":"tbDFA is not a subset of oddLDFA";
 							System.out.println(accepts);
 							
 							dfaToTest = false;
 							break;
 						
 						case "12":
-							isSubset = subset(tbDFA, elDFA);
-							accepts = (isSubset)?"tbDFA is a subset of elDFA":"tbDFA is not a subset of elDFA";
+							isSubset = subset(tbDFA, evenLDFA);
+							accepts = (isSubset)?"tbDFA is a subset of evenLDFA":"tbDFA is not a subset of evenLDFA";
 							System.out.println(accepts);
 							
 							dfaToTest = false;
@@ -1077,8 +1078,16 @@ public class DFAtest {
 							break;
 							
 						case "12":
-							isEqual = equal(intersection(complement(oddDFA), complement(emptyDFA)), evenDFA);							//Always consider the empty string
+							isEqual = equal(intersection(complement(oddDFA), complement(emptyDFA)), evenDFA);							
 							accepts = (isEqual)?"(~(oddDFA) n ~(emptyDFA)) is equal to evenDFA":"(~(oddDFA) n ~(emptyDFA)) is not equal to evenDFA";
+							System.out.println(accepts);
+							
+							dfaToTest = false;
+							break;
+							
+						case "13":
+							isEqual = equal(oddLDFA, oddLDFA);							
+							accepts = (isEqual)?"oddLDFA is equal to oddLDFA":"oddLDFA is not equal to oddLDFA";
 							System.out.println(accepts);
 							
 							dfaToTest = false;
@@ -1157,62 +1166,48 @@ public class DFAtest {
 		
 	}
 	
-	//Function that given a DFA, returns a string that is accepted by that DFA
+	//Return a string that is accepted by the dfa
 	public static AlphaString acceptingString(DFA dfa){
-		
-		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
-			return null;							//Return null
+		if(dfa.getAcceptingStates().isEmpty()) {
+			return null;
+			
 		}
 		
-		ArrayList<State> states = dfa.getStates(); 
-		//State curState = dfa.getAcceptingStates().get(0);	//Current state = acceptingStates[0] - i.e. the first accepting state
-		State startState = dfa.getStartState();
+		AlphaString string = new AlphaString(dfa.getAlphabet());
 		
-		StateTable stateTable = dfa.getStateTable();
+		State  curState = null;
+		boolean foundAccepting = false;
+		boolean foundNew = false;
+		int depth = 0;
 		
-		Alphabet alphabet = dfa.getAlphabet();
+		ArrayList<ArrayList<State>> states = new ArrayList<ArrayList<State>>();
+		ArrayList<ArrayList<Character>> chars = new ArrayList<ArrayList<Character>>();
+		states.add(new ArrayList<State>(Arrays.asList(dfa.getStartState())));
 		
-		AlphaString acceptingString = new AlphaString(alphabet);
-		
-		boolean newState;
-		boolean nextAccept = false;
-		
-		for(State curState : dfa.getAcceptingStates()) {
-			while(curState != startState){				//Until we arrive at the starting state
-				newState = false;
-				
-				for(int i = 0; i <= states.size(); i++){
-					if(newState){						//Current state has been updated
-						break;							//Stop searching
-						
-					}
-					
-					if(i == states.size()) {			//No states point to c
-						if(curState == dfa.getAcceptingStates().get(dfa.getAcceptingStates().size()-1)) {
-							return null;
-						}
-						
-						acceptingString = new AlphaString(alphabet);
-						nextAccept = true;
-						break;
-						
-					}
-					
-					for(int j = 0; j < alphabet.size(); j++){
-						if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
-							acceptingString.pushChar(alphabet.get(j));							//Push Character into the String to be returned
-							curState = states.get(i);										//Current State = Previous State
-							newState = true;												
-							break;															//Stop searching
-							
-						}
-						
-					}	
+		for(int i = 0 ; i < dfa.getStates().size(); i++) {
+			states.add(new ArrayList<State>());
+			chars.add(new ArrayList<Character>());
+			
+			for(State state : states.get(states.size()-2)) {
+				for(Character c : dfa.getAlphabet().getList()) {
+					states.get(states.size()-1).add(dfa.findNextState(state, c));
+					chars.get(chars.size()-1).add(c);
 					
 				}
 				
-				if(nextAccept) {
-					nextAccept = false;
+			}
+			
+		}
+		
+		for(int i = states.size() -1 ; i >= 0 ; i--) {
+			for(State state : states.get(i)) {
+				if(dfa.getAcceptingStates().contains(state)) {
+					curState = state;
+					foundAccepting = true;
+					depth = i;
+				}
+				
+				if(foundAccepting){
 					break;
 					
 				}
@@ -1221,7 +1216,38 @@ public class DFAtest {
 			
 		}
 		
-		return acceptingString;
+		if(!foundAccepting) {
+			return null;
+			
+		}
+		
+		while(curState != dfa.getStartState()) {
+			
+			foundNew = false;
+			
+			for(State state : states.get(depth-1)) {
+				for(Character character : dfa.getAlphabet().getList()) {
+					if(dfa.findNextState(state, character) == curState && state != curState){
+						curState = state;
+						foundNew = true;
+						string.pushChar(character);
+						break;
+						
+					}
+				
+				}
+				
+				if(foundNew) {
+					depth--;
+					break;
+					
+				}
+				
+			}
+			
+		}
+		
+		return string;
 		
 	}
 	
@@ -1302,6 +1328,7 @@ public class DFAtest {
 		
 		return union;
 	}
+	
 	//(dfa1 n dfa2)
 	public static DFA intersection(DFA dfa1, DFA dfa2){
 		ArrayList<State> intersectionStates = new ArrayList<State>();

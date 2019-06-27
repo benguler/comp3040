@@ -44,24 +44,11 @@ public class NFATest {
 			    
 		};
 	//----------------------------------------------------------------------------------------------------------------------
-	
-	//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
-			private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
-			
-			private static State oddDFAStartState =oddDFAStates.get(0);																				//q0 = A
-			
-			private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//Delta = {(A, '0', A), (A, '1', B)
-																			                     oddDFAStates.get(0), oddDFAStates.get(1)));		//(B, '0', A), (B, '1', B)
-			
-			private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
-			
-			private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
-	//----------------------------------------------------------------------------------------------------------------------	
 		
 	//NFA that accepts odd binary #s (The "oddNFA")-------------------------------------------------------------------------
-		private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {A, B}
+		private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {odd0, odd1}
 		
-		private static State oddNFAStartState = oddNFAStates.get(0);																			//q0 = A
+		private static State oddNFAStartState = oddNFAStates.get(0);																			//q0 = odd0
 		
 		private static ArrayList<ArrayList<State>>oddNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
 																									 newList( oddNFAStates.get(0) ), newList( oddNFAStates.get(0), oddNFAStates.get(1) ), newList(),	//Delta = {(odd0, '0', {odd0}), (odd0, '1', {odd0, odd1}), (odd0, epsilon, {})
@@ -464,12 +451,90 @@ public class NFATest {
 					
 			};
 	//----------------------------------------------------------------------------------------------------------------------
-	public static void main(String[] args) {  	
-		String accepts;
+	
+	//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
+		private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
 		
-		AlphaString string1 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))));
-		AlphaString string2 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));
-		AlphaString string3 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0))));	
+		private static State oddDFAStartState =oddDFAStates.get(0);																				//q0 = A
+		
+		private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//Delta = {(A, '0', A), (A, '1', B)
+																		                     oddDFAStates.get(0), oddDFAStates.get(1)));		//(B, '0', A), (B, '1', B)
+		
+		private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
+		
+		private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
+	//----------------------------------------------------------------------------------------------------------------------	
+			
+	//DFA that accepts even binary #s (The "evenDFA")-------------------------------------------------------------------------		
+		private static ArrayList<State> evenDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+				
+		private static State evenDFAStartState =evenDFAStates.get(0);																				//q0 = A
+				
+		private static ArrayList<State>evenDFANextStates = new ArrayList<State>(Arrays.asList(evenDFAStates.get(1), evenDFAStates.get(0),			//Delta = {(A, '0', B), (A, '1', A)
+																				              evenDFAStates.get(1), evenDFAStates.get(0)));			//(B, '0', B), (B, '1', A)
+				
+		private static ArrayList<State>evenDFAAcceptingStates = new ArrayList<State>(Arrays.asList(evenDFAStates.get(1)));							//F = {B}
+				
+		private static DFA evenDFA = new DFA(evenDFAStates, biAlphabet,evenDFAStartState,evenDFANextStates,evenDFAAcceptingStates);
+	//----------------------------------------------------------------------------------------------------------------------
+		
+	//DFA that accepts even length binary #s (The "evenLDFA")------------------------------------------------------------------
+		private static ArrayList<State> evenLDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+		
+		private static State evenLDFAStartState =evenLDFAStates.get(0);																				//q0 = A
+		
+		private static ArrayList<State>evenLDFANextStates = new ArrayList<State>(Arrays.asList(evenLDFAStates.get(1),evenLDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
+																		                    evenLDFAStates.get(0),evenLDFAStates.get(0)));			//(B, '0', A), (B, '1', A)
+																		                   
+		
+		private static ArrayList<State>evenLDFAAcceptingStates = new ArrayList<State>(Arrays.asList( evenLDFAStates.get(0)));							//F = {A}
+		
+		private static DFA evenLDFA = new DFA(evenLDFAStates, biAlphabet,evenLDFAStartState,evenLDFANextStates,evenLDFAAcceptingStates);
+	//----------------------------------------------------------------------------------------------------------------------
+		
+	//DFA that accepts odd length binary #s (The oddLDFA")-------------------------------------------------------------------
+		private static ArrayList<State> oddLDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+		
+		private static State oddLDFAStartState =oddLDFAStates.get(0);																				//q0 = A
+		
+		private static ArrayList<State> oddLDFANextStates = new ArrayList<State>(Arrays.asList(oddLDFAStates.get(1),oddLDFAStates.get(1),				//Delta = {(A, '0', B), (A, '1', B)
+																		                    oddLDFAStates.get(0),oddLDFAStates.get(0)));			//(B, '0', A), (B, '1', A)
+																		                   
+		
+		private static ArrayList<State> oddLDFAAcceptingStates = new ArrayList<State>(Arrays.asList( oddLDFAStates.get(1)));						//F = {B}
+		
+		private static DFA oddLDFA = new DFA(oddLDFAStates, biAlphabet,oddLDFAStartState,oddLDFANextStates,oddLDFAAcceptingStates);
+	//----------------------------------------------------------------------------------------------------------------------
+		
+	//DFA that accepts a sting containing the binary # "11" (The "ooDFA")------------------------------------------------------------------------
+		private static ArrayList<State> ooDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));						//Q = {A, B, C}
+		
+		private static State ooDFAStartState =ooDFAStates.get(0);																				//q0 = A
+		
+		private static ArrayList<State>ooDFANextStates = new ArrayList<State>(Arrays.asList(ooDFAStates.get(0),ooDFAStates.get(1),				//Delta = {(A, '0', A), (A, '1', B)
+																		                    ooDFAStates.get(0),ooDFAStates.get(2),						 //(B, '0', A), (B, '1', C)
+		 																					ooDFAStates.get(2),ooDFAStates.get(2)));					 //(C, '0', C), (C, '1', C)}
+		
+		private static ArrayList<State>ooDFAAcceptingStates = new ArrayList<State>(Arrays.asList(ooDFAStates.get(2)));							//F = {C}
+		
+		private static DFA ooDFA = new DFA(ooDFAStates, biAlphabet,ooDFAStartState,ooDFANextStates,ooDFAAcceptingStates);
+	//----------------------------------------------------------------------------------------------------------------------
+				
+		
+	//DFA that accepts all strings of bits (The "allDFA")-------------------------------------------------------------------															
+		private static ArrayList<State> allDFAStates = new ArrayList<State>(Arrays.asList(new State("A")));																//Q = {A}
+		
+		private static State allDFAStartState =allDFAStates.get(0);																										//q0 = A
+		
+		private static ArrayList<State> allDFANextStates = new ArrayList<State>(Arrays.asList(allDFAStates.get(0),allDFAStates.get(0)));								//Delta = {(A, '0', A), (A, '1', A)
+																		                   
+		
+		private static ArrayList<State> allDFAAcceptingStates = new ArrayList<State>(Arrays.asList(allDFAStates.get(0)));												//F = {A}
+		
+		private static DFA allDFA = new DFA(allDFAStates, biAlphabet,allDFAStartState,allDFANextStates,allDFAAcceptingStates);
+	//----------------------------------------------------------------------------------------------------------------------
+		
+	public static void main(String[] args) {  	
 		
 		/*
 		 * 
@@ -705,62 +770,62 @@ public class NFATest {
 		test = concatenation(evenNFA, oddNFA);
 		index = 4;
 		
-		//System.out.print("		evenNFA o oddNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		evenNFA o oddNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, zoNFA);
 		index = 8;
 		
-		//System.out.print("		evenNFA o zoNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		evenNFA o zoNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, oddLNFA);
 		index = 4;
 		
-		//System.out.print("		evenNFA o oddLNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		evenNFA o oddLNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, evenLNFA);
 		index = 9;
 		
-		//System.out.print("		evenNFA o evenLNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		evenNFA o evenLNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(stNFA, oddNFA);
 		index = 8;
 		
-		//System.out.print("		stNFA o oddNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		stNFA o oddNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, zOroEndNFA);
 		index = 10;
 		
-		//System.out.print("		evenNFA o zOroEndNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		evenNFA o zOroEndNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(stNFA, evenNFA);
 		index = 9;
 		
-		//System.out.print("		stNFA o evenNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		stNFA o evenNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(oddNFA, ozLastNFA);
 		index = 9;
 		
-		//System.out.print("		oddNFA o ozLastNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		oddNFA o ozLastNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(oddNFA, zzNFA);
 		index = 5;
 		
-		//System.out.print("		oddNFA o zzNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		oddNFA o zzNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(ozLastNFA, stNFA);
 		index = 10;
 		
-		//System.out.print("		ozLastNFA o stNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		ozLastNFA o stNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(ozLastNFA, ozLastNFA);
 		index = 3;
 		
-		//System.out.print("		ozLastNFA o ozLastNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		ozLastNFA o ozLastNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(oddLNFA, evenLNFA);
 		index = 7;
 		
-		//System.out.print("		oddLNFA o evenNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		oddLNFA o evenNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		
 		/*
@@ -929,10 +994,36 @@ public class NFATest {
 		
 		System.out.print("	allNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
-			System.out.print("		(DFA)allNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(allNFA).run(testStrings[i]) + " \n");
+			System.out.print("		(DFA)allNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(allNFA).run(testStrings[i]) + " \n\n");
 			
 		}
 		
+		/*
+		 * 
+		 * DFA Conversion Equivalence Tests
+		 * 
+		 */
+		
+		System.out.print("Test NFA to DFA conversion by comparing converted NFA's to equivalent DFA's: \n\n");
+		
+		System.out.print("	oddNFA:\n");
+		System.out.print("		(DFA)oddNFA == oddDFA? " + dfaEqual(nfaToDFA(oddNFA), oddDFA) + " \n\n");
+		
+		System.out.print("	evenNFA:\n");
+		System.out.print("		(DFA)evenNFA == evenDFA? " + dfaEqual(nfaToDFA(evenNFA), evenDFA) + " \n\n");
+		
+		System.out.print("	oddLNFA:\n");
+		System.out.print("		(DFA)oddLNFA == oddLDFA? " + dfaEqual(oddLDFA, oddLDFA) + " \n\n");
+		
+		System.out.print("	evenLNFA:\n");
+		System.out.print("		(DFA)evenLNFA == evenLDFA? " + dfaEqual(nfaToDFA(evenLNFA), evenLDFA) + " \n\n");
+		
+		System.out.print("	ooNFA:\n");
+		System.out.print("		(DFA)ooNFA == ooDFA? " + dfaEqual(nfaToDFA(ooNFA), ooDFA) + " \n\n");
+		
+		System.out.print("	allNFA:\n");
+		System.out.print("		(DFA)allNFA == allDFA? " + dfaEqual(nfaToDFA(allNFA), allDFA) + " \n\n");
+			
 	}
 	
 	public static ArrayList<State> newList(State...states){
@@ -1133,28 +1224,58 @@ public class NFATest {
 		ArrayList<ArrayList<State>> concatNextStates = new ArrayList<ArrayList<State>>();
 		ArrayList<State> concatAcceptingStates = new ArrayList<State>();
 		
-		concatStates.addAll(snfa1.getStates());
-		concatStates.addAll(snfa2.getStates());
-		
-		concatNextStates.addAll(snfa1.getNextStates());
-		concatNextStates.addAll(snfa2.getNextStates());													//Qc = Q1 + Q2
-		
-		int epsilonIndex;
-		ArrayList<State> epsilonTran;
-		
-		for(State accept : snfa1.getAcceptingStates()) {
-			epsilonIndex = (snfa1.getStates().indexOf(accept))*(alphabet.size()+1) + alphabet.size();
-			
-			epsilonTran = new ArrayList<State>();
-			
-			epsilonTran.addAll(snfa1.getNextStates().get(epsilonIndex));
-			epsilonTran.add(snfa2.getStartState());
-			
-			concatNextStates.set(epsilonIndex, epsilonTran);											//([nfa1 Accept], epsilon, [nfa2 start])
+		for(State state : snfa1.getStates()) {																														//Qc = Q1 + Q2
+			concatStates.add(new State(state.getIdentifier()));
 			
 		}
 		
-		concatAcceptingStates.addAll(snfa2.getAcceptingStates());										//Fc = F2
+		for(State state : snfa2.getStates()) {
+			concatStates.add(new State(state.getIdentifier()));
+			
+		}
+		
+		concatStartState = concatStates.get(snfa1.getStates().indexOf(snfa1.getStartState()));
+		
+		ArrayList<State> tran;
+		
+		for(int i = 0; i < snfa1.getNextStates().size(); i++) {
+			tran = new ArrayList<State>();
+			
+			for(State state :  snfa1.getNextStates().get(i)) {
+				tran.add(concatStates.get(snfa1.getStates().indexOf(state)));
+				
+			}
+			
+			for(State accepting : snfa1.getAcceptingStates()) {
+				if((i) % (alphabet.size() + 1) == alphabet.size() && i == (snfa1.getStates().indexOf(accepting)) * (alphabet.size() + 1) + alphabet.size()) {
+					tran.add(concatStates.get(snfa2.getStates().indexOf(snfa2.getStartState()) + snfa1.getStates().size()));											//([nfa1 Accept], epsilon, [nfa2 start])
+					break;
+					
+				}
+			
+			}
+			
+			concatNextStates.add(tran);
+			
+		}
+		
+		for(int i = 0; i < snfa2.getNextStates().size(); i++) {
+			tran = new ArrayList<State>();
+			
+			for(State state :  snfa2.getNextStates().get(i)) {
+				tran.add(concatStates.get(snfa2.getStates().indexOf(state)  + snfa1.getStates().size()));
+				
+			}
+			
+			concatNextStates.add(tran);
+			
+		}
+		
+					
+		for(State state : snfa2.getAcceptingStates()) {
+			concatAcceptingStates.add(concatStates.get(snfa2.getStates().indexOf(state)  + snfa1.getStates().size()));												//Fc = F2
+		
+		}
 		
 		return new NFA(concatStates, alphabet, concatStartState, concatNextStates, concatAcceptingStates, epsilon);
 		
@@ -1174,9 +1295,8 @@ public class NFATest {
 		
 		String id;
 		
-		for(int i = 0; i < snfa.getStates().size(); i++) {
-			id = "kleene" + i;
-			kleeneStates.add(new State(id));
+		for(State state : snfa.getStates()) {
+			kleeneStates.add(new State(state.getIdentifier()));
 			
 		}
 		
@@ -1197,7 +1317,7 @@ public class NFATest {
 				
 			}
 			
-			if(i % (alphabet.size() + 1) == 0) {
+			if((i) % (alphabet.size() + 1) == alphabet.size() && i!= (snfa.getStates().indexOf(snfa.getStartState())) * (alphabet.size() + 1) + alphabet.size()) {
 				tran.add(kleeneStates.get(snfa.getStates().indexOf(snfa.getStartState()) + 1));
 				
 			}
@@ -1304,5 +1424,245 @@ public class NFATest {
 		return new DFA(dfaStates, alphabet, dfaStartState, dfaNextStates, dfaAcceptingStates);
 	
 	}
+	
+	//Function that given a DFA, returns a string that is accepted by that DFA
+	public static AlphaString acceptingString(DFA dfa){
+		if(dfa.getAcceptingStates().isEmpty()) {
+			return null;
+			
+		}
+		
+		AlphaString string = new AlphaString(dfa.getAlphabet());
+		
+		State  curState = null;
+		boolean foundAccepting = false;
+		boolean foundNew = false;
+		int depth = 0;
+		
+		ArrayList<ArrayList<State>> states = new ArrayList<ArrayList<State>>();
+		ArrayList<ArrayList<Character>> chars = new ArrayList<ArrayList<Character>>();
+		states.add(new ArrayList<State>(Arrays.asList(dfa.getStartState())));
+		
+		for(int i = 0 ; i < dfa.getStates().size(); i++) {
+			states.add(new ArrayList<State>());
+			chars.add(new ArrayList<Character>());
+			
+			for(State state : states.get(states.size()-2)) {
+				for(Character c : dfa.getAlphabet().getList()) {
+					states.get(states.size()-1).add(dfa.findNextState(state, c));
+					chars.get(chars.size()-1).add(c);
+					
+				}
+				
+			}
+			
+		}
+		
+		for(int i = states.size() -1 ; i >= 0 ; i--) {
+			for(State state : states.get(i)) {
+				if(dfa.getAcceptingStates().contains(state)) {
+					curState = state;
+					foundAccepting = true;
+					depth = i;
+				}
+				
+				if(foundAccepting){
+					break;
+					
+				}
+				
+			}
+			
+		}
+		
+		if(!foundAccepting) {
+			return null;
+			
+		}
+		
+		while(curState != dfa.getStartState()) {
+			
+			foundNew = false;
+			
+			for(State state : states.get(depth-1)) {
+				for(Character character : dfa.getAlphabet().getList()) {
+					if(dfa.findNextState(state, character) == curState && state != curState){
+						curState = state;
+						foundNew = true;
+						string.pushChar(character);
+						break;
+						
+					}
+				
+				}
+				
+				if(foundNew) {
+					depth--;
+					break;
+					
+				}
+				
+			}
+			
+		}
+		
+		return string;
+		
+	}
+	
+	//~(dfa1)
+	public static DFA complement(DFA dfa){
+		ArrayList<State> complementAcceptingStates = new ArrayList<State>();
+		
+		for(int i = 0; i < dfa.getStates().size(); i++){
+			if(!(dfa.getAcceptingStates().contains(dfa.getStates().get(i)))){
+				complementAcceptingStates.add(dfa.getStates().get(i));			//complementAcceptingStates = dfaStates - dfaAcceptingStates
+				
+			}
+			
+		}
+		
+		DFA complement = new DFA(dfa.getStates(), dfa.getAlphabet(), dfa.getStartState(), dfa.getNextStates(), complementAcceptingStates);
+		
+		return complement;
+		
+	}
+	
+	//(dfa1 u dfa2)
+	public static DFA union(DFA dfa1, DFA dfa2){
+		ArrayList<State> unionStates = new ArrayList<State>();
+		Alphabet alphabet = dfa1.getAlphabet();
+		State unionStartState;
+		ArrayList<State> unionNextStates = new ArrayList<State>();
+		ArrayList<State> unionAcceptingStates = new ArrayList<State>();
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				unionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//|Q| = |Qa| * |Qb|
+				
+			}
+			
+		}
+		
+		unionStartState = unionStates.get(dfa2.getStates().size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//q0 = qa0 + qb0
+		
+		State dfa1NextState;
+		State dfa2NextState;
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				for(int k = 0; k < alphabet.size(); k++){
+					dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
+					dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
+				    
+					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//Delta = {( qi+j, c, ((qai, c)+(qaj, c)) )}
+					
+					unionNextStates.add(unionStates.get(nextIndex));
+				
+				}
+				
+			}
+			
+		}
+		
+		State dfa1CurState;
+		State dfa2CurState;
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			dfa1CurState = dfa1.getStates().get(i);
+			
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				dfa2CurState = dfa2.getStates().get(j);
+				
+				if(dfa1.getAcceptingStates().contains(dfa1CurState) || dfa2.getAcceptingStates().contains(dfa2CurState)){
+					unionAcceptingStates.add(unionStates.get(dfa2.getStates().size() * i + j));	//F = {qa e Qa + qb e Qb | qa e Fa or qb e Fb}
+					
+				}
+				
+			}
+			
+		}
+		
+		DFA union = new DFA(unionStates, alphabet, unionStartState, unionNextStates, unionAcceptingStates);
+		
+		return union;
+	}
+	//(dfa1 n dfa2)
+	public static DFA intersection(DFA dfa1, DFA dfa2){
+		ArrayList<State> intersectionStates = new ArrayList<State>();
+		Alphabet alphabet = dfa1.getAlphabet();
+		State intersectionStartState;
+		ArrayList<State> intersectionNextStates = new ArrayList<State>();
+		ArrayList<State> intersectionAcceptingStates = new ArrayList<State>();
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				intersectionStates.add( new State( dfa1.getStates().get(i).getIdentifier() + dfa2.getStates().get(j).getIdentifier() ) );	//|Q| = |Qa| * |Qb|
+				
+			}
+			
+		}
+		
+		intersectionStartState = intersectionStates.get(alphabet.size() * dfa1.getStates().indexOf( dfa1.getStartState() ) +  dfa2.getStates().indexOf( dfa2.getStartState() ) );	//q0 = qa0 + qb0
+		
+		State dfa1NextState;
+		State dfa2NextState;
+		
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				for(int k = 0; k < alphabet.size(); k++){
+					dfa1NextState = dfa1.getNextStates().get(alphabet.size() * i + k);
+					dfa2NextState = dfa2.getNextStates().get(alphabet.size() * j + k);
+				    
+					int nextIndex = (dfa2.getStates().size() * dfa1.getStates().indexOf(dfa1NextState) + dfa2.getStates().indexOf(dfa2NextState) );	//( qi+j, c, ((qai, c)+(qaj, c)) )
+					
+					intersectionNextStates.add(intersectionStates.get(nextIndex));
+				
+				}
+				
+			}
+			
+		}
+		
+		
+		State dfa1CurState;
+		State dfa2CurState;
+		int q = 0;
+		for(int i = 0; i < dfa1.getStates().size(); i++){
+			dfa1CurState = dfa1.getStates().get(i);
+			
+			for(int j = 0; j < dfa2.getStates().size(); j++){
+				dfa2CurState = dfa2.getStates().get(j);
+				
+				if(dfa1.getAcceptingStates().contains(dfa1CurState) && dfa2.getAcceptingStates().contains(dfa2CurState)){
+					intersectionAcceptingStates.add( intersectionStates.get( (dfa2.getStates().size() * i) + j) );	//F = {qa e Qa + qb e Qb | qa e Fa and qb e Fb}
+				
+				}
+				
+			}
+			
+		}
+		
+		DFA intersection = new DFA(intersectionStates, alphabet, intersectionStartState, intersectionNextStates, intersectionAcceptingStates);
+		
+		return intersection;
+		
+	}
+	
+	//(dfa1 c dfa2)?
+	public static boolean subset(DFA dfa1, DFA dfa2){
+		DFA dfa2Compliment = complement(dfa2);				   		//~(dfa2)
+		DFA dfaIntersection = intersection(dfa1, dfa2Compliment);	//dfa1 n ~(dfa2)
+		
+		
+		return (acceptingString(dfaIntersection) == null);					   
+	}
+	
+	//(dfa1 == dfa2)?
+	public static boolean dfaEqual(DFA dfa1, DFA dfa2) {
+		return(subset(dfa1, dfa2) && subset(dfa2, dfa1)); 			//(dfa1 c dfa2) and (dfa2 c dfa1) -> dfa1 == dfa2
+		
+	}
+
 	
 }

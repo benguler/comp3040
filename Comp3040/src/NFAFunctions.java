@@ -192,32 +192,67 @@ public class NFAFunctions {
 	
 	//Concatenation of 2 NFA's
 	public NFA concatenation(NFA nfa1, NFA nfa2) {
+		NFA snfa1 = new NFA(nfa1.getStates(), nfa1.getAlphabet(), nfa1.getStartState(), nfa1.getNextStates(), nfa1.getAcceptingStates(), epsilon);
+		NFA snfa2 = new NFA(nfa2.getStates(), nfa2.getAlphabet(), nfa2.getStartState(), nfa2.getNextStates(), nfa2.getAcceptingStates(), epsilon);
+		
 		ArrayList<State> concatStates = new ArrayList<State>();
-		Alphabet alphabet = nfa1.getAlphabet();
-		State concatStartState = nfa1.getStartState();
+		Alphabet alphabet = snfa1.getAlphabet();
+		State concatStartState = snfa1.getStartState();
 		ArrayList<ArrayList<State>> concatNextStates = new ArrayList<ArrayList<State>>();
 		ArrayList<State> concatAcceptingStates = new ArrayList<State>();
 		
-		concatStates.addAll(nfa1.getStates());
-		concatStates.addAll(nfa2.getStates());
-		
-		concatNextStates.addAll(nfa1.getNextStates());
-		concatNextStates.addAll(nfa2.getNextStates());													//Qu = Q1 + Q2
-		
-		int epsilonIndex;
-		ArrayList<State> epsilonTran;
-		
-		for(State accept : nfa1.getAcceptingStates()) {
-			epsilonIndex = (nfa1.getStates().indexOf(accept))*(alphabet.size()+1) + alphabet.size();
-			
-			epsilonTran = nfa1.getNextStates().get(epsilonIndex);
-			epsilonTran.add(nfa2.getStartState());
-			
-			concatNextStates.set(epsilonIndex, epsilonTran);											//([nfa1 Accept], epsilon, [nfa2 start])
+		for(State state : snfa1.getStates()) {																														//Qc = Q1 + Q2
+			concatStates.add(new State(state.getIdentifier()));
 			
 		}
 		
-		concatAcceptingStates.addAll(nfa2.getAcceptingStates());										//Fu = F2
+		for(State state : snfa2.getStates()) {
+			concatStates.add(new State(state.getIdentifier()));
+			
+		}
+		
+		concatStartState = concatStates.get(snfa1.getStates().indexOf(snfa1.getStartState()));
+		
+		ArrayList<State> tran;
+		
+		for(int i = 0; i < snfa1.getNextStates().size(); i++) {
+			tran = new ArrayList<State>();
+			
+			for(State state :  snfa1.getNextStates().get(i)) {
+				tran.add(concatStates.get(snfa1.getStates().indexOf(state)));
+				
+			}
+			
+			for(State accepting : snfa1.getAcceptingStates()) {
+				if((i) % (alphabet.size() + 1) == alphabet.size() && i == (snfa1.getStates().indexOf(accepting)) * (alphabet.size() + 1) + alphabet.size()) {
+					tran.add(concatStates.get(snfa2.getStates().indexOf(snfa2.getStartState()) + snfa1.getStates().size()));											//([nfa1 Accept], epsilon, [nfa2 start])
+					break;
+					
+				}
+			
+			}
+			
+			concatNextStates.add(tran);
+			
+		}
+		
+		for(int i = 0; i < snfa2.getNextStates().size(); i++) {
+			tran = new ArrayList<State>();
+			
+			for(State state :  snfa2.getNextStates().get(i)) {
+				tran.add(concatStates.get(snfa2.getStates().indexOf(state)  + snfa1.getStates().size()));
+				
+			}
+			
+			concatNextStates.add(tran);
+			
+		}
+		
+					
+		for(State state : snfa2.getAcceptingStates()) {
+			concatAcceptingStates.add(concatStates.get(snfa2.getStates().indexOf(state)  + snfa1.getStates().size()));												//Fc = F2
+		
+		}
 		
 		return new NFA(concatStates, alphabet, concatStartState, concatNextStates, concatAcceptingStates, epsilon);
 		
@@ -225,41 +260,56 @@ public class NFAFunctions {
 	
 	//Given an NFA, return a new NFA that accepts a string that can be broken into N parts that are accepted by the given NFA
 	public NFA kleene(NFA nfa) {
+		NFA snfa = new NFA(nfa.getStates(), nfa.getAlphabet(), nfa.getStartState(), nfa.getNextStates(), nfa.getAcceptingStates(), epsilon);
+		
 		ArrayList<State> kleeneStates = new ArrayList<State>();
-		Alphabet alphabet = nfa.getAlphabet();
-		State kleeneStartState = new State("kleene 0");
+		Alphabet alphabet = snfa.getAlphabet();
+		State kleeneStartState = new State("kleene start");
 		ArrayList<ArrayList<State>> kleeneNextStates = new ArrayList<ArrayList<State>>();
 		ArrayList<State> kleeneAcceptingStates = new ArrayList<State>();
 		
 		kleeneStates.add(kleeneStartState);																//Qk = Q u {qk0}
-		kleeneStates.addAll(nfa.getStates());
+		
+		String id;
+		
+		for(State state : snfa.getStates()) {
+			kleeneStates.add(new State(state.getIdentifier()));
+			
+		}
 		
 		for(int i = 0; i < alphabet.size(); i++){
 			kleeneNextStates.add(newList());
 			
 		}
 		
-		kleeneNextStates.add(newList(nfa.getStartState()));
+		kleeneNextStates.add(newList(kleeneStates.get(snfa.getStates().indexOf(snfa.getStartState()) + 1)));
 		
-		kleeneNextStates.addAll(nfa.getNextStates());
+		ArrayList<State> tran;
 		
-		int epsilonIndex;
-		ArrayList<State> epsilonTran;
-		
-		for(int i = 1; i < kleeneStates.size(); i++) {														//([all states except q0], epsilon, q0)
-			epsilonIndex = i*(alphabet.size() + 1) + alphabet.size();
-			epsilonTran = kleeneNextStates.get(epsilonIndex);
+		for(int i = 0; i < snfa.getNextStates().size(); i++) {													//{[All states, besides kleene0, epsilon, kleene0]}
+			tran = new ArrayList<State>();
 			
-			if(!epsilonTran.contains(nfa.getStartState()) && kleeneStates.get(i) != nfa.getStartState()){
-				epsilonTran.add(nfa.getStartState());
-				kleeneNextStates.set(epsilonIndex, epsilonTran);
+			for(State state : snfa.getNextStates().get(i)) {
+				tran.add(kleeneStates.get(snfa.getStates().indexOf(state) + 1));
 				
 			}
 			
+			if((i) % (alphabet.size() + 1) == alphabet.size() && i!= (snfa.getStates().indexOf(snfa.getStartState())) * (alphabet.size() + 1) + alphabet.size()) {
+				tran.add(kleeneStates.get(snfa.getStates().indexOf(snfa.getStartState()) + 1));
+				
+			}
+			
+			kleeneNextStates.add(tran);
+			
 		}
 		
+		
 		kleeneAcceptingStates.add(kleeneStartState);														//Fk = F u {qk0}
-		kleeneAcceptingStates.addAll(nfa.getAcceptingStates());
+		
+		for(State state : snfa.getAcceptingStates()) {
+			kleeneAcceptingStates.add(kleeneStates.get(snfa.getStates().indexOf(state) + 1));
+			
+		}
 		
 		return new NFA(kleeneStates, alphabet, kleeneStartState, kleeneNextStates, kleeneAcceptingStates, epsilon);
 		
@@ -363,7 +413,7 @@ public class NFAFunctions {
 		
 	}
 	
-	public AlphaString acceptingString(DFA dfa){
+	/*public AlphaString acceptingString(DFA dfa){
 		
 		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
 			return null;							//Return null
@@ -434,6 +484,90 @@ public class NFAFunctions {
 		}
 		
 		return null;
+		
+	}*/
+	
+	public AlphaString acceptingString(DFA dfa){
+		if(dfa.getAcceptingStates().isEmpty()) {
+			return null;
+			
+		}
+		
+		AlphaString string = new AlphaString(dfa.getAlphabet());
+		
+		State  curState = null;
+		boolean foundAccepting = false;
+		boolean foundNew = false;
+		int depth = 0;
+		
+		ArrayList<ArrayList<State>> states = new ArrayList<ArrayList<State>>();
+		ArrayList<ArrayList<Character>> chars = new ArrayList<ArrayList<Character>>();
+		states.add(new ArrayList<State>(Arrays.asList(dfa.getStartState())));
+		
+		for(int i = 0 ; i < dfa.getStates().size(); i++) {
+			states.add(new ArrayList<State>());
+			chars.add(new ArrayList<Character>());
+			
+			for(State state : states.get(states.size()-2)) {
+				for(Character c : dfa.getAlphabet().getList()) {
+					states.get(states.size()-1).add(dfa.findNextState(state, c));
+					chars.get(chars.size()-1).add(c);
+					
+				}
+				
+			}
+			
+		}
+		
+		for(int i = states.size() -1 ; i >= 0 ; i--) {
+			for(State state : states.get(i)) {
+				if(dfa.getAcceptingStates().contains(state)) {
+					curState = state;
+					foundAccepting = true;
+					depth = i;
+				}
+				
+				if(foundAccepting){
+					break;
+					
+				}
+				
+			}
+			
+		}
+		
+		if(!foundAccepting) {
+			return null;
+			
+		}
+		
+		while(curState != dfa.getStartState()) {
+			
+			foundNew = false;
+			
+			for(State state : states.get(depth-1)) {
+				for(Character character : dfa.getAlphabet().getList()) {
+					if(dfa.findNextState(state, character) == curState && state != curState){
+						curState = state;
+						foundNew = true;
+						string.pushChar(character);
+						break;
+						
+					}
+				
+				}
+				
+				if(foundNew) {
+					depth--;
+					break;
+					
+				}
+				
+			}
+			
+		}
+		
+		return string;
 		
 	}
 	
