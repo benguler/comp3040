@@ -83,6 +83,7 @@ public class NFA {
 		
 	}
 	
+	//See if NFA accepts string and generate trace tree resulting from that string
 	public boolean run(AlphaString string){
 		resetNFA();
 		

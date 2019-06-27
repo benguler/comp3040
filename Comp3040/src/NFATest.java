@@ -471,6 +471,11 @@ public class NFATest {
 		AlphaString string2 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));
 		AlphaString string3 = new AlphaString(biAlphabet,  new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0))));	
 		
+		/*
+		 * 
+		 * Gen Trace Trees
+		 * 
+		 */
 		System.out.print("Generate Trace Trees: \n");
 		
 		System.out.print("	oddNFA:\n");
@@ -581,6 +586,12 @@ public class NFATest {
 		
 		System.out.print("\n");
 		
+		/*
+		 * 
+		 * Test NFA's
+		 * 
+		 */
+		
 		System.out.print("Test NFA's: \n");
 		
 		System.out.print("	oddNFA:\n");
@@ -678,158 +689,249 @@ public class NFATest {
 		}
 		
 		System.out.print("\n");
-	
+		
+		
+		/*
+		 * 
+		 * Concat Tests
+		 * 
+		 */
+		
 		System.out.print("Concatenation Tests: \n");
 		
 		NFA test;
-		int i;
+		int index;
 		
 		test = concatenation(evenNFA, oddNFA);
-		i = 4;
+		index = 4;
 		
-		System.out.print("		evenNFA o oddNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		evenNFA o oddNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, zoNFA);
-		i = 8;
+		index = 8;
 		
-		System.out.print("		evenNFA o zoNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		evenNFA o zoNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, oddLNFA);
-		i = 4;
+		index = 4;
 		
-		System.out.print("		evenNFA o oddLNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		evenNFA o oddLNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, evenLNFA);
-		i = 9;
+		index = 9;
 		
-		System.out.print("		evenNFA o evenLNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		evenNFA o evenLNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(stNFA, oddNFA);
-		i = 8;
+		index = 8;
 		
-		System.out.print("		stNFA o oddNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		stNFA o oddNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(evenNFA, zOroEndNFA);
-		i = 10;
+		index = 10;
 		
-		System.out.print("		evenNFA o zOroEndNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		evenNFA o zOroEndNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(stNFA, evenNFA);
-		i = 9;
+		index = 9;
 		
-		System.out.print("		stNFA o evenNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		stNFA o evenNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(oddNFA, ozLastNFA);
-		i = 9;
+		index = 9;
 		
-		System.out.print("		oddNFA o ozLastNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		oddNFA o ozLastNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(oddNFA, zzNFA);
-		i = 5;
+		index = 5;
 		
-		System.out.print("		oddNFA o zzNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		oddNFA o zzNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(ozLastNFA, stNFA);
-		i = 10;
+		index = 10;
 		
-		System.out.print("		ozLastNFA o stNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		ozLastNFA o stNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(ozLastNFA, ozLastNFA);
-		i = 3;
+		index = 3;
 		
-		System.out.print("		ozLastNFA o ozLastNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		ozLastNFA o ozLastNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = concatenation(oddLNFA, evenLNFA);
-		i = 7;
+		index = 7;
 		
-		System.out.print("		oddLNFA o evenNFA('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		//System.out.print("		oddLNFA o evenNFA('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
+		
+		
+		/*
+		 * 
+		 * Kleene Tests
+		 * 
+		 */
 		
 		System.out.print("Kleene Star Tests: \n");
 		
 		test = kleene(oddNFA);
-		i = 11;
+		index = 11;
 		
-		System.out.print("		oddNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		oddNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(evenNFA);
-		i = 1;
+		index = 1;
 		
-		System.out.print("		evenNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		evenNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(oddLNFA);
-		i = 8;
+		index = 8;
 		
-		System.out.print("		oddLNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		oddLNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(evenLNFA);
-		i = 10;
+		index = 10;
 		
-		System.out.print("		evenLNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		evenLNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(stNFA);
-		i = 4;
+		index = 4;
 		
-		System.out.print("		stNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		stNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(zzNFA);
-		i = 9;
+		index = 9;
 		
-		System.out.print("		zzNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		zzNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(ooNFA);
-		i = 10;
+		index = 10;
 		
-		System.out.print("		ooNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		ooNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(zOroNFA);
-		i = 10;
+		index = 10;
 		
-		System.out.print("		zOroNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		zOroNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(zOroEndNFA);
-		i = 12;
+		index = 12;
 		
-		System.out.print("		zOroEndNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		zOroEndNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(zoNFA);
-		i = 11;
+		index = 11;
 		
-		System.out.print("		zoNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
+		System.out.print("		zoNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(ozLastNFA);
-		i = 2;
+		index = 2;
 		
-		System.out.print("		ozLastNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
-		
-		test = kleene(allNFA);
-		i = 0;
-		
-		System.out.print("		allNFA*('" + testStrings[i].displayable() + "') = " +stringTest(testStrings[i], test, test.getStartState(), 0) + " \n\n");
-	
-		/*accepts = (oddNFA.run(string2))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);
-		
-		accepts = (dfaToNFA(oddDFA).run(string2))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);
-		
-		accepts = (nfaToDFA(evenNFA).run(string2))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);
-		
-		accepts = (nfaToDFA(oddNFA).run(string2))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);
-		
-		NFA test = kleene(oddNFA);
-		
-		accepts = (stringTest(string2,test, test.getStartState(), 0))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);
+		System.out.print("		ozLastNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
 		test = kleene(allNFA);
+		index = 0;
 		
-		accepts = (stringTest(string2,test, test.getStartState(), 0))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);
+		System.out.print("		allNFA*('" + testStrings[index].displayable() + "') = " +stringTest(testStrings[index], test, test.getStartState(), 0) + " \n\n");
 		
-		accepts = (stringTest(string1, zzoNFA, zzoNFA.getStartState(), 0))? "String Accepted":"String Rejected";	
-		System.out.println("\n" + accepts);*/
+		/*
+		 * 
+		 * DFA Conversion Tests
+		 * 
+		 */
+		
+		System.out.print("Test NFA to DFA conversion: \n");
+		
+		System.out.print("	oddNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)oddNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(oddNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	evenNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)evenNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(evenNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	oddLNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)oddLNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(oddLNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	evenLNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)evenLNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(evenLNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	stNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)stNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(stNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zzNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)zzNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(zzNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	ooNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)ooNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(ooNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zOroNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)zOroNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(zOroNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zOroEndNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)zOroEndNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(zOroEndNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	zoNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)zoNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(zoNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	ozLastNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)ozLastLNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(ozLastNFA).run(testStrings[i]) + " \n");
+			
+		}
+		
+		System.out.print("\n");
+		
+		System.out.print("	allNFA:\n");
+		for(int i = 0; i < testStrings.length; i++) {
+			System.out.print("		(DFA)allNFA ('" + testStrings[i].displayable() + "') = " + nfaToDFA(allNFA).run(testStrings[i]) + " \n");
+			
+		}
 		
 	}
 	
@@ -849,6 +951,7 @@ public class NFATest {
 	//DFA -> NFA
 	public static NFA dfaToNFA(DFA dfa) {
 		ArrayList<State> nfaStates = new ArrayList<State>();
+		Alphabet alphabet = dfa.getAlphabet();
 		
 		nfaStates.add(new State("start"));
 		nfaStates.addAll(dfa.getStates());
@@ -860,7 +963,7 @@ public class NFATest {
 		State nfaStartState = nfaStates.get(0);
 		nfaAcceptingStates.add(nfaStates.get(nfaStates.size()-1));
 		
-		for(Character c : dfa.getAlphabet().getList()) {
+		for(int i = 0; i < alphabet.size(); i++) {
 			nfaNextStates.add(newList());
 		}
 		
@@ -868,7 +971,7 @@ public class NFATest {
 		
 		for(State state : dfa.getStates()) {
 
-			for(Character c : dfa.getAlphabet().getList()) {
+			for(Character c : alphabet.getList()) {
 				nfaNextStates.add(newList(dfa.findNextState(state, c)));
 			}
 			
@@ -882,12 +985,12 @@ public class NFATest {
 			
 		}
 		
-		for(int i = 0; i < dfa.getAlphabet().size()+1; i++) {
+		for(int i = 0; i < alphabet.size()+1; i++) {
 			nfaNextStates.add(newList());
 			
 		}
 		
-		NFA nfa = new NFA(nfaStates, dfa.getAlphabet(), nfaStartState, nfaNextStates, nfaAcceptingStates, epsilon);
+		NFA nfa = new NFA(nfaStates, alphabet, nfaStartState, nfaNextStates, nfaAcceptingStates, epsilon);
 		
 		return nfa;
 		
@@ -907,7 +1010,7 @@ public class NFATest {
 		}
 		
 		for(int i = string.length(); i > 0; i--){
-			if(!nfa.findNextStates(trace.get(i-1), string.getChar(i-1)).contains(trace.get(i))) {//If stateTable[trace[i-1][string[i-1]].contains(trace[i]) == false 
+			if(!nfa.findNextStates(trace.get(i-1), string.getChar(i-1)).contains(trace.get(i))) {//If stateTable[trace[i-1][string[i-1]].contains(trace[index]) == false 
 				return false;
 				
 			}
@@ -989,28 +1092,31 @@ public class NFATest {
 	
 	//Union of 2 NFA's
 	public static NFA union(NFA nfa1, NFA nfa2) {
+		NFA snfa1 = new NFA(nfa1.getStates(), nfa1.getAlphabet(), nfa1.getStartState(), nfa1.getNextStates(), nfa1.getAcceptingStates(), epsilon);
+		NFA snfa2 = new NFA(nfa2.getStates(), nfa2.getAlphabet(), nfa2.getStartState(), nfa2.getNextStates(), nfa2.getAcceptingStates(), epsilon);
+		
 		ArrayList<State> uStates = new ArrayList<State>();
-		Alphabet alphabet = nfa1.getAlphabet();
+		Alphabet alphabet = snfa1.getAlphabet();
 		State uStartState = new State("uStart");
 		ArrayList<ArrayList<State>> uNextStates = new ArrayList<ArrayList<State>>();
 		ArrayList<State> uAcceptingStates = new ArrayList<State>();
 		
 		uStates.add(uStartState);												//uStates = {uStart
-		uStates.addAll(nfa1.getStates());										//			 + [nfa1 States] 
-		uStates.addAll(nfa2.getStates());										//			 + [nfa2 States]}
+		uStates.addAll(snfa1.getStates());										//			 + [nfa1 States] 
+		uStates.addAll(snfa2.getStates());										//			 + [nfa2 States]}
 		
-		for(int i = 0; i < nfa1.getAlphabet().size(); i++){
+		for(int i = 0; i < snfa1.getAlphabet().size(); i++){
 				uNextStates.add(newList());										//(uStartState, C e Sigma, {} )
 				
 		}
 	
-		uNextStates.add(newList(nfa1.getStartState(), nfa2.getStartState()));	//(uStartState, epsilon, {Start1, Start2} )
+		uNextStates.add(newList(snfa1.getStartState(), snfa2.getStartState()));	//(uStartState, epsilon, {Start1, Start2} )
 		
-		uNextStates.addAll(nfa1.getNextStates());								//Preserve the transitions of the first NFA
-		uNextStates.addAll(nfa2.getNextStates());								//As well as the second
+		uNextStates.addAll(snfa1.getNextStates());								//Preserve the transitions of the first NFA
+		uNextStates.addAll(snfa2.getNextStates());								//As well as the second
 		
-		uAcceptingStates.addAll(nfa1.getAcceptingStates());						//uAcceptingStates = {[nfa1 Accepting States]
-		uAcceptingStates.addAll(nfa2.getAcceptingStates());						//+[nfa2 Accepting States]}
+		uAcceptingStates.addAll(snfa1.getAcceptingStates());						//uAcceptingStates = {[snfa1 Accepting States]
+		uAcceptingStates.addAll(snfa2.getAcceptingStates());						//+[nfa2 Accepting States]}
 		
 		return new NFA(uStates, alphabet, uStartState, uNextStates, uAcceptingStates, epsilon);
 		
@@ -1018,32 +1124,37 @@ public class NFATest {
 	
 	//Concatenation of 2 NFA's
 	public static NFA concatenation(NFA nfa1, NFA nfa2) {
+		NFA snfa1 = new NFA(nfa1.getStates(), nfa1.getAlphabet(), nfa1.getStartState(), nfa1.getNextStates(), nfa1.getAcceptingStates(), epsilon);
+		NFA snfa2 = new NFA(nfa2.getStates(), nfa2.getAlphabet(), nfa2.getStartState(), nfa2.getNextStates(), nfa2.getAcceptingStates(), epsilon);
+		
 		ArrayList<State> concatStates = new ArrayList<State>();
-		Alphabet alphabet = nfa1.getAlphabet();
-		State concatStartState = nfa1.getStartState();
+		Alphabet alphabet = snfa1.getAlphabet();
+		State concatStartState = snfa1.getStartState();
 		ArrayList<ArrayList<State>> concatNextStates = new ArrayList<ArrayList<State>>();
 		ArrayList<State> concatAcceptingStates = new ArrayList<State>();
 		
-		concatStates.addAll(nfa1.getStates());
-		concatStates.addAll(nfa2.getStates());
+		concatStates.addAll(snfa1.getStates());
+		concatStates.addAll(snfa2.getStates());
 		
-		concatNextStates.addAll(nfa1.getNextStates());
-		concatNextStates.addAll(nfa2.getNextStates());													//Qu = Q1 + Q2
+		concatNextStates.addAll(snfa1.getNextStates());
+		concatNextStates.addAll(snfa2.getNextStates());													//Qc = Q1 + Q2
 		
 		int epsilonIndex;
 		ArrayList<State> epsilonTran;
 		
-		for(State accept : nfa1.getAcceptingStates()) {
-			epsilonIndex = (nfa1.getStates().indexOf(accept))*(alphabet.size()+1) + alphabet.size();
+		for(State accept : snfa1.getAcceptingStates()) {
+			epsilonIndex = (snfa1.getStates().indexOf(accept))*(alphabet.size()+1) + alphabet.size();
 			
-			epsilonTran = nfa1.getNextStates().get(epsilonIndex);
-			epsilonTran.add(nfa2.getStartState());
+			epsilonTran = new ArrayList<State>();
+			
+			epsilonTran.addAll(snfa1.getNextStates().get(epsilonIndex));
+			epsilonTran.add(snfa2.getStartState());
 			
 			concatNextStates.set(epsilonIndex, epsilonTran);											//([nfa1 Accept], epsilon, [nfa2 start])
 			
 		}
 		
-		concatAcceptingStates.addAll(nfa2.getAcceptingStates());										//Fu = F2
+		concatAcceptingStates.addAll(snfa2.getAcceptingStates());										//Fc = F2
 		
 		return new NFA(concatStates, alphabet, concatStartState, concatNextStates, concatAcceptingStates, epsilon);
 		
@@ -1051,41 +1162,57 @@ public class NFATest {
 	
 	//Given an NFA, return a new NFA that accepts a string that can be broken into N parts that are accepted by the given NFA
 	public static NFA kleene(NFA nfa) {
+		NFA snfa = new NFA(nfa.getStates(), nfa.getAlphabet(), nfa.getStartState(), nfa.getNextStates(), nfa.getAcceptingStates(), epsilon);
+		
 		ArrayList<State> kleeneStates = new ArrayList<State>();
-		Alphabet alphabet = nfa.getAlphabet();
-		State kleeneStartState = new State("kleene 0");
+		Alphabet alphabet = snfa.getAlphabet();
+		State kleeneStartState = new State("kleene start");
 		ArrayList<ArrayList<State>> kleeneNextStates = new ArrayList<ArrayList<State>>();
 		ArrayList<State> kleeneAcceptingStates = new ArrayList<State>();
 		
 		kleeneStates.add(kleeneStartState);																//Qk = Q u {qk0}
-		kleeneStates.addAll(nfa.getStates());
+		
+		String id;
+		
+		for(int i = 0; i < snfa.getStates().size(); i++) {
+			id = "kleene" + i;
+			kleeneStates.add(new State(id));
+			
+		}
 		
 		for(int i = 0; i < alphabet.size(); i++){
 			kleeneNextStates.add(newList());
 			
 		}
 		
-		kleeneNextStates.add(newList(nfa.getStartState()));
+		kleeneNextStates.add(newList(kleeneStates.get(snfa.getStates().indexOf(snfa.getStartState()) + 1)));
 		
-		kleeneNextStates.addAll(nfa.getNextStates());
+		ArrayList<State> tran;
 		
-		int epsilonIndex;
-		ArrayList<State> epsilonTran;
-		
-		for(int i = 1; i < kleeneStates.size(); i++) {														//([all states except q0], epsilon, q0)
-			epsilonIndex = i*(alphabet.size() + 1) + alphabet.size();
-			epsilonTran = kleeneNextStates.get(epsilonIndex);
+		for(int i = 0; i < snfa.getNextStates().size(); i++) {													//{[All states, besides kleene0, epsilon, kleene0]}
+			tran = new ArrayList<State>();
 			
-			if(!epsilonTran.contains(nfa.getStartState()) && kleeneStates.get(i) != nfa.getStartState()){
-				epsilonTran.add(nfa.getStartState());
-				kleeneNextStates.set(epsilonIndex, epsilonTran);
+			for(State state : snfa.getNextStates().get(i)) {
+				tran.add(kleeneStates.get(snfa.getStates().indexOf(state) + 1));
 				
 			}
 			
+			if(i % (alphabet.size() + 1) == 0) {
+				tran.add(kleeneStates.get(snfa.getStates().indexOf(snfa.getStartState()) + 1));
+				
+			}
+			
+			kleeneNextStates.add(tran);
+			
 		}
 		
+		
 		kleeneAcceptingStates.add(kleeneStartState);														//Fk = F u {qk0}
-		kleeneAcceptingStates.addAll(nfa.getAcceptingStates());
+		
+		for(State state : snfa.getAcceptingStates()) {
+			kleeneAcceptingStates.add(kleeneStates.get(snfa.getStates().indexOf(state) + 1));
+			
+		}
 		
 		return new NFA(kleeneStates, alphabet, kleeneStartState, kleeneNextStates, kleeneAcceptingStates, epsilon);
 		
@@ -1093,7 +1220,7 @@ public class NFATest {
 	
 	//NFA -> DFA
 	public static DFA nfaToDFA(NFA nfa) {
-		NFA snfa = nfa;
+		NFA snfa = new NFA(nfa.getStates(), nfa.getAlphabet(), nfa.getStartState(), nfa.getNextStates(), nfa.getAcceptingStates(), epsilon);
 		
 		ArrayList<State> dfaStates = new ArrayList<State>();
 		Alphabet alphabet = snfa.getAlphabet();
