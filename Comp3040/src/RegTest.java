@@ -27,19 +27,6 @@ public class RegTest{
 		private static Alphabet engAlphabet = new Alphabet(engSymbols);
 	//---------------------------------------------------------------------------------------------------------------------
 		
-	//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
-			private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
-			
-			private static State oddDFAStartState =oddDFAStates.get(0);																				//q0 = A
-			
-			private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//Delta = {(A, '0', A), (A, '1', B)
-																			                     oddDFAStates.get(0), oddDFAStates.get(1)));		//(B, '0', A), (B, '1', B)
-			
-			private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
-			
-			private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
-		//----------------------------------------------------------------------------------------------------------------------
-		
 	private static RegEx regZOStar = new RegStar(new RegConcat(new RegChar(biAlphabet.get(0), biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet))); 	//('01')*
 	
 	private static AlphaString zoTestStrings[] = new AlphaString[]{
@@ -77,7 +64,7 @@ public class RegTest{
 		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(5), engAlphabet.get(4), engAlphabet.get(14)))),	//lfeo
 	};
 	
-	private static RegEx regEOunion = new RegUnion(new RegEpsilon(biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet));	//[func.epsilon] u '1'
+	private static RegEx regEOunion = new RegUnion(new RegEpsilon(biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet));																						//[epsilon] u '1'
 	
 	private static AlphaString EOUnionTestStrings[] = new AlphaString[]{
 			new AlphaString(biAlphabet),																														//epsilon
@@ -86,7 +73,7 @@ public class RegTest{
 		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1)))),	//1111
 	};
 	
-	private static RegEx regAll = new RegStar(new RegUnion(new RegChar(biAlphabet.get(0), biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet)));	//('0' u '1')*
+	private static RegEx regAll = new RegStar(new RegUnion(new RegChar(biAlphabet.get(0), biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet)));															//('0' u '1')*
 	
 	private static AlphaString allTestStrings[] = new AlphaString[]{
 			new AlphaString(biAlphabet),																														//epsilon
@@ -172,7 +159,7 @@ public class RegTest{
 		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 	};
 	
-	private static RegEx regZStarOStar = new RegConcat(new RegStar(new RegChar(biAlphabet.get(0), biAlphabet)), new RegStar(new RegChar(biAlphabet.get(1), biAlphabet)));	//('0')* o ('1')*
+	private static RegEx regZStarOStar = new RegConcat(new RegStar(new RegChar(biAlphabet.get(0), biAlphabet)), new RegStar(new RegChar(biAlphabet.get(1), biAlphabet)));									//('0')* o ('1')*
 	
 	private static AlphaString zStarOStarTestStrings[] = new AlphaString[]{
 			new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000
@@ -201,7 +188,26 @@ public class RegTest{
 		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13))))		//lben
 	};
 	
-	//NFA that accepts odd binary #s (The "oddNFA")------------------------------------------------------------------------- Used for testing																
+	//DFA's and NFA's used for testing
+	
+	//DFA that accepts a string of my name "ben" (The benDFA")---------------------------------------------------------------
+		private static ArrayList<Character> benTestCharacters =  new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13)));
+		private static AlphaString benTestString = new AlphaString(engAlphabet, benTestCharacters);
+		
+		private static ArrayList<State> benDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C"), 								//Q = {A, B, C, D, E}
+				 																		  new State("D"), new State("E")));
+		
+		private static State benDFAStartState = benDFAStates.get(0);																									//StartState = A
+		
+		private static ArrayList<State> benDFANextStates = new ArrayList<State>();
+		
+		private static ArrayList<State> benDFAAcceptingStates = new ArrayList<State>(Arrays.asList(benDFAStates.get(3)));												//F = {D}
+		
+		private static DFA benDFA;
+		
+	//----------------------------------------------------------------------------------------------------------------------
+	
+	//NFA that accepts odd binary #s (The "oddNFA")------------------------------------------------------------------------- 																
 			private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {odd0, odd1}
 			
 			private static State oddNFAStartState = oddNFAStates.get(0);																			//q0 = odd0
@@ -235,13 +241,39 @@ public class RegTest{
 			
 		//----------------------------------------------------------------------------------------------------------------------
 	
+			//NFA that accepts all binary #s (The "allNFA")-------------------------------------------------------------------------
+			private static ArrayList<State> allNFAStates = new ArrayList<State>(Arrays.asList(new State("all0"), new State("all1")));						//Q = {A, B}
+			
+			private static State allNFAStartState = allNFAStates.get(0);																			//q0 = A
+			
+			private static ArrayList<ArrayList<State>>allNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
+																										 func.newList( allNFAStates.get(0) ), func.newList( allNFAStates.get(0)), func.newList( allNFAStates.get(1) ),	//Delta = {(all0, '0', {all0}), (all0, '1', {all0}), (all0, epsilon, {all1})
+																										 func.newList(), func.newList(), func.newList())																//        {(all1, '0', {}), (all1, '1', {}), (all1, epsilon, {})
+																										);	
+																										
+			
+			private static ArrayList<State>allNFAAcceptingStates = new ArrayList<State>(Arrays.asList(allNFAStates.get(1)));						//F = {all1}
+			
+			private static NFA allNFA = new NFA(allNFAStates, biAlphabet,allNFAStartState,allNFANextStates,allNFAAcceptingStates, NFAFunctions.epsilon);
+			
+	//----------------------------------------------------------------------------------------------------------------------
+			
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) { 
-		String accepts;
 		
-		/*GNFA testGNFA = dfaToGNFA(func.nfaToDFA(regEven.compile()));
-		accepts = testGNFA.run(evenTestStrings[5]) == regEven.accepts(evenTestStrings[5])? "Works\n":"Doesn't Work\n";
-		System.out.println(accepts);*/
+		//Define benDFA--------------------------------------------------------------------------------------------------------
+		func.initializeStates(engAlphabet, benDFAStates, benDFANextStates, benDFAStates.get(4)); //Delta = {([ALL States], [ALL Characters], E])}
+																							//Except for																		
+		
+		
+		benDFANextStates.set((26*0 + 1), benDFAStates.get(1));								//{(A, 'b', B)
+		benDFANextStates.set((26*1 + 4), benDFAStates.get(2));								 //(B, 'e', C)
+		benDFANextStates.set((26*2 + 13), benDFAStates.get(3));							     //(C, 'n', D)}
+		
+		benDFA = new DFA(benDFAStates, engAlphabet, benDFAStartState, benDFANextStates, benDFAAcceptingStates);
+	//------------------------------------------------------------------------------------------------------------------------
+		
+		String accepts;
 		
 		//Test if RegEx compiler works
 		System.out.println("Compiler Tests:\n");
@@ -331,8 +363,36 @@ public class RegTest{
 		accepts = (regEqual(temp, simplify(temp)))? " == ":" != ";	
 		eqPrint(temp, accepts, simplify(temp));
 		
-		accepts = (regEqual(regOdd, dfaToReg(oddDFA)))? " == ":" != ";	
-		eqPrint(regOdd, accepts, dfaToReg(func.nfaToDFA(oddNFA)));
+		//Verify that the ripper works by checking if a DFA accepts a string generated by DFA->Reg
+		System.out.println("Do DFA's accept strings generated by RegEx's converted from those DFA's:\n");
+		
+		AlphaString gen;
+		NFA nfa;
+		DFA dfa;
+		
+		dfa = func.nfaToDFA(oddNFA);  
+		gen = dfaToReg(dfa).generate();
+		
+		accepts = (dfa.run(gen))? " == ":" != ";	
+		System.out.println("    oddDFA accepts " + gen.displayable() + "\n");
+		
+		dfa = func.nfaToDFA(evenNFA); 
+		gen = dfaToReg(dfa).generate();
+		
+		accepts = (dfa.run(gen))? " == ":" != ";	
+		System.out.println("    evenDFA accepts " + gen.displayable() + "\n");
+		
+		dfa = func.nfaToDFA(allNFA); 
+		gen = dfaToReg(dfa).generate();
+		
+		accepts = (dfa.run(gen))? " == ":" != ";	
+		System.out.println("    allDFA accepts " + gen.displayable() + "\n");
+		
+		dfa = benDFA; 
+		gen = dfaToReg(dfa).generate();
+		
+		accepts = (dfa.run(gen))? " == ":" != ";	
+		System.out.println("    benDFA accepts " + gen.displayable() + "\n");
 		
 	}
 	

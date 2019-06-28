@@ -655,4 +655,12 @@ public static AlphaString acceptingString(DFA dfa){
 		
 	}
 	
+	public void initializeStates(Alphabet alphabet, ArrayList<State> states, ArrayList<State> nextStates, State state){
+		for(int i = 0; i < alphabet.size() * states.size(); i++){
+			nextStates.add(state);
+			
+		}
+		
+	}
+	
 }
