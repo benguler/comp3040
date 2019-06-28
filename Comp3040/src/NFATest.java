@@ -546,7 +546,7 @@ public class NFATest {
 		System.out.print("	oddNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			oddNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for oddNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for oddNFA and string '" + testStrings[i].displayable() + "'\n" + oddNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -555,7 +555,7 @@ public class NFATest {
 		System.out.print("	evenNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			evenNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for evenNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for evenNFA and string '" + testStrings[i].displayable() + evenNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -564,7 +564,7 @@ public class NFATest {
 		System.out.print("	oddLNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			oddLNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for oddLNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for oddLNFA and string '" + testStrings[i].displayable() + oddLNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -573,7 +573,7 @@ public class NFATest {
 		System.out.print("	evenLNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			evenLNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for evenLNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for evenLNFA and string '" + testStrings[i].displayable() +"'\n"+ evenLNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -582,7 +582,7 @@ public class NFATest {
 		System.out.print("	stNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			stNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for stNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for stNFA and string '" + testStrings[i].displayable() +"'\n"+ stNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -591,7 +591,7 @@ public class NFATest {
 		System.out.print("	zzNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zzNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for zzNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zzNFA and string '" + testStrings[i].displayable() +"'\n"+ zzNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -600,7 +600,7 @@ public class NFATest {
 		System.out.print("	ooNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			ooNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for ooNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for ooNFA and string '" + testStrings[i].displayable() +"'\n"+ ooNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -609,7 +609,7 @@ public class NFATest {
 		System.out.print("	zOroNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zOroNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for zOroNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zOroNFA and string '" + testStrings[i].displayable() +"'\n"+ zOroNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -618,7 +618,7 @@ public class NFATest {
 		System.out.print("	zOroEndNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zOroEndNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for zOroEndNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zOroEndNFA and string '" + testStrings[i].displayable() +"'\n"+ zOroEndNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -627,7 +627,7 @@ public class NFATest {
 		System.out.print("	zoNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			zoNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for zoNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for zoNFA and string '" + testStrings[i].displayable() +"'\n"+ zoNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -636,7 +636,7 @@ public class NFATest {
 		System.out.print("	ozLastNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			ozLastNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for ozLastNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for ozLastNFA and string '" + testStrings[i].displayable() +"'\n"+ ozLastNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -645,7 +645,7 @@ public class NFATest {
 		System.out.print("	allNFA:\n");
 		for(int i = 0; i < testStrings.length; i++) {
 			allNFA.run(testStrings[i]);
-			System.out.print("		Created trace tree for allNFA and string '" + testStrings[i].displayable() + "'\n");
+			System.out.print("		Created trace tree for allNFA and string '" + testStrings[i].displayable() +"'\n"+ allNFA.getTraceTree().displayable() + "\n");
 			
 		}
 		
@@ -1020,9 +1020,13 @@ public class NFATest {
 		
 		System.out.print("	ooNFA:\n");
 		System.out.print("		(DFA)ooNFA == ooDFA? " + dfaEqual(nfaToDFA(ooNFA), ooDFA) + " \n\n");
-		
+
 		System.out.print("	allNFA:\n");
 		System.out.print("		(DFA)allNFA == allDFA? " + dfaEqual(nfaToDFA(allNFA), allDFA) + " \n\n");
+		
+
+		System.out.print("	oddNFA:\n");
+		System.out.print("		(DFA)oddNFA == evenDFA? " + dfaEqual(nfaToDFA(oddNFA), evenDFA) + " \n\n");
 			
 	}
 	
@@ -1425,88 +1429,89 @@ public class NFATest {
 	
 	}
 	
-	//Function that given a DFA, returns a string that is accepted by that DFA
 	public static AlphaString acceptingString(DFA dfa){
-		if(dfa.getAcceptingStates().isEmpty()) {
-			return null;
-			
+		
+		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
+			return null;							//Return null
 		}
 		
-		AlphaString string = new AlphaString(dfa.getAlphabet());
+		ArrayList<State> states = dfa.getStates(); 
+		State startState = dfa.getStartState();
 		
-		State  curState = null;
-		boolean foundAccepting = false;
-		boolean foundNew = false;
-		int depth = 0;
+		StateTable stateTable = dfa.getStateTable();
 		
-		ArrayList<ArrayList<State>> states = new ArrayList<ArrayList<State>>();
-		ArrayList<ArrayList<Character>> chars = new ArrayList<ArrayList<Character>>();
-		states.add(new ArrayList<State>(Arrays.asList(dfa.getStartState())));
+		Alphabet alphabet = dfa.getAlphabet();
 		
-		for(int i = 0 ; i < dfa.getStates().size(); i++) {
-			states.add(new ArrayList<State>());
-			chars.add(new ArrayList<Character>());
+		AlphaString acceptingString = new AlphaString(alphabet);
+		
+		boolean newState;
+		boolean nextAccept = false;
+		
+		State curState;
+		State orig;
+		
+		for(State acc : dfa.getAcceptingStates()) {
 			
-			for(State state : states.get(states.size()-2)) {
-				for(Character c : dfa.getAlphabet().getList()) {
-					states.get(states.size()-1).add(dfa.findNextState(state, c));
-					chars.get(chars.size()-1).add(c);
+			curState = acc;
+			orig = acc;
+			
+			while(curState != startState ){				//Until we arrive at the starting state
+				newState = false;
+				
+				for(int i = 0; i <= states.size(); i++){
+					if(newState){						//Current state has been updated
+						break;							//Stop searching
+						
+					}
 					
-				}
-				
-			}
-			
-		}
-		
-		for(int i = states.size() -1 ; i >= 0 ; i--) {
-			for(State state : states.get(i)) {
-				if(dfa.getAcceptingStates().contains(state)) {
-					curState = state;
-					foundAccepting = true;
-					depth = i;
-				}
-				
-				if(foundAccepting){
-					break;
-					
-				}
-				
-			}
-			
-		}
-		
-		if(!foundAccepting) {
-			return null;
-			
-		}
-		
-		while(curState != dfa.getStartState()) {
-			
-			foundNew = false;
-			
-			for(State state : states.get(depth-1)) {
-				for(Character character : dfa.getAlphabet().getList()) {
-					if(dfa.findNextState(state, character) == curState && state != curState){
-						curState = state;
-						foundNew = true;
-						string.pushChar(character);
+					if(i == states.size()) {			//No states point to curState through c
+						if(curState == dfa.getAcceptingStates().get(dfa.getAcceptingStates().size()-1)) {
+							return null;
+							
+						}
+						
+						acceptingString = new AlphaString(alphabet);
+						nextAccept = true;
 						break;
 						
 					}
-				
+					
+					for(int j = 0; j < alphabet.size(); j++){
+						if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
+							acceptingString.pushChar(alphabet.get(j));						//Push Character into the String to be returned
+							curState = states.get(i);										//Current State = Previous State
+							newState = true;
+							
+							if(orig == curState) {											//Loop protection
+								nextAccept = true;
+								
+							}
+							
+							break;															//Stop searching
+							
+						}
+						
+					}	
+					
 				}
 				
-				if(foundNew) {
-					depth--;
+				if(nextAccept) {
 					break;
 					
 				}
 				
 			}
 			
+			if(dfa.run(acceptingString) && !nextAccept) {
+				return acceptingString;
+				
+			}
+			
+			nextAccept = false;
+			
 		}
 		
-		return string;
+		return null;
 		
 	}
 	

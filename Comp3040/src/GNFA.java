@@ -137,4 +137,24 @@ public class GNFA {
 		
 	}
 	
+	public Alphabet getAlphabet() {
+		return this.alphabet;
+		
+	}
+	
+	public ArrayList<State> getStates(){
+		return this.states;
+		
+	}
+	
+	public State gatStartState() {
+		return this.startState;
+		
+	}
+	
+	public State getAcceptingState() {
+		return this.acceptingState;
+		
+	}
+	
 }

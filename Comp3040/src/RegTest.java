@@ -26,40 +26,19 @@ public class RegTest{
 		
 		private static Alphabet engAlphabet = new Alphabet(engSymbols);
 	//---------------------------------------------------------------------------------------------------------------------
-	
-	//NFA that accepts odd binary #s (The "oddNFA")------------------------------------------------------------------------- Used for testing																
-		private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {odd0, odd1}
 		
-		private static State oddNFAStartState = oddNFAStates.get(0);																			//q0 = odd0
-		
-		private static ArrayList<ArrayList<State>>oddNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
-																									 func.newList( oddNFAStates.get(0) ), func.newList( oddNFAStates.get(0), oddNFAStates.get(1) ), func.newList(),	//Delta = {(odd0, '0', {odd0}), (odd0, '1', {odd0, odd1}), (odd0, func.epsilon, {})
-																									 func.newList(), func.newList(), func.newList())																	//        	   (odd1, '0', {}), (odd1, '1', {}), (odd1, func.epsilon, {})}
-																									);	
-																									
-		
-		private static ArrayList<State>oddNFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddNFAStates.get(1)));						//F = {odd1}
-		
-		private static NFA oddNFA = new NFA(oddNFAStates, biAlphabet,oddNFAStartState,oddNFANextStates,oddNFAAcceptingStates, NFAFunctions.epsilon);
-		
-	//----------------------------------------------------------------------------------------------------------------------
-		
-	//NFA that accepts even binary #s (The "evenNFA")----------------------------------------------------------------------- Used for testing
-		private static ArrayList<State> evenNFAStates = new ArrayList<State>(Arrays.asList(new State("even0"), new State("even1")));						//Q = {evenO, even1}
-		
-		private static State evenNFAStartState = evenNFAStates.get(0);																				//q0 = evenO
-		
-		private static ArrayList<ArrayList<State>>evenNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
-																									 func.newList( evenNFAStates.get(0), evenNFAStates.get(1)), func.newList( evenNFAStates.get(0)), func.newList(),	//Delta = {(even0, '0', {even0, even1}), (even0, '1', {even0}), (even0, func.epsilon, {})
-																									 func.newList(), func.newList(), func.newList())																	//         (even1, '0', {}),     (even1, '1', {}),  (even1, func.epsilon, {})}
-																									);	
-																									
-		
-		private static ArrayList<State>evenNFAAcceptingStates = new ArrayList<State>(Arrays.asList(evenNFAStates.get(1)));						//F = {even1}
-		
-		private static NFA evenNFA = new NFA(evenNFAStates, biAlphabet,evenNFAStartState,evenNFANextStates,evenNFAAcceptingStates, NFAFunctions.epsilon);
-		
-	//----------------------------------------------------------------------------------------------------------------------
+	//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
+			private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+			
+			private static State oddDFAStartState =oddDFAStates.get(0);																				//q0 = A
+			
+			private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//Delta = {(A, '0', A), (A, '1', B)
+																			                     oddDFAStates.get(0), oddDFAStates.get(1)));		//(B, '0', A), (B, '1', B)
+			
+			private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
+			
+			private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
+		//----------------------------------------------------------------------------------------------------------------------
 		
 	private static RegEx regZOStar = new RegStar(new RegConcat(new RegChar(biAlphabet.get(0), biAlphabet), new RegChar(biAlphabet.get(1), biAlphabet))); 	//('01')*
 	
@@ -195,7 +174,7 @@ public class RegTest{
 	
 	private static RegEx regZStarOStar = new RegConcat(new RegStar(new RegChar(biAlphabet.get(0), biAlphabet)), new RegStar(new RegChar(biAlphabet.get(1), biAlphabet)));	//('0')* o ('1')*
 	
-	private static AlphaString epTestStrings[] = new AlphaString[]{
+	private static AlphaString zStarOStarTestStrings[] = new AlphaString[]{
 			new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(0)))),						//000
 		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(0), biAlphabet.get(1)))),						//001
 		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(0)))),						//010
@@ -221,10 +200,48 @@ public class RegTest{
 		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13), engAlphabet.get(0)))),		//bena
 		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(11), engAlphabet.get(1), engAlphabet.get(4), engAlphabet.get(13))))		//lben
 	};
+	
+	//NFA that accepts odd binary #s (The "oddNFA")------------------------------------------------------------------------- Used for testing																
+			private static ArrayList<State> oddNFAStates = new ArrayList<State>(Arrays.asList(new State("odd0"), new State("odd1")));						//Q = {odd0, odd1}
 			
+			private static State oddNFAStartState = oddNFAStates.get(0);																			//q0 = odd0
+			
+			private static ArrayList<ArrayList<State>>oddNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
+																										 func.newList( oddNFAStates.get(0) ), func.newList( oddNFAStates.get(0), oddNFAStates.get(1) ), func.newList(),	//Delta = {(odd0, '0', {odd0}), (odd0, '1', {odd0, odd1}), (odd0, func.epsilon, {})
+																										 func.newList(), func.newList(), func.newList())																	//        	   (odd1, '0', {}), (odd1, '1', {}), (odd1, func.epsilon, {})}
+																										);	
+																										
+			
+			private static ArrayList<State>oddNFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddNFAStates.get(1)));						//F = {odd1}
+			
+			private static NFA oddNFA = new NFA(oddNFAStates, biAlphabet,oddNFAStartState,oddNFANextStates,oddNFAAcceptingStates, NFAFunctions.epsilon);
+			
+		//----------------------------------------------------------------------------------------------------------------------
+			
+		//NFA that accepts even binary #s (The "evenNFA")----------------------------------------------------------------------- Used for testing
+			private static ArrayList<State> evenNFAStates = new ArrayList<State>(Arrays.asList(new State("even0"), new State("even1")));						//Q = {evenO, even1}
+			
+			private static State evenNFAStartState = evenNFAStates.get(0);																				//q0 = evenO
+			
+			private static ArrayList<ArrayList<State>>evenNFANextStates = new ArrayList<ArrayList<State>>(Arrays.asList(
+																										 func.newList( evenNFAStates.get(0), evenNFAStates.get(1)), func.newList( evenNFAStates.get(0)), func.newList(),	//Delta = {(even0, '0', {even0, even1}), (even0, '1', {even0}), (even0, func.epsilon, {})
+																										 func.newList(), func.newList(), func.newList())																	//         (even1, '0', {}),     (even1, '1', {}),  (even1, func.epsilon, {})}
+																										);	
+																										
+			
+			private static ArrayList<State>evenNFAAcceptingStates = new ArrayList<State>(Arrays.asList(evenNFAStates.get(1)));						//F = {even1}
+			
+			private static NFA evenNFA = new NFA(evenNFAStates, biAlphabet,evenNFAStartState,evenNFANextStates,evenNFAAcceptingStates, NFAFunctions.epsilon);
+			
+		//----------------------------------------------------------------------------------------------------------------------
+	
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) { 
 		String accepts;
+		
+		/*GNFA testGNFA = dfaToGNFA(func.nfaToDFA(regEven.compile()));
+		accepts = testGNFA.run(evenTestStrings[5]) == regEven.accepts(evenTestStrings[5])? "Works\n":"Doesn't Work\n";
+		System.out.println(accepts);*/
 		
 		//Test if RegEx compiler works
 		System.out.println("Compiler Tests:\n");
@@ -244,7 +261,7 @@ public class RegTest{
 		//RegEx equality tests
 		System.out.println("Equality Tests:\n");
 		
-		accepts = (regEqual(regAll, new RegUnion(new RegUnion(regOdd, regEven), new RegEpsilon(biAlphabet))))? " == 4":" != 4";	
+		accepts = (regEqual(regAll, new RegUnion(new RegUnion(regOdd, regEven), new RegEpsilon(biAlphabet))))? " == ":" != ";	
 		eqPrint(regAll, accepts, new RegUnion(new RegUnion(regOdd, regEven), new RegEpsilon(biAlphabet)));
 		
 		accepts = (regEqual(regNotEp, new RegUnion(regOdd, regEven)))? " == ":" != ";	
@@ -314,9 +331,8 @@ public class RegTest{
 		accepts = (regEqual(temp, simplify(temp)))? " == ":" != ";	
 		eqPrint(temp, accepts, simplify(temp));
 		
-	}
-	
-	public static void printReg(RegEx reg, String string){
+		accepts = (regEqual(regOdd, dfaToReg(oddDFA)))? " == ":" != ";	
+		eqPrint(regOdd, accepts, dfaToReg(func.nfaToDFA(oddNFA)));
 		
 	}
 	
@@ -352,7 +368,7 @@ public class RegTest{
 				
 			}
 			
-			if(temp.getReg1().isConcat() && temp.getReg1().isConcat()) {
+			if(temp.getReg1().isConcat() && temp.getReg2().isConcat()) {
 				RegConcat subTemp1 = (RegConcat)temp.getReg1();
 				RegConcat subTemp2 = (RegConcat)temp.getReg2();
 				
@@ -364,6 +380,13 @@ public class RegTest{
 					
 				}
 				
+			}
+			
+			if(temp.getReg1().isStar() && temp.getReg2().isStar()) {																				//(a)* u (b)* -> (a u b)*				
+				RegStar subTemp1 = (RegStar)temp.getReg1();
+				RegStar subTemp2 = (RegStar)temp.getReg2();
+				
+				return new RegStar(new RegUnion(simplify(subTemp1.getReg()), simplify(subTemp2.getReg())));
 			}
 			
 			return new RegUnion(simplify(temp.getReg1()), simplify(temp.getReg2()));
@@ -399,14 +422,144 @@ public class RegTest{
 		
 	}
 	
-	/*public static RegEx dfaToReg(DFA dfa) {
-		NFA nfa = func.dfaToNFA(dfa);
+	public static RegEx dfaToReg(DFA dfa) {
+		GNFA gnfa = dfaToGNFA(dfa);
 		
-		for(State state : nfa.getStates()) {
+		GNFA ripped = rip(gnfa);
+		
+		return simplify(ripped.findReg(ripped.gatStartState(), ripped.getAcceptingState()));
+		
+	}
+	
+	//Reduce a GNFA with k>2 states to an equivalent one with k-1 states until k == 2
+	//The GNFA will be non-functional, but it does not have to be for this purpose
+	public static GNFA rip(GNFA gnfa) {
+		//System.out.println(gnfa.getStates().size());
+		
+		if(gnfa.getStates().size() == 2) {
+			return gnfa;
 			
 		}
 		
-	}*/
+		ArrayList<State> ripStates = new ArrayList<State>();
+		
+		Alphabet alphabet = gnfa.getAlphabet();
+		
+		ArrayList<RegEx> ripNextRegs = new ArrayList<RegEx>();
+		
+		ArrayList<RegEx> tempRegs = new ArrayList<RegEx>();
+		
+		ripStates.add(new State(gnfa.getStates().get(0).getIdentifier()));
+		
+		//Remove the second state
+		for(int i = 2; i < gnfa.getStates().size(); i++) {
+			ripStates.add(new State(gnfa.getStates().get(i).getIdentifier()));
+			
+		}
+		
+		//Because the gnfa is a converted nfa, which is a converted dfa, we know
+		State ripStart = ripStates.get(0);										//The first state is the starting state
+		
+		State ripAccept = ripStates.get(ripStates.size()-1);					//and the last state is the accepting state
+				
+		
+		
+		//Find the concatenations in the form of reg(qi, [q removed]) o reg([q], [q removed])* o reg([q removed]. qj)
+		tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(0))));
+		
+		for(int i = 2; i < gnfa.getStates().size(); i ++) {
+			tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(i))));
+
+		}
+		
+		for(int i = 2; i < gnfa.getStates().size(); i ++) {
+			tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(0))));
+
+			
+			for(int j = 2; j < gnfa.getStates().size(); j ++) {
+				tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(j))));
+	
+			}
+			
+		}
+		
+		for(int i = 0; i < gnfa.getStates().size(); i++) {
+			for(int j = 0; j < gnfa.getStates().size(); j++) {
+				if(i == 1) {
+					break;
+					
+				}
+				
+				if(j != 1) {
+					ripNextRegs.add(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(j)));
+					ripNextRegs.set(ripNextRegs.size()-1, new RegUnion(tempRegs.get(ripNextRegs.size()-1), ripNextRegs.get(ripNextRegs.size()-1)));	//Add regs that mirror the functionality of the removed reg
+					
+				}
+				
+			}
+			
+		}
+		
+		return rip(new GNFA(ripStates, alphabet, ripStart, ripNextRegs, ripAccept, NFAFunctions.epsilon));
+		
+	}
+	
+	//Convert a dfa to a GNFA
+	public static GNFA dfaToGNFA(DFA dfa) {
+		NFA nfa = func.dfaToNFA(dfa);
+		
+		StateTable stateTable = nfa.getStateTable();
+		
+		ArrayList<State> gnfaStates = new ArrayList<State>();
+		gnfaStates.addAll(nfa.getStates());
+		
+		Alphabet alphabet = nfa.getAlphabet();
+		
+		State gnfaStart = gnfaStates.get(0);
+		State gnfaAccept = gnfaStates.get(gnfaStates.size()-1);
+		
+		ArrayList<RegEx> nextRegs = new ArrayList<RegEx>();
+		
+		for(int i = 0; i < gnfaStates.size(); i++) {
+			for(int j = 0; j < gnfaStates.size(); j++) {
+				nextRegs.add(new RegEmpty(alphabet));
+				
+			}
+		}
+		
+		Character c;
+		int index; 
+		
+		for(int i = 0; i < gnfaStates.size(); i++) {
+			for(int j = 0; j < gnfaStates.size(); j++) {
+				for(int k = 0; k < alphabet.size() + 1; k++) {
+					if(k < alphabet.size()) {
+						c = alphabet.get(k);
+						
+						if(nfa.findNextStates(nfa.getStates().get(i), alphabet.get(k)).contains(nfa.getStates().get(j))) {
+							index = i*gnfaStates.size() + j;
+							nextRegs.set(index, new RegChar(c, alphabet));
+							
+						}
+							
+					}else {
+						if(nfa.findNextStates(nfa.getStates().get(i), func.epsilon).contains(nfa.getStates().get(j))) {
+							index = i*gnfaStates.size() + j;
+							nextRegs.set(index, new RegEpsilon(alphabet));
+							
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		return new GNFA (gnfaStates, alphabet, gnfaStart, nextRegs, gnfaAccept, func.epsilon);
+		
+	}
 	
 	public static void eqPrint(RegEx reg1, String acc, RegEx reg2) {
 		System.out.println("    " + reg1.displayable() + acc + reg2.displayable() + "\n");

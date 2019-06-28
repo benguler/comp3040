@@ -447,6 +447,8 @@ public class DFAtest {
 			
 			azDFA = new DFA(azDFAStates, engAlphabet, azDFAStartState, azDFANextStates, azDFAAcceptingStates);
 		//------------------------------------------------------------------------------------------------------------------------
+		
+		System.out.println(acceptingString(benDFA).displayable());
 			
 		boolean cont = true;
 		boolean dfaToTest = true;
@@ -1015,7 +1017,7 @@ public class DFAtest {
 						
 						case "4":
 							isEqual = equal(benDFA, azDFA);
-							accepts = (isEqual)?"benDFA is equal to ooDFA":"oddDFA is not equal to ooDFA";
+							accepts = (isEqual)?"benDFA is equal to azDFA":"benDFA is not equal to azDFA";
 							System.out.println(accepts);
 							
 							dfaToTest = false;
@@ -1167,87 +1169,89 @@ public class DFAtest {
 	}
 	
 	//Return a string that is accepted by the dfa
-	public static AlphaString acceptingString(DFA dfa){
-		if(dfa.getAcceptingStates().isEmpty()) {
-			return null;
-			
+public static AlphaString acceptingString(DFA dfa){
+		
+		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
+			return null;							//Return null
 		}
 		
-		AlphaString string = new AlphaString(dfa.getAlphabet());
+		ArrayList<State> states = dfa.getStates(); 
+		State startState = dfa.getStartState();
 		
-		State  curState = null;
-		boolean foundAccepting = false;
-		boolean foundNew = false;
-		int depth = 0;
+		StateTable stateTable = dfa.getStateTable();
 		
-		ArrayList<ArrayList<State>> states = new ArrayList<ArrayList<State>>();
-		ArrayList<ArrayList<Character>> chars = new ArrayList<ArrayList<Character>>();
-		states.add(new ArrayList<State>(Arrays.asList(dfa.getStartState())));
+		Alphabet alphabet = dfa.getAlphabet();
 		
-		for(int i = 0 ; i < dfa.getStates().size(); i++) {
-			states.add(new ArrayList<State>());
-			chars.add(new ArrayList<Character>());
+		AlphaString acceptingString = new AlphaString(alphabet);
+		
+		boolean newState;
+		boolean nextAccept = false;
+		
+		State curState;
+		State orig;
+		
+		for(State acc : dfa.getAcceptingStates()) {
 			
-			for(State state : states.get(states.size()-2)) {
-				for(Character c : dfa.getAlphabet().getList()) {
-					states.get(states.size()-1).add(dfa.findNextState(state, c));
-					chars.get(chars.size()-1).add(c);
+			curState = acc;
+			orig = acc;
+			
+			while(curState != startState ){				//Until we arrive at the starting state
+				newState = false;
+				
+				for(int i = 0; i <= states.size(); i++){
+					if(newState){						//Current state has been updated
+						break;							//Stop searching
+						
+					}
 					
-				}
-				
-			}
-			
-		}
-		
-		for(int i = states.size() -1 ; i >= 0 ; i--) {
-			for(State state : states.get(i)) {
-				if(dfa.getAcceptingStates().contains(state)) {
-					curState = state;
-					foundAccepting = true;
-					depth = i;
-				}
-				
-				if(foundAccepting){
-					break;
-					
-				}
-				
-			}
-			
-		}
-		
-		if(!foundAccepting) {
-			return null;
-			
-		}
-		
-		while(curState != dfa.getStartState()) {
-			
-			foundNew = false;
-			
-			for(State state : states.get(depth-1)) {
-				for(Character character : dfa.getAlphabet().getList()) {
-					if(dfa.findNextState(state, character) == curState && state != curState){
-						curState = state;
-						foundNew = true;
-						string.pushChar(character);
+					if(i == states.size()) {			//No states point to curState through c
+						if(curState == dfa.getAcceptingStates().get(dfa.getAcceptingStates().size()-1)) {
+							return null;
+							
+						}
+						
+						acceptingString = new AlphaString(alphabet);
+						nextAccept = true;
 						break;
 						
 					}
-				
+					
+					for(int j = 0; j < alphabet.size(); j++){
+						if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
+							acceptingString.pushChar(alphabet.get(j));						//Push Character into the String to be returned
+							curState = states.get(i);										//Current State = Previous State
+							newState = true;
+							
+							if(orig == curState) {											//Loop protection
+								nextAccept = true;
+								
+							}
+							
+							break;															//Stop searching
+							
+						}
+						
+					}	
+					
 				}
 				
-				if(foundNew) {
-					depth--;
+				if(nextAccept) {
 					break;
 					
 				}
 				
 			}
 			
+			if(dfa.run(acceptingString) && !nextAccept) {
+				return acceptingString;
+				
+			}
+			
+			nextAccept = false;
+			
 		}
 		
-		return string;
+		return null;
 		
 	}
 	

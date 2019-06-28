@@ -43,7 +43,7 @@ public class Nth {
 		
 																	//Initialize nthString with stringLength many first characters
 		for(int i = 0; i < stringLength; i++){
-			nthString.addChar(alphabet.get(i));
+			nthString.addChar(alphabet.get(0));
 			
 		}
 		

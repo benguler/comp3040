@@ -33,4 +33,14 @@ public class TTNode {
 		
 	}
 	
+	public State getState() {
+		return this.state;
+		
+	}
+	
+	public ArrayList<TTNode> getChildNodes(){
+		return childNodes;
+		
+	}
+	
 }

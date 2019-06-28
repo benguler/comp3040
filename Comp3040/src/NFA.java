@@ -90,7 +90,7 @@ public class NFA {
 		ArrayList<State> branch = new ArrayList<State>();	
 		
 		for(int i = 0; i <  string.length(); i++){
-			newStates.clear();
+			newStates  = new ArrayList<ArrayList<State>>();
 			
 			branch = new ArrayList<State>();
 			for(int j = 0; j < this.currentStates.size(); j++) {																		//Find next set of states that are transitioned to

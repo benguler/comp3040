@@ -54,16 +54,16 @@ public class NFAFunctions {
 			nfaNextStates.add(newList());
 		}
 		
-		nfaNextStates.add(newList(dfa.getStartState()));
+		nfaNextStates.add(newList(dfa.getStartState()));					//([new start state], [epsilon, [old start state]])
 		
 		for(State state : dfa.getStates()) {
 
 			for(Character c : dfa.getAlphabet().getList()) {
-				nfaNextStates.add(newList(dfa.findNextState(state, c)));
+				nfaNextStates.add(newList(dfa.findNextState(state, c))); 
 			}
 			
 			if(dfa.getAcceptingStates().contains(state)) {
-				nfaNextStates.add(nfaAcceptingStates);
+				nfaNextStates.add(nfaAcceptingStates);						//([old accepting state], [epsilon], [new accepting state]
 				
 			}else {
 				nfaNextStates.add(newList());
@@ -413,7 +413,7 @@ public class NFAFunctions {
 		
 	}
 	
-	/*public AlphaString acceptingString(DFA dfa){
+public static AlphaString acceptingString(DFA dfa){
 		
 		if(dfa.getAcceptingStates().size() < 1){	//If there are no accepting states
 			return null;							//Return null
@@ -431,7 +431,13 @@ public class NFAFunctions {
 		boolean newState;
 		boolean nextAccept = false;
 		
-		for(State curState : dfa.getAcceptingStates()) {
+		State curState;
+		State orig;
+		
+		for(State acc : dfa.getAcceptingStates()) {
+			
+			curState = acc;
+			orig = acc;
 			
 			while(curState != startState ){				//Until we arrive at the starting state
 				newState = false;
@@ -458,7 +464,13 @@ public class NFAFunctions {
 						if(stateTable.get(i, j) == curState && states.get(i) != curState){	//StateTable[Previous State][Character] == Current State
 							acceptingString.pushChar(alphabet.get(j));						//Push Character into the String to be returned
 							curState = states.get(i);										//Current State = Previous State
-							newState = true;												
+							newState = true;
+							
+							if(orig == curState) {											//Loop protection
+								nextAccept = true;
+								
+							}
+							
 							break;															//Stop searching
 							
 						}
@@ -485,91 +497,9 @@ public class NFAFunctions {
 		
 		return null;
 		
-	}*/
-	
-	public AlphaString acceptingString(DFA dfa){
-		if(dfa.getAcceptingStates().isEmpty()) {
-			return null;
-			
-		}
-		
-		AlphaString string = new AlphaString(dfa.getAlphabet());
-		
-		State  curState = null;
-		boolean foundAccepting = false;
-		boolean foundNew = false;
-		int depth = 0;
-		
-		ArrayList<ArrayList<State>> states = new ArrayList<ArrayList<State>>();
-		ArrayList<ArrayList<Character>> chars = new ArrayList<ArrayList<Character>>();
-		states.add(new ArrayList<State>(Arrays.asList(dfa.getStartState())));
-		
-		for(int i = 0 ; i < dfa.getStates().size(); i++) {
-			states.add(new ArrayList<State>());
-			chars.add(new ArrayList<Character>());
-			
-			for(State state : states.get(states.size()-2)) {
-				for(Character c : dfa.getAlphabet().getList()) {
-					states.get(states.size()-1).add(dfa.findNextState(state, c));
-					chars.get(chars.size()-1).add(c);
-					
-				}
-				
-			}
-			
-		}
-		
-		for(int i = states.size() -1 ; i >= 0 ; i--) {
-			for(State state : states.get(i)) {
-				if(dfa.getAcceptingStates().contains(state)) {
-					curState = state;
-					foundAccepting = true;
-					depth = i;
-				}
-				
-				if(foundAccepting){
-					break;
-					
-				}
-				
-			}
-			
-		}
-		
-		if(!foundAccepting) {
-			return null;
-			
-		}
-		
-		while(curState != dfa.getStartState()) {
-			
-			foundNew = false;
-			
-			for(State state : states.get(depth-1)) {
-				for(Character character : dfa.getAlphabet().getList()) {
-					if(dfa.findNextState(state, character) == curState && state != curState){
-						curState = state;
-						foundNew = true;
-						string.pushChar(character);
-						break;
-						
-					}
-				
-				}
-				
-				if(foundNew) {
-					depth--;
-					break;
-					
-				}
-				
-			}
-			
-		}
-		
-		return string;
-		
 	}
+	
+	
 	
 	//~(dfa1)
 	public DFA complement(DFA dfa){

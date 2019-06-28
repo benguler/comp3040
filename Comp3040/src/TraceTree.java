@@ -39,4 +39,32 @@ public class TraceTree {
 		
 	}
 	
+	public String displayable() {
+		String display = "";
+		
+		for(ArrayList<TTNode> row : nodes){
+			for(TTNode node : row) {
+				display += " Parent Node: " + node.getState().getIdentifier() + " Child Nodes : ";
+				
+				if(node.getChildNodes().isEmpty()) {
+					display += "[none] ";
+					
+				}else {
+					for(TTNode child : node.getChildNodes()) {
+						display += child.getState().getIdentifier() + " ";
+								
+					}
+				
+				}
+				
+				display += "\n \n";
+				
+			}
+			
+		}
+		
+		return display;
+		
+	}
+	
 }
