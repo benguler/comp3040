@@ -241,7 +241,7 @@ public class RegTest implements Cloneable{
 			
 		//----------------------------------------------------------------------------------------------------------------------
 	
-			//NFA that accepts all binary #s (The "allNFA")-------------------------------------------------------------------------
+		//NFA that accepts all binary #s (The "allNFA")-------------------------------------------------------------------------
 			private static ArrayList<State> allNFAStates = new ArrayList<State>(Arrays.asList(new State("all0"), new State("all1")));						//Q = {A, B}
 			
 			private static State allNFAStartState = allNFAStates.get(0);																			//q0 = A
@@ -256,7 +256,20 @@ public class RegTest implements Cloneable{
 			
 			private static NFA allNFA = new NFA(allNFAStates, biAlphabet,allNFAStartState,allNFANextStates,allNFAAcceptingStates, NFAFunctions.epsilon);
 			
-	//----------------------------------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------------------------
+			
+		//DFA that accepts odd binary #s (The "oddDFA")-------------------------------------------------------------------------
+			private static ArrayList<State> oddDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B")));						//Q = {A, B}
+			
+			private static State oddDFAStartState =oddDFAStates.get(0);																				//q0 = A
+			
+			private static ArrayList<State>oddDFANextStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(0), oddDFAStates.get(1),			//Delta = {(A, '0', A), (A, '1', B)
+																			                     oddDFAStates.get(0), oddDFAStates.get(1)));		//(B, '0', A), (B, '1', B)
+			
+			private static ArrayList<State>oddDFAAcceptingStates = new ArrayList<State>(Arrays.asList(oddDFAStates.get(1)));						//F = {B}
+			
+			private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
+		//----------------------------------------------------------------------------------------------------------------------
 			
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) { 
@@ -429,7 +442,7 @@ public class RegTest implements Cloneable{
 		
 		AlphaString origY;
 		
-		AlphaString xyz;																				//xyz = x(y^i)z, where |y| >= 1, |xy| <=p, reg.acceppts(x(y^i)z) for i >=0, and |xyz| >= p
+		AlphaString xyz;																				//xyz = x(y^i)z, where |y| >= 1, |xyz| >= p, |xy| <=p, and reg.acceppts(x(y^i)z) for i >=0 
 		ArrayList<Character> xyzChars;
 		
 		RegEx reg;
@@ -789,6 +802,23 @@ public class RegTest implements Cloneable{
 			
 		}
 		
+		//Pumper tests
+		System.out.println("Pumper function tests: \n");
+		
+		AlphaString string;
+		Trace trace;
+		AlphaString[] pumped;
+		
+		dfa = oddDFA;
+		string = new AlphaString(dfa.getAlphabet(), new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));
+		dfa.run(string);
+		
+		trace = new Trace(dfa.getTrace().getStates());
+		
+		pumped = pumper(dfa, string, trace);
+		
+		System.out.println("    oddNFA and string '" + string.displayable() +"': '" + pumped[0].displayable() + "' + ('" + pumped[1].displayable()+ "'^i) + '" + pumped[2].displayable()+"' ");
+		
 	}
 	
 	
@@ -1074,6 +1104,148 @@ public class RegTest implements Cloneable{
 	
 	public static void eqPrint(RegEx reg1, String acc, RegEx reg2) {
 		System.out.println("    " + reg1.displayable() + acc + reg2.displayable() + "\n");
+		
+	}
+	
+	//Given a DFA, a string, and an accepting trace, return xxyz
+	public static AlphaString[] pumper(DFA dfa, AlphaString string, Trace acceptingTrace) {
+		if(dfa.getAcceptingStates().contains(acceptingTrace.get(acceptingTrace.size()-1)) && string.getAlphabet() == dfa.getAlphabet() && string.length() == acceptingTrace.size()-1) {
+			AlphaString[] xyz = new AlphaString[3];
+			
+			ArrayList<ArrayList<AlphaString>> groupings = func.genGroupings(string);
+			
+			ArrayList<ArrayList<AlphaString>> tpGroupings = new ArrayList<ArrayList<AlphaString>>();
+			
+			ArrayList<AlphaString> tempGrouping;
+			
+			State curState;
+			
+			// fimd possible xyz's where |x| >= 0, |y| >= 1, |z| >= 0 and |xyz| == string 
+			for(ArrayList<AlphaString> grouping : groupings) {
+				if(grouping.size() == 3) {
+					tpGroupings.add(grouping);
+					
+				}else if(grouping.size() == 2) {
+					tempGrouping = new ArrayList<AlphaString>(Arrays.asList(new AlphaString(string.getAlphabet())));
+					tempGrouping.add(grouping.get(0));
+					tempGrouping.add(grouping.get(1));
+					
+					tpGroupings.add(new ArrayList<AlphaString>(tempGrouping));
+					
+					tempGrouping = new ArrayList<AlphaString>(Arrays.asList(grouping.get(1)));
+					tempGrouping.add(grouping.get(1));
+					tempGrouping.add(new AlphaString(string.getAlphabet()));
+					
+					tpGroupings.add(new ArrayList<AlphaString>(tempGrouping));
+					
+				}else if(grouping.size() == 1) {
+					tempGrouping = new ArrayList<AlphaString>(Arrays.asList(new AlphaString(string.getAlphabet())));
+					tempGrouping.add(grouping.get(0));
+					tempGrouping.add(new AlphaString(string.getAlphabet()));
+					
+					tpGroupings.add(new ArrayList<AlphaString>(tempGrouping));
+					
+				}
+				
+			}
+			
+
+			AlphaString x;
+			AlphaString y;
+			AlphaString z;
+			
+			boolean loop;
+			int traceIndex;
+			boolean stop;
+			
+			for(ArrayList<AlphaString> grouping : tpGroupings) {
+				x = grouping.get(0);
+				y = grouping.get(1);
+				z = grouping.get(2);
+				
+				System.out.println("'" + x.displayable() + "' '" + y.displayable() + "' '" + z.displayable() + "'");
+				
+				loop = false;
+				stop = false;
+				
+				traceIndex = 0;
+				
+				curState = dfa.getStartState();
+				
+				for(Character character : x.getChars()){					//See if string x matches trace
+					curState = dfa.findNextState(curState, character);
+					traceIndex++;
+					
+					if(curState != acceptingTrace.get(traceIndex)) {
+						stop = true;
+						break;
+						
+					}
+					
+				}
+				
+				if(stop) {
+					break;
+					
+				}
+				
+				for(Character character : y.getChars()){					//See if string y matches trace
+					curState = dfa.findNextState(curState, character);
+					traceIndex++;
+					
+					if(curState != acceptingTrace.get(traceIndex)) {
+						stop = true;
+						break;
+						
+					}
+					
+				}
+				
+				if(stop) {
+					break;
+					
+				}
+				
+				State loopState = curState;
+				
+				for(Character character : y.getChars()){					//See if y's segment of the trace loops (dfa accepts xyz -> dfa accepts x(y^i)x
+					loopState = dfa.findNextState(loopState, character);
+					
+				}
+				
+				if(loopState != curState) {
+					break;
+					
+				}
+				
+				for(Character character : z.getChars()){					//see if string z matches string
+					curState = dfa.findNextState(curState, character);
+					traceIndex++;
+					
+					if(curState != acceptingTrace.get(traceIndex)) {
+						stop = true;
+						break;
+						
+					}
+					
+				}
+				
+				if(stop) {
+					break;
+					
+				}
+				
+				xyz[0] = x;
+				xyz[1] = y;
+				xyz[2] = z;
+				
+				return xyz;													//return x, y, z where xyz == string
+				
+			}
+			
+		}
+		
+		return null;
 		
 	}
 	

@@ -57,6 +57,11 @@ public class AlphaString {
 		
 	}
 	
+	public boolean equals(AlphaString string) {
+		return this.string != string.getChars();
+				
+	}
+	
 	public String displayable(){
 		String display = "";
 		

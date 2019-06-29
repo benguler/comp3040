@@ -14,6 +14,11 @@ public class Trace {
 		
 	}
 	
+	public ArrayList<State> getStates(){
+		return this.trace;
+		
+	}
+	
 	public void addState(State state){
 		this.trace.add(state);
 		

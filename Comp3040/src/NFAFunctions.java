@@ -668,4 +668,62 @@ public AlphaString acceptingString(DFA dfa){
 		
 	}
 	
+	public ArrayList<ArrayList<AlphaString>> genGroupings(AlphaString string){
+
+		ArrayList<ArrayList<AlphaString>> groupings = new ArrayList<ArrayList<AlphaString>>();
+		
+		ArrayList<ArrayList<AlphaString>> prev = new ArrayList<ArrayList<AlphaString>>();
+		
+		ArrayList<AlphaString> grouping1 = new ArrayList<AlphaString>();
+		ArrayList<AlphaString> grouping2 = new ArrayList<AlphaString>();
+		
+		ArrayList<Character> newChars;
+		
+		if(string.length() <= 1) {
+			
+			grouping1.add(string);
+			groupings.add(grouping1);
+			
+			return groupings;
+			
+		}
+		
+		prev = genGroupings(string.subString(1, string.length()-1));
+		
+		for(ArrayList<AlphaString> part : prev) {
+			grouping1 = new ArrayList<AlphaString>();
+			
+			for(int i = 0; i < part.size(); i++) {
+				newChars = new ArrayList<Character>();
+				newChars.addAll(part.get(i).getChars());
+				
+				grouping1.add(new AlphaString(string.getAlphabet(), newChars));
+				
+			}
+			
+			newChars = new ArrayList<Character>();
+			newChars.add(string.getChar(0));
+			newChars.addAll(part.get(0).getChars());	
+			
+			grouping1.set(0, new AlphaString(string.getAlphabet(), newChars));
+
+			groupings.add(grouping1);
+			
+			grouping2 = new ArrayList<AlphaString>();
+			
+			grouping2.add(new AlphaString(string.getAlphabet(), string.getChar(0)));
+			
+			for(AlphaString s : part) {
+				grouping2.add(new AlphaString(s.getAlphabet(), s.getChars()));
+				
+			}
+			
+			groupings.add(grouping2);
+			
+			
+		}
+		
+		return groupings;
+		
+	}
 }
