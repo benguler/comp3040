@@ -1163,8 +1163,6 @@ public class RegTest implements Cloneable{
 				y = grouping.get(1);
 				z = grouping.get(2);
 				
-				System.out.println("'" + x.displayable() + "' '" + y.displayable() + "' '" + z.displayable() + "'");
-				
 				loop = false;
 				stop = false;
 				
@@ -1246,6 +1244,36 @@ public class RegTest implements Cloneable{
 		}
 		
 		return null;
+		
+	}
+	
+	public static DFA rePumper(AlphaString x, AlphaString y, AlphaString z) {
+		return func.nfaToDFA((new RegConcat(regString(x), new RegConcat(regString(y), regString(z))).compile()));
+		
+	}
+	
+	public static RegEx regString(AlphaString string) {
+		Alphabet alphabet = string.getAlphabet();
+		
+		switch(string.length()) {
+			case 0:
+				return new RegEpsilon(alphabet);
+				
+			case 1:
+				return new RegChar(string.getChar(0), alphabet);
+				
+			case 2:
+				return new RegConcat(new RegChar(string.getChar(0), alphabet), new RegChar(string.getChar(1), alphabet));
+			default:
+				RegEx regString = new RegConcat(new RegChar(string.getChar(0), alphabet), new RegChar(string.getChar(1), alphabet));
+				
+				for(int i = 2; i < string.length(); i++) {
+					regString = new RegConcat(regCopy(regString), new RegChar(string.getChar(i), alphabet));
+				}
+				
+				return regString;
+				
+		}
 		
 	}
 	
