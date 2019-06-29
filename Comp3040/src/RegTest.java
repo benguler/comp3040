@@ -271,6 +271,21 @@ public class RegTest implements Cloneable{
 			private static DFA oddDFA = new DFA(oddDFAStates, biAlphabet,oddDFAStartState,oddDFANextStates,oddDFAAcceptingStates);
 		//----------------------------------------------------------------------------------------------------------------------
 			
+		//DFA that accepts a string that contains "ab" somewhere in it (The "abDFA")---------------------------------------------
+			private static ArrayList<State> abDFAStates = new ArrayList<State>(Arrays.asList(new State("A"), new State("B"), new State("C")));								//Q = {A, B, C}
+				
+			private static State abDFAStartState = abDFAStates.get(0);																										//q0 = A
+			
+			private static ArrayList<State> abDFANextStates = new ArrayList<State>(Arrays.asList(abDFAStates.get(1), abDFAStates.get(0), abDFAStates.get(0),				//Delta = {(A, 'a', B), (A, 'b', A), (A, 'c', A)
+																								 abDFAStates.get(1), abDFAStates.get(2), abDFAStates.get(0),                //(B, 'a', B), (B, 'b', C), (B, 'c', A)
+																			                     abDFAStates.get(2), abDFAStates.get(2), abDFAStates.get(2)));				//(C, 'a', C), (C, 'b', C), (C, 'c', C)
+																			                   
+			
+			private static ArrayList<State> abDFAAcceptingStates = new ArrayList<State>(Arrays.asList( abDFAStates.get(2)));												//F = {C}
+			
+			private static DFA abDFA = new DFA(abDFAStates, abcAlphabet, abDFAStartState, abDFANextStates, abDFAAcceptingStates);
+	//----------------------------------------------------------------------------------------------------------------------
+			
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) { 
 		
@@ -802,22 +817,73 @@ public class RegTest implements Cloneable{
 			
 		}
 		
-		//Pumper tests
-		System.out.println("Pumper function tests: \n");
+		//Pumper and Repumper tests
+		System.out.println("Pumper and Repumper function tests:");
 		
 		AlphaString string;
 		Trace trace;
 		AlphaString[] pumped;
+		DFA subDFA;
 		
+		//+++++++++++
 		dfa = oddDFA;
-		string = new AlphaString(dfa.getAlphabet(), new ArrayList<Character>(Arrays.asList(biAlphabet.get(0), biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(1))));
+		alphabet = dfa.getAlphabet();
+		
+		string = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(1), alphabet.get(1), alphabet.get(1))));
 		dfa.run(string);
 		
 		trace = new Trace(dfa.getTrace().getStates());
 		
 		pumped = pumper(dfa, string, trace);
 		
-		System.out.println("    oddNFA and string '" + string.displayable() +"': '" + pumped[0].displayable() + "' + ('" + pumped[1].displayable()+ "'^i) + '" + pumped[2].displayable()+"' ");
+		System.out.println("\n    oddDFA and string '" + string.displayable() +"': '" + pumped[0].displayable() + "' + ('" + pumped[1].displayable()+ "'^i) + '" + pumped[2].displayable()+"' ");
+		
+		subDFA = rePumper(pumped[0], pumped[1], pumped[2]);
+		System.out.println("    Resulting DFA is subset of original DFA?: " + func.subset(subDFA, dfa));
+		
+		//---
+		
+		string = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(0), alphabet.get(0), alphabet.get(1))));
+		dfa.run(string);
+		
+		trace = new Trace(dfa.getTrace().getStates());
+		
+		pumped = pumper(dfa, string, trace);
+		
+		System.out.println("\n    oddDFA and string '" + string.displayable() +"': '" + pumped[0].displayable() + "' + ('" + pumped[1].displayable()+ "'^i) + '" + pumped[2].displayable()+"' ");
+		
+		subDFA = rePumper(pumped[0], pumped[1], pumped[2]);
+		System.out.println("    Resulting DFA is subset of original DFA?: " + func.subset(subDFA, dfa));
+		
+		//+++++++++++
+		dfa = abDFA;
+		alphabet = dfa.getAlphabet();
+		
+		string = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(2), alphabet.get(2), alphabet.get(0), alphabet.get(1))));
+		dfa.run(string);
+		
+		trace = new Trace(dfa.getTrace().getStates());
+		
+		pumped = pumper(dfa, string, trace);
+		
+		System.out.println("\n    abDFA and string '" + string.displayable() +"': '" + pumped[0].displayable() + "' + ('" + pumped[1].displayable()+ "'^i) + '" + pumped[2].displayable()+"' ");
+		
+		subDFA = rePumper(pumped[0], pumped[1], pumped[2]);
+		System.out.println("    Resulting DFA is subset of original DFA?: " + func.subset(subDFA, dfa));
+		
+		//---
+		
+		string = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(2), alphabet.get(0), alphabet.get(1), alphabet.get(2))));
+		dfa.run(string);
+		
+		trace = new Trace(dfa.getTrace().getStates());
+		
+		pumped = pumper(dfa, string, trace);
+		
+		System.out.println("\n    abdDFA and string '" + string.displayable() +"': '" + pumped[0].displayable() + "' + ('" + pumped[1].displayable()+ "'^i) + '" + pumped[2].displayable()+"' ");
+		
+		subDFA = rePumper(pumped[0], pumped[1], pumped[2]);
+		System.out.println("    Resulting DFA is subset of original DFA?: " + func.subset(subDFA, dfa));
 		
 	}
 	
@@ -1120,7 +1186,7 @@ public class RegTest implements Cloneable{
 			
 			State curState;
 			
-			// fimd possible xyz's where |x| >= 0, |y| >= 1, |z| >= 0 and |xyz| == string 
+			// fimd possible xyz's where |x| >= 0, |y| >= 1, |z| >= 0 and |xyz| == |string|
 			for(ArrayList<AlphaString> grouping : groupings) {
 				if(grouping.size() == 3) {
 					tpGroupings.add(grouping);
