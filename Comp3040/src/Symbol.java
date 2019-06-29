@@ -1,8 +1,4 @@
 
-public class Symbol {
-	
-	public Symbol() {
-		
-	}
-	
+public interface Symbol {
+
 }
