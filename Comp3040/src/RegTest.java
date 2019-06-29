@@ -44,14 +44,14 @@ public class RegTest implements Cloneable{
 		    new AlphaString(biAlphabet, new ArrayList<Character>(Arrays.asList(biAlphabet.get(1), biAlphabet.get(1), biAlphabet.get(0), biAlphabet.get(1))))	//1101
 	};
 	
-	private static RegEx regABCUnion = new RegUnion(new RegUnion(new RegChar(engAlphabet.get(0), engAlphabet), new RegChar(engAlphabet.get(1), engAlphabet)), new RegChar(engAlphabet.get(2), engAlphabet));	//'a' u 'b' u  'c'
+	private static RegEx regABC = new RegStar(new RegUnion(new RegUnion(new RegChar(engAlphabet.get(0), engAlphabet), new RegChar(engAlphabet.get(1), engAlphabet)), new RegChar(engAlphabet.get(2), engAlphabet)));	//('a' u 'b' u  'c')*
 	
 	private static AlphaString abcUnionTestStrings[] = new AlphaString[]{
 			new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0)))),																	//a
 		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(2)))),												//ac
 		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(0), engAlphabet.get(1), engAlphabet.get(2)))),							//abc
 		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(1)))),																	//b
-		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(2)))),																	//c
+		    new AlphaString(engAlphabet, new ArrayList<Character>(Arrays.asList(engAlphabet.get(5)))),																	//f
 	};
 	
 	private static RegEx regEpsilon = new RegEpsilon(engAlphabet); // '[func.epsilon]'
@@ -310,8 +310,8 @@ public class RegTest implements Cloneable{
 		accepts = (regEqual(regNone, new RegConcat(regAll, new RegEmpty(biAlphabet))))? " == ":" != ";	
 		eqPrint(regNone, accepts, new RegConcat(regAll, new RegEmpty(biAlphabet)));
 		
-		accepts = (regEqual(regBen, regABCUnion))? " == ":" != ";	
-		eqPrint(regBen, accepts, regABCUnion);
+		accepts = (regEqual(regBen, regABC))? " == ":" != ";	
+		eqPrint(regBen, accepts, regABC);
 		
 		accepts = (regEqual(new RegUnion(regOdd, regEven), new RegUnion(regOdd, regEven)))? " == ":" != ";	
 		eqPrint(new RegUnion(regOdd, regEven), accepts, new RegUnion(regOdd, regEven));
@@ -319,11 +319,11 @@ public class RegTest implements Cloneable{
 		accepts = (regEqual(new RegUnion(regOdd, regEven), new RegUnion(regEven, regOdd)))? " == ":" != ";	
 		eqPrint(new RegUnion(regOdd, regEven), accepts, new RegUnion(regOdd, regEven));
 
-		accepts = (regEqual(new RegUnion(regBen, regABCUnion), new RegUnion(regBen, regABCUnion)))? " == ":" != ";	
-		eqPrint(new RegUnion(regBen, regABCUnion), accepts, new RegUnion(regBen, regABCUnion));
+		accepts = (regEqual(new RegUnion(regBen, regABC), new RegUnion(regBen, regABC)))? " == ":" != ";	
+		eqPrint(new RegUnion(regBen, regABC), accepts, new RegUnion(regBen, regABC));
 		
-		accepts = (regEqual(new RegUnion(regBen, regABCUnion), new RegUnion(regABCUnion, regBen)))? " == ":" != ";	
-		eqPrint(new RegUnion(regBen, regABCUnion), accepts, new RegUnion(regABCUnion, regBen));
+		accepts = (regEqual(new RegUnion(regBen, regABC), new RegUnion(regABC, regBen)))? " == ":" != ";	
+		eqPrint(new RegUnion(regBen, regABC), accepts, new RegUnion(regABC, regBen));
 		
 		accepts = (regEqual(regNone, regNone))? " == ":" != ";	
 		eqPrint(regNone, accepts, regNone);
@@ -420,8 +420,380 @@ public class RegTest implements Cloneable{
 		//accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
 		//System.out.println("    benDFA " + accepts + " (Reg)benDFA \n");
 		
+		//Regular Pumping examples
+		System.out.println("Regular pumping examples:\n");
+		
+		AlphaString x;
+		AlphaString y;
+		AlphaString z;
+		
+		AlphaString origY;
+		
+		AlphaString xyz;																				//xyz = x(y^i)z, where |y| >= 1, |xy| <=p, reg.acceppts(x(y^i)z) for i >=0, and |xyz| >= p
+		ArrayList<Character> xyzChars;
+		
+		RegEx reg;
+		Alphabet alphabet;
+		
+		reg = regOdd;
+		alphabet = reg.getAlphabet();
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		
+		System.out.println("\n    regOdd:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(1))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		
+		System.out.println("\n    regOdd:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		reg = regEven;
+		alphabet = reg.getAlphabet();
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(1))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		
+		System.out.println("\n    regEven:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(1))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1), alphabet.get(1))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		
+		System.out.println("	reEven:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		reg = regABC;
+		alphabet = reg.getAlphabet();
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(2))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		
+		System.out.println("\n    regABC:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(2), alphabet.get(1))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1), alphabet.get(1))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(0), alphabet.get(2))));
+		
+		System.out.println("	reABC:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		reg = regOddEven;
+		alphabet = reg.getAlphabet();
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1), alphabet.get(1), alphabet.get(0))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		
+		System.out.println("\n    regOddEven:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(0))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1), alphabet.get(1))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		
+		System.out.println("\n    regOddEven:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		reg = regZStarOStar;
+		alphabet = reg.getAlphabet();
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(0), alphabet.get(0))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		
+		System.out.println("\n    regZStarOStar:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(0))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		
+		System.out.println("\n    regZStarOStar:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		reg = regAll;
+		alphabet = reg.getAlphabet();
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0), alphabet.get(0))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		
+		System.out.println("\n    regAll:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
+		
+		x = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(0))));
+		y = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		z = new AlphaString(alphabet, new ArrayList<Character>(Arrays.asList(alphabet.get(1))));
+		
+		System.out.println("\n    regAll:");
+		System.out.println("	x = '" + x.displayable()+"'");
+		System.out.println("	y = '" + y.displayable()+"'");
+		System.out.println("	z = '" + z.displayable()+"'");
+		
+		origY = new AlphaString(y.getAlphabet(), new ArrayList<Character>(y.getChars()));
+		
+		for (int i = 0; i<20; i++) {
+			xyzChars = new ArrayList<Character>();
+			xyzChars.addAll(x.getChars());
+			xyzChars.addAll(y.getChars());
+			xyzChars.addAll(z.getChars());
+			
+			xyz = new AlphaString(alphabet, xyzChars);
+			
+			System.out.println("		"+reg.displayable()+ " accepts("+xyz.displayable()+") == " + reg.accepts(xyz));
+			
+			for(Character c : origY.getChars()){
+				y.addChar(c);
+				
+			}
+			
+		}
 		
 	}
+	
+	
+	
+
 	
 	public static boolean testReg(RegEx reg, AlphaString string) {
 		NFA nfa = reg.compile();
