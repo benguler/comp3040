@@ -1046,10 +1046,14 @@ public class NFATest {
 	//DFA -> NFA
 	public static NFA dfaToNFA(DFA dfa) {
 		ArrayList<State> nfaStates = new ArrayList<State>();
-		Alphabet alphabet = dfa.getAlphabet();
 		
 		nfaStates.add(new State("start"));
-		nfaStates.addAll(dfa.getStates());
+
+		for(State state : dfa.getStates()){
+			nfaStates.add(new State(state.getIdentifier()));
+			
+		}
+		
 		nfaStates.add(new State("accept"));
 		
 		ArrayList<ArrayList<State>> nfaNextStates = new ArrayList<ArrayList<State>>();
@@ -1058,20 +1062,20 @@ public class NFATest {
 		State nfaStartState = nfaStates.get(0);
 		nfaAcceptingStates.add(nfaStates.get(nfaStates.size()-1));
 		
-		for(int i = 0; i < alphabet.size(); i++) {
+		for(Character c : dfa.getAlphabet().getList()) {
 			nfaNextStates.add(newList());
 		}
 		
-		nfaNextStates.add(newList(dfa.getStartState()));
+		nfaNextStates.add(newList(dfa.getStartState()));					//([new start state], [epsilon], [old start state]])
 		
 		for(State state : dfa.getStates()) {
 
-			for(Character c : alphabet.getList()) {
-				nfaNextStates.add(newList(dfa.findNextState(state, c)));
+			for(Character c : dfa.getAlphabet().getList()) {
+				nfaNextStates.add(newList(dfa.findNextState(state, c))); 
 			}
 			
 			if(dfa.getAcceptingStates().contains(state)) {
-				nfaNextStates.add(nfaAcceptingStates);
+				nfaNextStates.add(nfaAcceptingStates);						//([old accepting state], [epsilon], [new accepting state]
 				
 			}else {
 				nfaNextStates.add(newList());
@@ -1080,12 +1084,12 @@ public class NFATest {
 			
 		}
 		
-		for(int i = 0; i < alphabet.size()+1; i++) {
+		for(int i = 0; i < dfa.getAlphabet().size()+1; i++) {
 			nfaNextStates.add(newList());
 			
 		}
 		
-		NFA nfa = new NFA(nfaStates, alphabet, nfaStartState, nfaNextStates, nfaAcceptingStates, epsilon);
+		NFA nfa = new NFA(nfaStates, dfa.getAlphabet(), nfaStartState, nfaNextStates, nfaAcceptingStates, epsilon);
 		
 		return nfa;
 		

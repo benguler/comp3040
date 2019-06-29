@@ -16,11 +16,23 @@ public class RegUnion implements RegEx {
 
 	@Override
 	public AlphaString generate() {
-		if(Math.random() < 0.5) {
+		if(reg1.generate() == null && reg2.generate() != null) {
+			return this.reg2.generate();
+			
+		}else if(reg1.generate() != null && reg2.generate() == null) {
 			return this.reg1.generate();
 			
+		}else if(reg1.generate() == null && reg2.generate() == null) {
+			return null;
+			
 		}else {
-			return this.reg2.generate();
+			if(Math.random() < 0.5) {
+				return this.reg1.generate();
+				
+			}else {
+				return this.reg2.generate();
+				
+			}
 			
 		}
 		
@@ -76,6 +88,24 @@ public class RegUnion implements RegEx {
 
 	@Override
 	public boolean isStar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isChar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEpsilon() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return false;
 	}

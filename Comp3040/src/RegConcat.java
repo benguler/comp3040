@@ -21,6 +21,11 @@ public class RegConcat implements RegEx{
 	public AlphaString generate() {
 		Alphabet alphabet = this.reg1.getAlphabet();
 		
+		if(this.reg1.generate() == null || this.reg2.generate() == null ) {
+			return null;
+			
+		}
+		
 		ArrayList<Character> chars1 = this.reg1.generate().getChars();
 		ArrayList<Character> chars2 = this.reg2.generate().getChars();
 		
@@ -87,6 +92,24 @@ public class RegConcat implements RegEx{
 
 	@Override
 	public boolean isStar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isChar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEpsilon() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return false;
 	}

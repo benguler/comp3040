@@ -19,4 +19,10 @@ public interface RegEx {
 	
 	public boolean isStar();
 	
+	public boolean isChar();
+	
+	public boolean isEpsilon();
+	
+	public boolean isEmpty();
+	
 }

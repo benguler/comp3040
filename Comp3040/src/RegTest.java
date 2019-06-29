@@ -2,7 +2,7 @@ import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RegTest{
+public class RegTest implements Cloneable{
 	
 	private static NFAFunctions func = new NFAFunctions();
 	
@@ -275,6 +275,8 @@ public class RegTest{
 		
 		String accepts;
 		
+		System.out.println(dfaToGNFA(benDFA).run(benTestStrings[0]));
+		
 		//Test if RegEx compiler works
 		System.out.println("Compiler Tests:\n");
 		
@@ -370,29 +372,55 @@ public class RegTest{
 		NFA nfa;
 		DFA dfa;
 		
-		dfa = func.nfaToDFA(oddNFA);  
+		dfa = func.nfaToDFA(oddNFA); 
 		gen = dfaToReg(dfa).generate();
 		
-		accepts = (dfa.run(gen))? " == ":" != ";	
-		System.out.println("    oddDFA accepts " + gen.displayable() + "\n");
+		accepts = (dfa.run(gen))? " accpets ":" does not accept ";	
+		System.out.println("    oddDFA " + accepts + gen.displayable() + "\n");
 		
 		dfa = func.nfaToDFA(evenNFA); 
 		gen = dfaToReg(dfa).generate();
 		
-		accepts = (dfa.run(gen))? " == ":" != ";	
-		System.out.println("    evenDFA accepts " + gen.displayable() + "\n");
+		accepts = (dfa.run(gen))? " accpets ":" does not accept ";		
+		System.out.println("    evenDFA" + accepts + gen.displayable() + "\n");
 		
-		dfa = func.nfaToDFA(allNFA); 
+		dfa = func.nfaToDFA(allNFA);
+		//System.out.println(dfaToReg(dfa).displayable());
 		gen = dfaToReg(dfa).generate();
 		
-		accepts = (dfa.run(gen))? " == ":" != ";	
-		System.out.println("    allDFA accepts " + gen.displayable() + "\n");
+		accepts = (dfa.run(gen))? " accpets ":" does not accept ";		
+		System.out.println("    allDFA" + accepts + gen.displayable() + "\n");
 		
 		dfa = benDFA; 
 		gen = dfaToReg(dfa).generate();
 		
-		accepts = (dfa.run(gen))? " == ":" != ";	
-		System.out.println("    benDFA accepts " + gen.displayable() + "\n");
+		
+		accepts = (dfa.run(gen))? " accpets ":" does not accept ";	
+		System.out.println("    benDFA" + accepts + gen.displayable() + "\n");
+		
+		//Verify that the ripper works by checking if a DFA is equal to to (DFA -> Reg -> NFA -> DFA):
+		System.out.println("Is DFA == nfaToDFA(dfaToReg(dfa).compile()):\n");
+		
+		dfa = func.nfaToDFA(oddNFA);  
+		
+		accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
+		System.out.println("    oddDFA " + accepts + " (Reg)oddDFA \n");
+		
+		dfa = func.nfaToDFA(evenNFA);  
+		
+		accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
+		System.out.println("    evenDFA " + accepts + " (Reg)evenDFA \n");
+		
+		dfa = func.nfaToDFA(allNFA);  
+		
+		accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
+		System.out.println("    allDFA " + accepts + " (Reg)allDFA \n");
+		
+		dfa = benDFA;  
+		
+		accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
+		System.out.println("    benDFA " + accepts + " (Reg)benDFA \n");
+		//System.out.println(dfaToGNFA(benDFA).run(benTestStrings[0]));
 		
 	}
 	
@@ -417,7 +445,7 @@ public class RegTest{
 			
 			if(regEqual(temp.getReg1(), temp.getReg2())) {																							//a u a -> a
 				return simplify(temp.getReg1());
-				
+	
 			}
 			
 			if(!regEqual(temp.getReg1(), new RegEmpty(reg.getAlphabet())) && regEqual(temp.getReg2(), new RegEmpty(reg.getAlphabet()))) {			//a u [theta] -> a
@@ -445,7 +473,6 @@ public class RegTest{
 			if(temp.getReg1().isStar() && temp.getReg2().isStar()) {																				//(a)* u (b)* -> (a u b)*				
 				RegStar subTemp1 = (RegStar)temp.getReg1();
 				RegStar subTemp2 = (RegStar)temp.getReg2();
-				
 				return new RegStar(new RegUnion(simplify(subTemp1.getReg()), simplify(subTemp2.getReg())));
 			}
 			
@@ -469,9 +496,14 @@ public class RegTest{
 			
 			return new RegConcat(simplify(temp.getReg1()), simplify(temp.getReg2()));
 			
-		//If the reg is *, simplify its reg
+		//If the reg is *, simplify its reg or epsilon if reg is equal to epsilon
 		}else if(reg.isStar()) {
 			RegStar temp = (RegStar) reg;
+			
+			if(regEqual(temp.getReg(), new RegEpsilon(reg.getAlphabet()))) {
+				return new RegEpsilon(reg.getAlphabet());
+				
+			}
 			
 			return new RegStar(simplify(temp.getReg()));
 			
@@ -484,7 +516,7 @@ public class RegTest{
 	
 	public static RegEx dfaToReg(DFA dfa) {
 		GNFA gnfa = dfaToGNFA(dfa);
-		
+	
 		GNFA ripped = rip(gnfa);
 		
 		return simplify(ripped.findReg(ripped.gatStartState(), ripped.getAcceptingState()));
@@ -494,9 +526,21 @@ public class RegTest{
 	//Reduce a GNFA with k>2 states to an equivalent one with k-1 states until k == 2
 	//The GNFA will be non-functional, but it does not have to be for this purpose
 	public static GNFA rip(GNFA gnfa) {
-		//System.out.println(gnfa.getStates().size());
+		
+		for(State state1 : gnfa.getStates()) {
+			for(State state2 : gnfa.getStates()) {
+				System.out.print(gnfa.findReg(state1, state2).displayable() + "     ");
+				
+			}
+			
+			System.out.println();
+			
+		}
+		
+		System.out.println();
 		
 		if(gnfa.getStates().size() == 2) {
+			System.out.println("\n" + gnfa.findReg(gnfa.gatStartState(), gnfa.getAcceptingState()).displayable() + "\n");
 			return gnfa;
 			
 		}
@@ -517,44 +561,57 @@ public class RegTest{
 			
 		}
 		
-		//Because the gnfa is a converted nfa, which is a converted dfa, we know
-		State ripStart = ripStates.get(0);										//The first state is the starting state
+		//Because the gnfa is converted from a trivial nfa converted from a dfa, , we know
+		State ripStart = ripStates.get(0);											//The first state is the starting state
 		
-		State ripAccept = ripStates.get(ripStates.size()-1);					//and the last state is the accepting state
+		State ripAccept = ripStates.get(ripStates.size()-1);						//and the last state is the accepting state
 				
 		
 		
-		//Find the concatenations in the form of reg(qi, [q removed]) o reg([q], [q removed])* o reg([q removed]. qj)
-		tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(0))));
-		
-		for(int i = 2; i < gnfa.getStates().size(); i ++) {
-			tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(i))));
+		//Find the concatenations in the form of reg(qi, [q removed]) o reg([q removed], [q removed])* o reg([q removed]. qj)
 
-		}
-		
-		for(int i = 2; i < gnfa.getStates().size(); i ++) {
-			tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(0))));
+		tempRegs.add(regCopy(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(0)))));
 
-			
-			for(int j = 2; j < gnfa.getStates().size(); j ++) {
-				tempRegs.add(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(j))));
-	
+		for(int j = 2; j < gnfa.getStates().size(); j++) {
+			tempRegs.add(regCopy(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(j)))));
+			if(j == 2) {
+				System.out.println("------------------------------------------------------------------------");
+				System.out.println(tempRegs.get(ripNextRegs.size()-1).displayable());
+				System.out.println("------------------------------------------------------------------------");
+				System.out.println();
 			}
+
+		}
+		
+		for(int i = 2; i < gnfa.getStates().size(); i++) {
+			tempRegs.add(regCopy(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(0)))));
+
+			for(int j = 2; j < gnfa.getStates().size(); j++) {
+				tempRegs.add(regCopy(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(j)))));
+
+			}
+		}
+		
+
+		
+		//Add those connections
+		
+		ripNextRegs.add(regCopy(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(0))));													//Add regs that mirror the functionality of the removed reg
+		ripNextRegs.set(ripNextRegs.size()-1, simplify(new RegUnion(ripNextRegs.get(ripNextRegs.size()-1), tempRegs.get(ripNextRegs.size()-1))));	//reg(qi, qj) --> reg(reg(qi, qj) u (reg(qi, [q removed]) o reg([q removed], qj)))
+																																					
+		for(int j = 2; j < gnfa.getStates().size(); j++) {
+			ripNextRegs.add(regCopy(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(j))));
+			ripNextRegs.set(ripNextRegs.size()-1, simplify(new RegUnion(ripNextRegs.get(ripNextRegs.size()-1), tempRegs.get(ripNextRegs.size()-1))));	
 			
 		}
 		
-		for(int i = 0; i < gnfa.getStates().size(); i++) {
-			for(int j = 0; j < gnfa.getStates().size(); j++) {
-				if(i == 1) {
-					break;
-					
-				}
-				
-				if(j != 1) {
-					ripNextRegs.add(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(j)));
-					ripNextRegs.set(ripNextRegs.size()-1, new RegUnion(tempRegs.get(ripNextRegs.size()-1), ripNextRegs.get(ripNextRegs.size()-1)));	//Add regs that mirror the functionality of the removed reg
-					
-				}
+		for(int i = 2; i < gnfa.getStates().size(); i++) {
+			ripNextRegs.add(regCopy(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(0))));
+			ripNextRegs.set(ripNextRegs.size()-1, simplify(new RegUnion(ripNextRegs.get(ripNextRegs.size()-1), tempRegs.get(ripNextRegs.size()-1))));	
+			
+			for(int j = 2; j < gnfa.getStates().size(); j++) {	
+				ripNextRegs.add(regCopy(gnfa.findReg(gnfa.getStates().get(i), gnfa.getStates().get(j))));
+				ripNextRegs.set(ripNextRegs.size()-1, simplify(new RegUnion(ripNextRegs .get(ripNextRegs.size()-1), tempRegs.get(ripNextRegs.size()-1))));
 				
 			}
 			
@@ -564,6 +621,45 @@ public class RegTest{
 		
 	}
 	
+	//Return an equivalent but separate reg
+	public static RegEx regCopy(RegEx reg) {
+
+		if(reg.isChar()) {
+			RegChar tempChar;
+			tempChar = (RegChar)reg;
+			
+			return new RegChar(tempChar.getCharacter(), reg.getAlphabet());
+			
+		}else if(reg.isEpsilon()) {
+			return new RegEpsilon(reg.getAlphabet());
+			
+		}else if(reg.isEmpty()) {
+			return new RegEmpty(reg.getAlphabet());
+			
+		}else if(reg.isStar()) {
+			RegStar tempStar;
+			tempStar = (RegStar)reg;
+			
+			return new RegStar(regCopy(tempStar.getReg()));
+			
+		}else if(reg.isUnion()) {
+			RegUnion tempUnion;
+			tempUnion = (RegUnion)reg;
+			
+			return new RegUnion(regCopy(tempUnion.getReg1()), regCopy(tempUnion.getReg1()));
+			
+		}else if(reg.isConcat()) {
+			RegConcat tempConcat;
+			tempConcat = (RegConcat)reg;
+			
+			return new RegConcat(regCopy(tempConcat.getReg1()), (regCopy(tempConcat.getReg1())));
+			
+		}
+		
+		return null;
+		
+	}
+
 	//Convert a dfa to a GNFA
 	public static GNFA dfaToGNFA(DFA dfa) {
 		NFA nfa = func.dfaToNFA(dfa);
@@ -571,6 +667,7 @@ public class RegTest{
 		StateTable stateTable = nfa.getStateTable();
 		
 		ArrayList<State> gnfaStates = new ArrayList<State>();
+		
 		gnfaStates.addAll(nfa.getStates());
 		
 		Alphabet alphabet = nfa.getAlphabet();
@@ -597,15 +694,16 @@ public class RegTest{
 						c = alphabet.get(k);
 						
 						if(nfa.findNextStates(nfa.getStates().get(i), alphabet.get(k)).contains(nfa.getStates().get(j))) {
+							//System.out.println(c.displayable());
 							index = i*gnfaStates.size() + j;
-							nextRegs.set(index, new RegChar(c, alphabet));
+							nextRegs.set(index, new RegUnion(new RegChar(c, alphabet), nextRegs.get(index)));
 							
 						}
 							
 					}else {
-						if(nfa.findNextStates(nfa.getStates().get(i), func.epsilon).contains(nfa.getStates().get(j))) {
+						if(nfa.findNextStates(nfa.getStates().get(i), NFAFunctions.epsilon).contains(nfa.getStates().get(j))) {
 							index = i*gnfaStates.size() + j;
-							nextRegs.set(index, new RegEpsilon(alphabet));
+							nextRegs.set(index, new RegUnion(new RegEpsilon(alphabet), nextRegs.get(index)));
 							
 						}
 						
@@ -617,7 +715,9 @@ public class RegTest{
 			
 		}
 		
-		return new GNFA (gnfaStates, alphabet, gnfaStart, nextRegs, gnfaAccept, func.epsilon);
+		//System.out.println();
+		
+		return new GNFA (gnfaStates, alphabet, gnfaStart, nextRegs, gnfaAccept, NFAFunctions.epsilon);
 		
 	}
 	

@@ -19,8 +19,18 @@ public class RegStar implements RegEx {
 
 	@Override
 	public AlphaString generate() {
-		
 		Alphabet alphabet = this.reg.getAlphabet();
+		
+		if(reg.generate() == null) {
+			if(Math.random() < 0.5) {
+				return null;
+				
+			}else {
+				return new AlphaString(alphabet);
+				
+			}
+			
+		}
 		
 		ArrayList<Character> chars = this.reg.generate().getChars();
 		
@@ -81,6 +91,24 @@ public class RegStar implements RegEx {
 	public boolean isStar() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public boolean isChar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEpsilon() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

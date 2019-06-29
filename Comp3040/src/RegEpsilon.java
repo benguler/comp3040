@@ -71,5 +71,23 @@ public class RegEpsilon implements RegEx {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isChar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEpsilon() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

@@ -47,6 +47,11 @@ public class RegChar implements RegEx {
 		
 	}
 	
+	public Character getCharacter() {
+		return this.c;
+		
+	}
+	
 	public Alphabet getAlphabet() {
 		return this.alphabet;
 		
@@ -71,6 +76,24 @@ public class RegChar implements RegEx {
 
 	@Override
 	public boolean isStar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isChar() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEpsilon() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return false;
 	}
