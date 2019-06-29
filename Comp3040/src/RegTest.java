@@ -385,18 +385,17 @@ public class RegTest implements Cloneable{
 		System.out.println("    evenDFA" + accepts + gen.displayable() + "\n");
 		
 		dfa = func.nfaToDFA(allNFA);
-		//System.out.println(dfaToReg(dfa).displayable());
 		gen = dfaToReg(dfa).generate();
 		
 		accepts = (dfa.run(gen))? " accpets ":" does not accept ";		
 		System.out.println("    allDFA" + accepts + gen.displayable() + "\n");
 		
-		dfa = benDFA; 
-		gen = dfaToReg(dfa).generate();
+		//Takes an inordinate amount of time to compile. possibly because of alphabet size?
+		//dfa = benDFA; 
+		//gen = dfaToReg(dfa).generate();
 		
-		
-		accepts = (dfa.run(gen))? " accpets ":" does not accept ";	
-		System.out.println("    benDFA" + accepts + gen.displayable() + "\n");
+		//accepts = (dfa.run(gen))? " accpets ":" does not accept ";	
+		//System.out.println("    benDFA" + accepts + gen.displayable() + "\n");
 		
 		//Verify that the ripper works by checking if a DFA is equal to to (DFA -> Reg -> NFA -> DFA):
 		System.out.println("Is DFA == nfaToDFA(dfaToReg(dfa).compile()):\n");
@@ -416,11 +415,11 @@ public class RegTest implements Cloneable{
 		accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
 		System.out.println("    allDFA " + accepts + " (Reg)allDFA \n");
 		
-		dfa = benDFA;  
+		//dfa = benDFA;  
 		
-		accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
-		System.out.println("    benDFA " + accepts + " (Reg)benDFA \n");
-		//System.out.println(dfaToGNFA(benDFA).run(benTestStrings[0]));
+		//accepts = (func.equal(dfa, func.nfaToDFA(dfaToReg(dfa).compile())))? " == ":" != ";	
+		//System.out.println("    benDFA " + accepts + " (Reg)benDFA \n");
+		
 		
 	}
 	
@@ -486,7 +485,7 @@ public class RegTest implements Cloneable{
 				
 			}
 			
-			if(regEqual(temp.getReg2(), new RegEpsilon(reg.getAlphabet()))) {																	 //a o [epsilon] -> a, [epsilon] o [epsilon] -> [epsilon]
+			if(regEqual(temp.getReg2(), new RegEpsilon(reg.getAlphabet()))) {																	 //a o [epsilon] -> a
 				return simplify(temp.getReg1());
 				
 			}else if(regEqual(temp.getReg1(), new RegEpsilon(reg.getAlphabet())) && !regEqual(temp.getReg2(), new RegEpsilon(reg.getAlphabet()))) {	//[epsilon] o b -> b
@@ -527,20 +526,7 @@ public class RegTest implements Cloneable{
 	//The GNFA will be non-functional, but it does not have to be for this purpose
 	public static GNFA rip(GNFA gnfa) {
 		
-		/*for(State state1 : gnfa.getStates()) {
-			for(State state2 : gnfa.getStates()) {
-				System.out.print(gnfa.findReg(state1, state2).displayable() + "     ");
-				
-			}
-			
-			System.out.println();
-			
-		}*/
-		
-		//System.out.println();
-		
 		if(gnfa.getStates().size() == 2) {
-			System.out.println("\n" + gnfa.findReg(gnfa.gatStartState(), gnfa.getAcceptingState()).displayable() + "\n");
 			return gnfa;
 			
 		}
