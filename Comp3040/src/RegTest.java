@@ -527,7 +527,7 @@ public class RegTest implements Cloneable{
 	//The GNFA will be non-functional, but it does not have to be for this purpose
 	public static GNFA rip(GNFA gnfa) {
 		
-		for(State state1 : gnfa.getStates()) {
+		/*for(State state1 : gnfa.getStates()) {
 			for(State state2 : gnfa.getStates()) {
 				System.out.print(gnfa.findReg(state1, state2).displayable() + "     ");
 				
@@ -535,9 +535,9 @@ public class RegTest implements Cloneable{
 			
 			System.out.println();
 			
-		}
+		}*/
 		
-		System.out.println();
+		//System.out.println();
 		
 		if(gnfa.getStates().size() == 2) {
 			System.out.println("\n" + gnfa.findReg(gnfa.gatStartState(), gnfa.getAcceptingState()).displayable() + "\n");
@@ -574,12 +574,6 @@ public class RegTest implements Cloneable{
 
 		for(int j = 2; j < gnfa.getStates().size(); j++) {
 			tempRegs.add(regCopy(new RegConcat(new RegConcat(gnfa.findReg(gnfa.getStates().get(0), gnfa.getStates().get(1)), new RegStar(gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(1)))), gnfa.findReg(gnfa.getStates().get(1), gnfa.getStates().get(j)))));
-			if(j == 2) {
-				System.out.println("------------------------------------------------------------------------");
-				System.out.println(tempRegs.get(ripNextRegs.size()-1).displayable());
-				System.out.println("------------------------------------------------------------------------");
-				System.out.println();
-			}
 
 		}
 		
@@ -623,7 +617,6 @@ public class RegTest implements Cloneable{
 	
 	//Return an equivalent but separate reg
 	public static RegEx regCopy(RegEx reg) {
-
 		if(reg.isChar()) {
 			RegChar tempChar;
 			tempChar = (RegChar)reg;
@@ -631,6 +624,8 @@ public class RegTest implements Cloneable{
 			return new RegChar(tempChar.getCharacter(), reg.getAlphabet());
 			
 		}else if(reg.isEpsilon()) {
+			
+			
 			return new RegEpsilon(reg.getAlphabet());
 			
 		}else if(reg.isEmpty()) {
@@ -646,13 +641,13 @@ public class RegTest implements Cloneable{
 			RegUnion tempUnion;
 			tempUnion = (RegUnion)reg;
 			
-			return new RegUnion(regCopy(tempUnion.getReg1()), regCopy(tempUnion.getReg1()));
+			return new RegUnion(regCopy(tempUnion.getReg1()), regCopy(tempUnion.getReg2()));
 			
 		}else if(reg.isConcat()) {
 			RegConcat tempConcat;
 			tempConcat = (RegConcat)reg;
 			
-			return new RegConcat(regCopy(tempConcat.getReg1()), (regCopy(tempConcat.getReg1())));
+			return new RegConcat(regCopy(tempConcat.getReg1()), (regCopy(tempConcat.getReg2())));
 			
 		}
 		
@@ -714,8 +709,6 @@ public class RegTest implements Cloneable{
 			}
 			
 		}
-		
-		//System.out.println();
 		
 		return new GNFA (gnfaStates, alphabet, gnfaStart, nextRegs, gnfaAccept, NFAFunctions.epsilon);
 		
