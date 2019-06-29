@@ -1248,7 +1248,7 @@ public class RegTest implements Cloneable{
 	}
 	
 	public static DFA rePumper(AlphaString x, AlphaString y, AlphaString z) {
-		return func.nfaToDFA((new RegConcat(regString(x), new RegConcat(regString(y), regString(z))).compile()));
+		return func.nfaToDFA((new RegConcat(regString(x), new RegConcat(new RegConcat(new RegStar(regString(y)), regString(y)), regString(z))).compile()));
 		
 	}
 	
