@@ -818,7 +818,7 @@ public class RegTest implements Cloneable{
 		}
 		
 		//Pumper and Repumper tests
-		System.out.println("Pumper and Repumper function tests:");
+		System.out.println("\nPumper and Repumper function tests:");
 		
 		AlphaString string;
 		Trace trace;
