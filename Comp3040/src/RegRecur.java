@@ -35,11 +35,6 @@ public class RegRecur implements RegEx {
 	public AlphaString generate() {
 		return this.reg.generate();
 	}
-	
-	@Override
-	public AlphaString generate(ParseTree parseTree) {
-		return this.reg.generate();
-	}
 
 	@Override
 	public boolean accepts(AlphaString string) {
