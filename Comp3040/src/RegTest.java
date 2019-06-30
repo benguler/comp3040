@@ -937,12 +937,6 @@ public class RegTest implements Cloneable{
 				
 			}
 			
-			if(temp.getReg1().isStar() && temp.getReg2().isStar()) {																				//(a)* u (b)* -> (a u b)*				
-				RegStar subTemp1 = (RegStar)temp.getReg1();
-				RegStar subTemp2 = (RegStar)temp.getReg2();
-				return new RegStar(new RegUnion(simplify(subTemp1.getReg()), simplify(subTemp2.getReg())));
-			}
-			
 			return new RegUnion(simplify(temp.getReg1()), simplify(temp.getReg2()));
 			
 		}else if(reg.isConcat()) {
