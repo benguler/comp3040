@@ -3,12 +3,12 @@ public class NonTerminal implements Symbol{
 	
 	private String identifier;
 	private Alphabet alphabet;
-	private RegEx reg;
+	private RegRecur reg;
 	
 	public NonTerminal(String identifier, Alphabet alphabet) {
 		this.identifier = identifier;
 		this.alphabet = alphabet;
-		this.reg = new RegEmpty(alphabet);
+		this.reg = new RegRecur(this);
 		
 	}
 
@@ -17,8 +17,18 @@ public class NonTerminal implements Symbol{
 		
 	}
 	
+	public Alphabet getAlphabet() {
+		return this.alphabet;
+		
+	}
+
+	public String getIdentiier() {
+		return this.identifier;
+		
+	}
+	
 	public void setReg(RegEx reg) {
-		this.reg = reg;
+		this.reg.setReg(reg);
 		
 	}
 	

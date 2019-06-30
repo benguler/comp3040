@@ -21,7 +21,7 @@ public class RegStar implements RegEx {
 	public AlphaString generate() {
 		Alphabet alphabet = this.reg.getAlphabet();
 		
-		if(reg.generate() == null) {
+		if(reg.isEmpty()) {
 			if(Math.random() < 0.5) {
 				return null;
 				
@@ -107,6 +107,12 @@ public class RegStar implements RegEx {
 
 	@Override
 	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isRecur() {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -21,8 +21,25 @@ public class RegConcat implements RegEx{
 	public AlphaString generate() {
 		Alphabet alphabet = this.reg1.getAlphabet();
 		
-		if(this.reg1.generate() == null || this.reg2.generate() == null ) {
-			return null;
+		if(!reg1.isRecur() && !reg2.isRecur()) {
+			if(this.reg1.isEmpty() || this.reg2.isEmpty() ) {
+				return null;
+				
+			}
+		
+		}else if(!reg1.isRecur() && reg2.isRecur()) {
+			if(this.reg1.isEmpty()) {
+				return null;
+				
+			}
+			
+			
+		}else if(reg1.isRecur() && !reg2.isRecur()) {
+			System.out.println(reg2.displayable());
+			if(this.reg2.isEmpty()) {
+				return null;
+				
+			}
 			
 		}
 		
@@ -110,6 +127,12 @@ public class RegConcat implements RegEx{
 
 	@Override
 	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return (this.reg1.isEmpty() || this.reg2.isEmpty());
+	}
+
+	@Override
+	public boolean isRecur() {
 		// TODO Auto-generated method stub
 		return false;
 	}

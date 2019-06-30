@@ -1,57 +1,61 @@
 import java.util.ArrayList;
 
-public class RegEpsilon implements RegEx {
-
-	private Alphabet alphabet;
+public class RegRecur implements RegEx {
 	
-	public RegEpsilon(Alphabet alphabet) {
-		this.alphabet = alphabet;
+	private NonTerminal nt;
+	private Alphabet alphabet;
+	private RegEx reg; 
+	
+	private ArrayList<RegEx> regs;
+	
+	public RegRecur(NonTerminal nt) {
+		this.nt = nt;
+		this.alphabet = nt.getAlphabet();
+		this.regs = new ArrayList<RegEx>();
+		
 	}
-
+	
+	public void addReg(RegEx reg) {
+		regs.add(reg);
+		
+	}
+	
+	public void setReg(RegEx reg) {
+		this.reg = reg;
+		
+	}
+	
 	@Override
 	public NFA compile() {
-		ArrayList<State> states = new ArrayList<State>(func.newList(new State("ep0"), new State("ep1")));
-		ArrayList<ArrayList<State>> next = new ArrayList<ArrayList<State>>();
-		
-		State start = states.get(0);
-		
-		for(int i = 0; i < states.size(); i++) {
-			for(int j = 0; j < this.alphabet.size(); j++) {
-				next.add(func.newList(states.get(1)));
-			}
-			
-			next.add(func.newList());
-			
-		}
-		
-		ArrayList<State> accepting = new ArrayList<State>(func.newList(states.get(0)));
-		
-		return new NFA(states, this.alphabet, start, next, accepting, func.epsilon);
-		
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public AlphaString generate() {
-		return new AlphaString(alphabet);
-		
+		return this.reg.generate();
+	}
+	
+	@Override
+	public AlphaString generate(ParseTree parseTree) {
+		return this.reg.generate();
 	}
 
 	@Override
 	public boolean accepts(AlphaString string) {
-		DFA dfa = func.nfaToDFA(this.compile());
-		return (dfa.run(string));
-		
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
+
+	@Override
 	public Alphabet getAlphabet() {
+		// TODO Auto-generated method stub
 		return this.alphabet;
-		
 	}
 
 	@Override
 	public String displayable() {
-		return "[epsilon]";
-		
+		return nt.getIdentiier();
 	}
 
 	@Override
@@ -81,7 +85,7 @@ public class RegEpsilon implements RegEx {
 	@Override
 	public boolean isEpsilon() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override
@@ -93,7 +97,7 @@ public class RegEpsilon implements RegEx {
 	@Override
 	public boolean isRecur() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-	
+
 }

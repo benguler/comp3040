@@ -318,7 +318,8 @@ public class CFGTest {
 			
 			private static ArrayList<Terminal> epsilonCFGT = new ArrayList<Terminal>(Arrays.asList(new Terminal(biAlphabet.get(0), biAlphabet), new Terminal(biAlphabet.get(1), biAlphabet), new Terminal(NFAFunctions.epsilon, biAlphabet)));			//T = {'0', '1', [epsilon]}
 			
-			private static ArrayList<Rule> epsilonCFGRules = new ArrayList<Rule>(Arrays.asList(new Rule(epsilonCFGNT.get(0), epsilonCFGT.get(0))																								//R ={{s0, [epsilon])			
+			private static ArrayList<Rule> epsilonCFGRules = new ArrayList<Rule>(Arrays.asList(new Rule(epsilonCFGNT.get(0), epsilonCFGT.get(2)),																										//R ={{s0, [epsilon])
+																							   new Rule(epsilonCFGNT.get(0), epsilonCFGNT.get(0))																										//    (s0, s0)}		
 																								
 					));
 			
@@ -328,8 +329,26 @@ public class CFGTest {
 	//---------------------------------------------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) {
-		
+		System.out.println("znonCFG example string: '" +  znonCFG.generate().displayable() + "'");
+		System.out.println("oddCFG example string: '" +  oddCFG.generate().displayable() + "'");
+		System.out.println("evenCFG example string: '" +  evenCFG.generate().displayable() + "'");
+		System.out.println("ooCFG example string: '" +  ooCFG.generate().displayable() + "'");
+		System.out.println("zzCFG example string: '" +  zzCFG.generate().displayable() + "'");
+		System.out.println("zStarCFG example string: '" +  zStarCFG.generate().displayable() + "'");
+		System.out.println("oStarCFG example string: '" +  oStarCFG.generate().displayable() + "'");
+		System.out.println("allCFG example string: '" +  allCFG.generate().displayable() + "'");
+		System.out.println("oStarzoStarCFG example string: '" +  oStarzoStarCFG.generate().displayable() + "'");
+		System.out.println("epsilonCFG example string: '" +  epsilonCFG.generate().displayable() + "'");
 
+	}
+	
+	
+	
+	public static ParseTree genParseTree(CFG cfg) {
+		cfg.run(cfg.generate());
+		
+		return cfg.getPareTree();
+		
 	}
 
 }

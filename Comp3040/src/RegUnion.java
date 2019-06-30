@@ -13,26 +13,41 @@ public class RegUnion implements RegEx {
 		return func.union(this.reg1.compile(), this.reg2.compile());
 		
 	}
-
+	
 	@Override
 	public AlphaString generate() {
-		if(reg1.generate() == null && reg2.generate() != null) {
-			return this.reg2.generate();
+		
+		 if(!this.reg1.isRecur() && !this.reg2.isRecur()){
+			if(this.reg1.isEmpty() && !this.reg2.isEmpty()) {
+				return this.reg2.generate();
 			
-		}else if(reg1.generate() != null && reg2.generate() == null) {
-			return this.reg1.generate();
-			
-		}else if(reg1.generate() == null && reg2.generate() == null) {
-			return null;
-			
-		}else {
-			if(Math.random() < 0.5) {
+			}else if(this.reg1.isEmpty() && !this.reg2.isEmpty()) {
 				return this.reg1.generate();
 				
-			}else {
+			}else if(this.reg1.isEmpty() && this.reg2.isEmpty()) {
+				return null;
+				
+			}
+		
+		}else if(!this.reg1.isRecur() && this.reg2.isRecur()) {
+			if(this.reg1.isEmpty()) {
 				return this.reg2.generate();
 				
 			}
+			
+		}else if(this.reg1.isRecur() && !this.reg2.isRecur()) {
+			if(this.reg2.isEmpty()) {
+				return this.reg1.generate();
+				
+			}
+			
+		}
+		
+		if(Math.random() < 0.5) {
+			return this.reg1.generate();
+			
+		}else {
+			return this.reg2.generate();
 			
 		}
 		
@@ -106,6 +121,12 @@ public class RegUnion implements RegEx {
 
 	@Override
 	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return (this.reg1.isEmpty() && this.reg2.isEmpty());
+	}
+
+	@Override
+	public boolean isRecur() {
 		// TODO Auto-generated method stub
 		return false;
 	}

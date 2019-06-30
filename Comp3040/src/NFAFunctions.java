@@ -726,4 +726,45 @@ public AlphaString acceptingString(DFA dfa){
 		return groupings;
 		
 	}
+	
+	//Return an equivalent but separate reg
+	public RegEx regCopy(RegEx reg) {
+		if(reg.isChar()) {
+			RegChar tempChar;
+			tempChar = (RegChar)reg;
+			
+			return new RegChar(tempChar.getCharacter(), reg.getAlphabet());
+			
+		}else if(reg.isEpsilon()) {
+			
+			
+			return new RegEpsilon(reg.getAlphabet());
+			
+		}else if(reg.isEmpty()) {
+			return new RegEmpty(reg.getAlphabet());
+			
+		}else if(reg.isStar()) {
+			RegStar tempStar;
+			tempStar = (RegStar)reg;
+			
+			return new RegStar(regCopy(tempStar.getReg()));
+			
+		}else if(reg.isUnion()) {
+			RegUnion tempUnion;
+			tempUnion = (RegUnion)reg;
+			
+			return new RegUnion(regCopy(tempUnion.getReg1()), regCopy(tempUnion.getReg2()));
+			
+		}else if(reg.isConcat()) {
+			RegConcat tempConcat;
+			tempConcat = (RegConcat)reg;
+			
+			return new RegConcat(regCopy(tempConcat.getReg1()), (regCopy(tempConcat.getReg2())));
+			
+		}
+		
+		return reg;
+		
+	}
+	
 }

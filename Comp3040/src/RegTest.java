@@ -1105,7 +1105,7 @@ public class RegTest implements Cloneable{
 			
 		}
 		
-		return null;
+		return reg;
 		
 	}
 
@@ -1224,10 +1224,10 @@ public class RegTest implements Cloneable{
 			int traceIndex;
 			boolean stop;
 			
-			for(ArrayList<AlphaString> grouping : tpGroupings) {
-				x = grouping.get(0);
-				y = grouping.get(1);
-				z = grouping.get(2);
+			for(int i = tpGroupings.size() - 1 ; i >= 0 ; i--) {
+				x = tpGroupings.get(i).get(0);
+				y = tpGroupings.get(i).get(1);
+				z = tpGroupings.get(i).get(2);
 				
 				loop = false;
 				stop = false;

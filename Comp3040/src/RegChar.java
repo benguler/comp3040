@@ -97,5 +97,11 @@ public class RegChar implements RegEx {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isRecur() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

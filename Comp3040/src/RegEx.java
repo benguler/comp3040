@@ -25,4 +25,6 @@ public interface RegEx {
 	
 	public boolean isEmpty();
 	
+	public boolean isRecur();
+	
 }

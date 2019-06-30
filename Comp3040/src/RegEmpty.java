@@ -88,5 +88,11 @@ public class RegEmpty implements RegEx {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public boolean isRecur() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

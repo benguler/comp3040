@@ -34,4 +34,5 @@ public class ParseTree {
 		this.depth = 0;
 		
 	}
+	
 }

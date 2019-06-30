@@ -10,7 +10,6 @@ public class Terminal implements Symbol{
 		
 	}
 
-	@Override
 	public RegEx getReg() {
 		if(this.alphabet.getList().contains(character)) {
 			return new RegChar(this.character, this.alphabet);
@@ -19,6 +18,12 @@ public class Terminal implements Symbol{
 			return new RegEpsilon(this.alphabet);
 			
 		}
+		
+	}
+	
+	public Alphabet getAlphabet() {
+		return this.alphabet;
+		
 	}
 	
 }
