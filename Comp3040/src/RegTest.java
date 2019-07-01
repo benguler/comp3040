@@ -961,11 +961,6 @@ public class RegTest implements Cloneable{
 		}else if(reg.isStar()) {
 			RegStar temp = (RegStar) reg;
 			
-			if(regEqual(temp.getReg(), new RegEpsilon(reg.getAlphabet()))) {
-				return new RegEpsilon(reg.getAlphabet());
-				
-			}
-			
 			return new RegStar(simplify(temp.getReg()));
 			
 		}
